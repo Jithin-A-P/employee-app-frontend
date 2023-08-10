@@ -1,0 +1,43 @@
+.login-page {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+.banner-container {
+    background-color: #e5f7fd;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px 0 0 20px;
+}
+
+.banner {
+    width: 723px;
+    height: 723px;
+    border-radius: 50%;
+    border: 40px solid white;
+}
+
+.login-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container {
+    width: 460px;
+}
+
+.login-form-logo {
+    width: 200px;
+}
+
+.login-error-message {
+    color: red;
+    font: normal normal 600 14px/19px "Nunito Sans";
+    padding: 8px 0px;
+}
