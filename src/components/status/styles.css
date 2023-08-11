@@ -1,0 +1,10 @@
+.status {
+    width: 110px;
+    height: 30px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: normal normal normal 16px/22px "Nunito Sans";
+    color: #183072;
+}

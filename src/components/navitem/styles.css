@@ -1,0 +1,27 @@
+.nav-item {
+    height: 60px;
+    width: 280px;
+    margin-left: 20px;
+    background-color: #03AEEE;
+    border-radius: 50px 0 0 50px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+}
+
+.nav-item-icon-container {
+    background-color: #ffffff;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    margin-left: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-item-text {
+    font: normal normal bold 16px/22px "Nunito Sans";
+    margin-left: 10px;
+}
