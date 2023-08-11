@@ -32,6 +32,7 @@ const CreateEmployee = () => {
               setEmployee({ ...employee, name: e.target.value });
             }}
             label='Employee Name'
+            placeholder='Employee Name'
           />
         </div>
         <div className='form-input'>
@@ -42,6 +43,7 @@ const CreateEmployee = () => {
               setEmployee({ ...employee, joiningDate: e.target.value });
             }}
             label='Joining Date'
+            placeholder='Joining Date'
           />
         </div>
         <div className='form-input'>
@@ -52,6 +54,7 @@ const CreateEmployee = () => {
               setEmployee({ ...employee, experience: e.target.value });
             }}
             label='Experience'
+            placeholder='Experience'
           />
         </div>
         <div className='form-input'>
@@ -92,7 +95,8 @@ const CreateEmployee = () => {
               onChange={(e: any) => {
                 setEmployee({ ...employee, experience: e.target.value });
               }}
-              label='Address Line 1'
+              label='Address'
+              placeholder='Address Line 1'
             />
           </div>
           <div className='form-input'>
@@ -102,7 +106,8 @@ const CreateEmployee = () => {
               onChange={(e: any) => {
                 setEmployee({ ...employee, experience: e.target.value });
               }}
-              label='Address Line 2'
+              label=''
+              placeholder='Address Line 2'
             />
           </div>
           <div className='form-input'>
@@ -112,7 +117,8 @@ const CreateEmployee = () => {
               onChange={(e: any) => {
                 setEmployee({ ...employee, experience: e.target.value });
               }}
-              label='City'
+              label=''
+              placeholder='City'
             />
           </div>
           <div className='form-button'>

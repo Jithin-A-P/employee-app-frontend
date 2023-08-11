@@ -32,12 +32,19 @@ const Login = () => {
       <div className='login-container'>
         <div className='form-container'>
           <img className='login-form-logo' src='assets/img/kv-logo.png' alt='banner' />
-          <Input value={username} type='text' onChange={handleUsernameChange} label='Username' />
+          <Input
+            value={username}
+            type='text'
+            onChange={handleUsernameChange}
+            label='Username'
+            placeholder='Username'
+          />
           <Input
             value={password}
             type='password'
             onChange={handlePassowrdChange}
             label='Password'
+            placeholder='Password'
           />
           <Button text='Login' type='primary' onClick={handleLogin} />
           {showError && (
