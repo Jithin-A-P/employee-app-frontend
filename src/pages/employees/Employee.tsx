@@ -6,7 +6,7 @@ import employees from '../../employee';
 import { useNavigate } from 'react-router-dom';
 import './styles.css';
 
-const CreateEmployee = () => {
+const Employee = () => {
   const navigate = useNavigate();
 
   return (
@@ -26,7 +26,6 @@ const CreateEmployee = () => {
           'Role',
           'Status',
           'Experience',
-          'Address',
           'Action'
         ]}
         employees={employees}
@@ -38,4 +37,4 @@ const CreateEmployee = () => {
   );
 };
 
-export default CreateEmployee;
+export default Employee;

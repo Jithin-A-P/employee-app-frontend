@@ -1,11 +1,11 @@
 .material-icon-button {
     height: 60px;
-    width: 250px;
     border: none;
     display: flex;
     align-items: center;
     border-radius: 0 50px 50px 0;
     cursor: pointer;
+    padding-right: 30px;
 }
 
 .material-icon-button-text {
