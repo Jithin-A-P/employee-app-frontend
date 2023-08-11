@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login/Login';
 import Employee from './pages/employees/Employee';
 import EmployeeDetails from './pages/employee-details/EmployeeDetails';
+import CreateEmployee from './pages/create-employee/CreateEmployee';
 
 const App: FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: FC = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/employees' element={<Employee />} />
           <Route path='/employees/:id' element={<EmployeeDetails />} />
+          <Route path='/employees/create' element={<CreateEmployee />} />
           <Route path='/test' element={<div style={{ width: '100%' }}></div>} />
         </Routes>
       </BrowserRouter>

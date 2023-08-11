@@ -1,0 +1,33 @@
+.select-div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+}
+
+.select-field {
+    outline: none;
+    border: 1px solid #B4B7BD;
+    height: 50px;
+    width: 100%;
+    border-radius: 5px;
+    padding-left: 17px;
+    text-align: left;
+    font: normal normal 600 14px/19px "Nunito Sans";
+    letter-spacing: 0px;
+    opacity: 0.95;
+    background-color: transparent;
+}
+
+.select-field::placeholder {
+    font: normal normal 600 14px/19px "Nunito Sans";
+    color: #8B8D9D;
+}
+
+.select-label {
+    text-align: left;
+    font: normal normal 600 16px/22px "Nunito Sans";
+    letter-spacing: 0px;
+    color: #3E3E3E;
+    opacity: 1;
+    margin-bottom: 10px;
+}

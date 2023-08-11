@@ -14,7 +14,9 @@ const Employee = () => {
       <SubHeader title={'Employee List'}>
         <MaterialIconButton
           icon='assets/icons/plus.png'
-          onClick={() => {}}
+          onClick={() => {
+            navigate('/employees/create');
+          }}
           text='Create employee'
         />
       </SubHeader>

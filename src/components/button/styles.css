@@ -10,3 +10,17 @@
     cursor: pointer;
     font: normal normal 600 16px/22px "Nunito Sans";
 }
+
+.secondary-button {
+    background-color: transparent;
+    box-shadow: 0px 3px 6px #C9C9C929;
+    border: 1px solid #8A8C8F;
+    border-radius: 3px;
+    opacity: 1;
+    color: #8A8C8F;
+    height: 50px;
+    width: 100%;
+    margin-top: 50px;
+    cursor: pointer;
+    font: normal normal 600 16px/22px "Nunito Sans";
+}
