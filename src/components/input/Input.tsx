@@ -7,18 +7,20 @@ type InputPropsType = {
   type: string;
   label: string;
   placeholder: string;
+  inactive?: string;
 };
 
-const Input: FC<InputPropsType> = ({ value, onChange, type, label, placeholder }) => {
+const Input: FC<InputPropsType> = ({ value, onChange, type, label, placeholder, inactive }) => {
   return (
     <div className='input-div'>
       {label !== '' && <label className='input-label'>{label}</label>}
       <input
-        className='input-field'
+        className={`input-field ${inactive}`}
         type={type}
         onChange={onChange}
         value={value}
         placeholder={placeholder}
+        readOnly={inactive ? true : false}
       />
     </div>
   );

@@ -2,11 +2,12 @@ import MaterialIconButton from '../../components/material-icon-button/MaterialIc
 import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import Status from '../../components/status/Status';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './styles.css';
 
 const EmployeeDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   console.log(id);
 
@@ -23,7 +24,13 @@ const EmployeeDetails = () => {
   return (
     <HomeLayout>
       <SubHeader title='Employee Details'>
-        <MaterialIconButton icon='assets/icons/edit.png' text='Edit' onClick={() => {}} />
+        <MaterialIconButton
+          icon='assets/icons/edit.png'
+          text='Edit'
+          onClick={() => {
+            navigate('/employees/edit');
+          }}
+        />
       </SubHeader>
       <div className='employee-details-card'>
         <div className='row'>
