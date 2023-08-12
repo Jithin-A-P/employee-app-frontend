@@ -20,3 +20,9 @@
 .table-row-column img {
     width: 15px;
 }
+
+.table-row-action {
+    width: 50px;
+    display: flex;
+    justify-content: space-between;
+}

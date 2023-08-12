@@ -13,7 +13,7 @@ const Employee = () => {
     <HomeLayout>
       <SubHeader title={'Employee List'}>
         <MaterialIconButton
-          icon='assets/icons/plus.png'
+          icon='assets/icons/plus.svg'
           onClick={() => {
             navigate('/employees/create');
           }}

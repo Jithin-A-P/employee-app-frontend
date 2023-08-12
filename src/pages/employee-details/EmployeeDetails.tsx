@@ -25,7 +25,7 @@ const EmployeeDetails = () => {
     <HomeLayout>
       <SubHeader title='Employee Details'>
         <MaterialIconButton
-          icon='assets/icons/edit.png'
+          icon='assets/icons/edit-white.svg'
           text='Edit'
           onClick={() => {
             navigate('/employees/edit');

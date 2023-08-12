@@ -16,9 +16,9 @@ const TableRow: FC<TableRowPropsType> = ({ employee, onRowClick }) => {
         </td>
       ))}
       <td className='table-row-column'>
-        <div>
-          <img style={{ color: '#fA4242' }} src='assets/icons/delete.png' alt='Delete' />
-          <img style={{ color: '#10AAC0' }} src='assets/icons/edit.png' alt='Edit' />
+        <div className='table-row-action'>
+          <img style={{ color: '#fA4242' }} src='assets/icons/delete.svg' alt='Delete' />
+          <img style={{ color: '#10AAC0' }} src='assets/icons/edit.svg' alt='Edit' />
         </div>
       </td>
     </tr>
