@@ -8,16 +8,20 @@ type PopupPropsType = {
 };
 
 const Popup: FC<PopupPropsType> = ({ isVisible, setIsVisible, children }) => {
+  const close = () => {
+    setIsVisible(false);
+  };
+
   return isVisible ? (
-    <div className='popup'>
-      <div className='popup-container'>
+    <div onClick={close} className='popup'>
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        className='popup-container'
+      >
         {children}
-        <button
-          className='close-button'
-          onClick={() => {
-            setIsVisible(false);
-          }}
-        >
+        <button className='close-button' onClick={close}>
           X
         </button>
       </div>
