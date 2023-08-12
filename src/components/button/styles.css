@@ -9,6 +9,9 @@
     margin-top: 50px;
     cursor: pointer;
     font: normal normal 600 16px/22px "Nunito Sans";
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .secondary-button {
@@ -23,4 +26,7 @@
     margin-top: 50px;
     cursor: pointer;
     font: normal normal 600 16px/22px "Nunito Sans";
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
