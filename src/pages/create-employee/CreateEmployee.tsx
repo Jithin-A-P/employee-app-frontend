@@ -29,7 +29,7 @@ const CreateEmployee = () => {
             type='text'
             value={employee.name}
             onChange={(e: any) => {
-              setEmployee({ ...employee, name: e.target.value });
+              setEmployee((prevEmployee) => ({ ...prevEmployee, name: e.target.value }));
             }}
             label='Employee Name'
             placeholder='Employee Name'
@@ -40,7 +40,7 @@ const CreateEmployee = () => {
             type='date'
             value={employee.joiningDate}
             onChange={(e: any) => {
-              setEmployee({ ...employee, joiningDate: e.target.value });
+              setEmployee((prevEmployee) => ({ ...prevEmployee, joiningDate: e.target.value }));
             }}
             label='Joining Date'
             placeholder='Joining Date'
@@ -51,7 +51,7 @@ const CreateEmployee = () => {
             type='number'
             value={employee.experience}
             onChange={(e: any) => {
-              setEmployee({ ...employee, experience: e.target.value });
+              setEmployee((prevEmployee) => ({ ...prevEmployee, experience: e.target.value }));
             }}
             label='Experience'
             placeholder='Experience'
@@ -61,7 +61,7 @@ const CreateEmployee = () => {
           <Select
             value={employee.experience}
             onChange={(e: any) => {
-              setEmployee({ ...employee, experience: e.target.value });
+              setEmployee((prevEmployee) => ({ ...prevEmployee, experience: e.target.value }));
             }}
             label='Department'
             options={['Select Department', 'Backend', 'Frontend', 'UI/UX']}
@@ -71,7 +71,7 @@ const CreateEmployee = () => {
           <Select
             value={employee.experience}
             onChange={(e: any) => {
-              setEmployee({ ...employee, experience: e.target.value });
+              setEmployee((prevEmployee) => ({ ...prevEmployee, experience: e.target.value }));
             }}
             label='Role'
             options={['Select Role', 'HR', 'admin']}
@@ -81,7 +81,7 @@ const CreateEmployee = () => {
           <Select
             value={employee.experience}
             onChange={(e: any) => {
-              setEmployee({ ...employee, experience: e.target.value });
+              setEmployee((prevEmployee) => ({ ...prevEmployee, experience: e.target.value }));
             }}
             label='Status'
             options={['Status', 'Active', 'Inactive', 'Probation']}
@@ -93,7 +93,7 @@ const CreateEmployee = () => {
               type='text'
               value={employee.address.line1}
               onChange={(e: any) => {
-                setEmployee({ ...employee, experience: e.target.value });
+                setEmployee((prevEmployee) => ({ ...prevEmployee, experience: e.target.value }));
               }}
               label='Address'
               placeholder='Address Line 1'
@@ -104,7 +104,7 @@ const CreateEmployee = () => {
               type='text'
               value={employee.address.line2}
               onChange={(e: any) => {
-                setEmployee({ ...employee, experience: e.target.value });
+                setEmployee((prevEmployee) => ({ ...prevEmployee, experience: e.target.value }));
               }}
               label=''
               placeholder='Address Line 2'
@@ -115,7 +115,7 @@ const CreateEmployee = () => {
               type='text'
               value={employee.address.city}
               onChange={(e: any) => {
-                setEmployee({ ...employee, experience: e.target.value });
+                setEmployee((prevEmployee) => ({ ...prevEmployee, experience: e.target.value }));
               }}
               label=''
               placeholder='City'
