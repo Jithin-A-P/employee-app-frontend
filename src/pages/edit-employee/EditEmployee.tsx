@@ -14,6 +14,7 @@ const EditEmployee = () => {
     role: '',
     status: '',
     experience: null,
+    department: 'Backend',
     address: {
       line1: '',
       line2: '',
@@ -62,7 +63,7 @@ const EditEmployee = () => {
           <Select
             value={employee.experience}
             onChange={(e: any) => {
-              setEmployee((prevEmployee) => ({ ...prevEmployee, experience: e.target.value }));
+              setEmployee((prevEmployee) => ({ ...prevEmployee, department: e.target.value }));
             }}
             label='Department'
             options={['Select Department', 'Backend', 'Frontend', 'UI/UX']}
@@ -70,9 +71,9 @@ const EditEmployee = () => {
         </div>
         <div className='form-input'>
           <Select
-            value={employee.experience}
+            value={employee.role}
             onChange={(e: any) => {
-              setEmployee((prevEmployee) => ({ ...prevEmployee, experience: e.target.value }));
+              setEmployee((prevEmployee) => ({ ...prevEmployee, role: e.target.value }));
             }}
             label='Role'
             options={['Select Role', 'HR', 'admin']}
@@ -80,9 +81,9 @@ const EditEmployee = () => {
         </div>
         <div className='form-input'>
           <Select
-            value={employee.experience}
+            value={employee.status}
             onChange={(e: any) => {
-              setEmployee((prevEmployee) => ({ ...prevEmployee, experience: e.target.value }));
+              setEmployee((prevEmployee) => ({ ...prevEmployee, status: e.target.value }));
             }}
             label='Status'
             options={['Status', 'Active', 'Inactive', 'Probation']}
@@ -95,7 +96,10 @@ const EditEmployee = () => {
                 type='text'
                 value={employee.address.line1}
                 onChange={(e: any) => {
-                  setEmployee((prevEmployee) => ({ ...prevEmployee, experience: e.target.value }));
+                  setEmployee((prevEmployee) => ({
+                    ...prevEmployee,
+                    address: { ...employee.address, line1: e.target.value }
+                  }));
                 }}
                 label='Address'
                 placeholder='Address Line 1'
@@ -106,7 +110,10 @@ const EditEmployee = () => {
                 type='text'
                 value={employee.address.line2}
                 onChange={(e: any) => {
-                  setEmployee((prevEmployee) => ({ ...prevEmployee, experience: e.target.value }));
+                  setEmployee((prevEmployee) => ({
+                    ...prevEmployee,
+                    address: { ...employee.address, line2: e.target.value }
+                  }));
                 }}
                 label=''
                 placeholder='Address Line 2'
@@ -117,7 +124,10 @@ const EditEmployee = () => {
                 type='text'
                 value={employee.address.city}
                 onChange={(e: any) => {
-                  setEmployee((prevEmployee) => ({ ...prevEmployee, experience: e.target.value }));
+                  setEmployee((prevEmployee) => ({
+                    ...prevEmployee,
+                    address: { ...employee.address, city: e.target.value }
+                  }));
                 }}
                 label=''
                 placeholder='City'
