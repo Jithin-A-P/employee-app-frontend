@@ -2,8 +2,9 @@ import Input from '../../components/input/Input';
 import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import Select from '../../components/select/Select';
-import { useState } from 'react';
 import Button from '../../components/button/Button';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './styles.css';
 
 const CreateEmployee = () => {
@@ -20,6 +21,8 @@ const CreateEmployee = () => {
       city: ''
     }
   });
+
+  const navigate = useNavigate();
 
   return (
     <HomeLayout>
@@ -60,7 +63,7 @@ const CreateEmployee = () => {
         </div>
         <div className='form-input'>
           <Select
-            value={employee.experience}
+            value={employee.department}
             onChange={(e: any) => {
               setEmployee((prevEmployee) => ({ ...prevEmployee, department: e.target.value }));
             }}
@@ -70,7 +73,7 @@ const CreateEmployee = () => {
         </div>
         <div className='form-input'>
           <Select
-            value={employee.experience}
+            value={employee.role}
             onChange={(e: any) => {
               setEmployee((prevEmployee) => ({ ...prevEmployee, role: e.target.value }));
             }}
@@ -80,7 +83,7 @@ const CreateEmployee = () => {
         </div>
         <div className='form-input'>
           <Select
-            value={employee.experience}
+            value={employee.status}
             onChange={(e: any) => {
               setEmployee((prevEmployee) => ({ ...prevEmployee, status: e.target.value }));
             }}
@@ -133,7 +136,13 @@ const CreateEmployee = () => {
           </div>
           <div className='form-button'>
             <Button type='primary' onClick={() => {}} text='Create' />
-            <Button type='secondary' onClick={() => {}} text='Cancel' />
+            <Button
+              type='secondary'
+              onClick={() => {
+                navigate(-1);
+              }}
+              text='Cancel'
+            />
           </div>
         </div>
       </div>

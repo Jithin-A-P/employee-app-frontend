@@ -2,8 +2,9 @@ import Input from '../../components/input/Input';
 import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import Select from '../../components/select/Select';
-import { useState } from 'react';
 import Button from '../../components/button/Button';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './styles.css';
 
 const EditEmployee = () => {
@@ -21,6 +22,8 @@ const EditEmployee = () => {
       city: ''
     }
   });
+
+  const navigate = useNavigate();
 
   return (
     <HomeLayout>
@@ -61,7 +64,7 @@ const EditEmployee = () => {
         </div>
         <div className='form-input'>
           <Select
-            value={employee.experience}
+            value={employee.department}
             onChange={(e: any) => {
               setEmployee((prevEmployee) => ({ ...prevEmployee, department: e.target.value }));
             }}
@@ -135,7 +138,13 @@ const EditEmployee = () => {
             </div>
             <div className='form-button'>
               <Button type='primary' onClick={() => {}} text='Save' />
-              <Button type='secondary' onClick={() => {}} text='Cancel' />
+              <Button
+                type='secondary'
+                onClick={() => {
+                  navigate(-1);
+                }}
+                text='Cancel'
+              />
             </div>
           </div>
           <div className='form-input id-field'>
