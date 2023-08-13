@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Input from '../../components/input/Input';
+import AnimatedInput from '../../components/animated-input/AnimatedInput';
 import Button from '../../components/button/Button';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
@@ -32,19 +32,21 @@ const Login = () => {
       <div className='login-container'>
         <div className='form-container'>
           <img className='login-form-logo' src='assets/img/kv-logo.png' alt='banner' />
-          <Input
+          <br />
+          <br />
+          <br />
+          <AnimatedInput
             value={username}
             type='text'
             onChange={handleUsernameChange}
             label='Username'
-            placeholder='Username'
           />
-          <Input
+          <br /> <br />
+          <AnimatedInput
             value={password}
             type='password'
             onChange={handlePassowrdChange}
             label='Password'
-            placeholder='Password'
           />
           <Button text='Login' type='primary' onClick={handleLogin} />
           {showError && (
