@@ -1,16 +1,31 @@
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import SubHeader from '../../components/sub-header/SubHeader';
 import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
 import Table from '../../components/table/Table';
-import employees from '../../employee';
-import { useNavigate } from 'react-router-dom';
 import DeleteEmployeePopup from '../../components/delete-employee-popup/DeleteEmployeePopup';
-import { useState } from 'react';
 import './styles.css';
 
 const Employee = () => {
   const navigate = useNavigate();
   const [popupIsVisible, setPopupIsVisible] = useState(false);
+  const [currentEmployeeId, setCurrentEmployeeId] = useState(null);
+
+  const employees = useSelector((state: any) => {
+    return state.employees;
+  });
+
+  const dispatch = useDispatch();
+
+  const handleDelete = (id) => {
+    dispatch({
+      type: 'EMPLOYEE:DELETE',
+      payload: id
+    });
+    setPopupIsVisible(false);
+  };
 
   return (
     <HomeLayout>
@@ -37,14 +52,18 @@ const Employee = () => {
         onRowClick={(id: number) => {
           navigate(`/employees/${id}`);
         }}
-        setDeletePopup={(isVisible) => {
+        setDeletePopup={(isVisible, id) => {
           setPopupIsVisible(isVisible);
+          setCurrentEmployeeId(id);
         }}
       />
       <DeleteEmployeePopup
         isVisible={popupIsVisible}
         setIsVisible={(isVisible) => {
           setPopupIsVisible(isVisible);
+        }}
+        handleDelete={() => {
+          handleDelete(currentEmployeeId);
         }}
       />
     </HomeLayout>

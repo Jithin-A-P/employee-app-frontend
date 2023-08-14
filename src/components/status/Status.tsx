@@ -8,7 +8,8 @@ type StatusPropsType = {
 const statuses = {
   active: { label: 'Active', color: '#D3F4BE' },
   inactive: { label: 'Inactive', color: '#FFBFBF' },
-  probation: { label: 'Probation', color: '#F5ECB8' }
+  probation: { label: 'Probation', color: '#F5ECB8' },
+  '*': { label: '', color: '#000' }
 };
 
 const Status: FC<StatusPropsType> = ({ status }) => {

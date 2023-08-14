@@ -3,23 +3,16 @@ import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import Status from '../../components/status/Status';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import './styles.css';
 
 const EmployeeDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  console.log(id);
-
-  const mockEmployee = {
-    name: 'Name',
-    id: 2,
-    joiningDate: '2012-02-01',
-    role: 'hr',
-    status: 'active',
-    experience: 3,
-    address: 'address'
-  };
+  const employee = useSelector((state: any) => {
+    return state.employees.find((emp) => emp.id == id);
+  });
 
   return (
     <HomeLayout>
@@ -36,24 +29,24 @@ const EmployeeDetails = () => {
         <div className='row'>
           <div className='column'>
             <div className='label'>Employee Name</div>
-            <div className='value'>{mockEmployee.name}</div>
+            <div className='value'>{employee.name}</div>
           </div>
           <div className='column'>
             <div className='label'>Joining Date</div>
-            <div className='value'>{mockEmployee.joiningDate}</div>
+            <div className='value'>{employee.joiningDate}</div>
           </div>
           <div className='column'>
             <div className='label'>Experience</div>
-            <div className='value'>{mockEmployee.experience}</div>
+            <div className='value'>{employee.experience}</div>
           </div>
           <div className='column'>
             <div className='label'>Role</div>
-            <div className='value'>{mockEmployee.role}</div>
+            <div className='value'>{employee.role}</div>
           </div>
           <div className='column'>
             <div className='label'>Status</div>
             <div className='value'>
-              <Status status={mockEmployee.status} />
+              <Status status={employee.status} />
             </div>
           </div>
         </div>
@@ -61,11 +54,11 @@ const EmployeeDetails = () => {
         <div className='row'>
           <div className='column'>
             <div className='label'>Address</div>
-            <div className='value'>{mockEmployee.address}</div>
+            <div className='value'>{employee.address}</div>
           </div>
           <div className='column'>
             <div className='label'>Employee Id</div>
-            <div className='value'>{mockEmployee.id}</div>
+            <div className='value'>{employee.id}</div>
           </div>
         </div>
       </div>

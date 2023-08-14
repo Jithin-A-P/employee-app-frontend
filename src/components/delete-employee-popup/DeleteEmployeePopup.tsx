@@ -1,14 +1,19 @@
 import { FC } from 'react';
-import './styles.css';
 import Popup from '../popup/Popup';
 import Button from '../button/Button';
+import './styles.css';
 
 type DeleteEmployeePopupPropsType = {
   isVisible: boolean;
   setIsVisible: (isVisible: boolean) => void;
+  handleDelete: () => void;
 };
 
-const DeleteEmployeePopup: FC<DeleteEmployeePopupPropsType> = ({ isVisible, setIsVisible }) => {
+const DeleteEmployeePopup: FC<DeleteEmployeePopupPropsType> = ({
+  isVisible,
+  setIsVisible,
+  handleDelete
+}) => {
   return (
     <Popup
       isVisible={isVisible}
@@ -19,7 +24,7 @@ const DeleteEmployeePopup: FC<DeleteEmployeePopupPropsType> = ({ isVisible, setI
       <div className='delete-poup-title'>Are you sure?</div>
       <div className='delete-employee-message'>Do you really want to delete employee ?</div>
       <div className='delete-employee-buttons'>
-        <Button style='primary' onClick={() => {}} text='Confirm' />
+        <Button style='primary' onClick={handleDelete} text='Confirm' />
         <Button
           style='secondary'
           onClick={() => {

@@ -1,22 +1,32 @@
 import { FC } from 'react';
-import './styles.css';
-import Status from '../status/Status';
 import { useNavigate } from 'react-router-dom';
+import Status from '../status/Status';
+import './styles.css';
 
 type TableRowPropsType = {
   employee: any;
   onRowClick: (id: number) => void;
-  setDeletePopup?: (isVisible: boolean) => void;
+  setDeletePopup?: (isVisible: boolean, id: number) => void;
 };
 
 const TableRow: FC<TableRowPropsType> = ({ employee, onRowClick, setDeletePopup }) => {
   const navigate = useNavigate();
 
+  const employeeRender = {
+    name: employee.name,
+    id: employee.id,
+    joiningDate: employee.joiningDate.split('-').reverse().join('/'),
+    role: employee.role,
+    status: employee.status,
+    experience: employee.experience
+  };
+
   return (
     <tr onClick={() => onRowClick(employee.id)} className='table-row'>
-      {Object.keys(employee).map((key) => (
-        <td className='table-row-column' key={`${employee.id}-${key}`}>
-          {(key === 'status' && <Status status={employee[key]} />) || ('status' && employee[key])}
+      {Object.keys(employeeRender).map((key) => (
+        <td className='table-row-column' key={`${employeeRender.id}-${key}`}>
+          {(key === 'status' && <Status status={employeeRender[key].toLowerCase()} />) ||
+            ('status' && employeeRender[key])}
         </td>
       ))}
       <td className='table-row-column'>
@@ -27,7 +37,7 @@ const TableRow: FC<TableRowPropsType> = ({ employee, onRowClick, setDeletePopup 
             alt='Delete'
             onClick={(e) => {
               e.stopPropagation();
-              setDeletePopup(true);
+              setDeletePopup(true, employee.id);
             }}
           />
           <img

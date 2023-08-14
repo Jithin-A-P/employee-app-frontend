@@ -7,7 +7,7 @@ type TablePropsType = {
   tableHeadValues: any;
   employees: any;
   onRowClick: (id: number) => void;
-  setDeletePopup?: (isVisible: boolean) => void;
+  setDeletePopup?: (isVisible: boolean, id: number) => void;
 };
 
 const Table: FC<TablePropsType> = ({ tableHeadValues, employees, onRowClick, setDeletePopup }) => {

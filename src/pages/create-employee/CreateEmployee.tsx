@@ -5,6 +5,7 @@ import Select from '../../components/select/Select';
 import Button from '../../components/button/Button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import './styles.css';
 
 const CreateEmployee = () => {
@@ -14,7 +15,7 @@ const CreateEmployee = () => {
     role: '',
     status: '',
     experience: null,
-    department: 'Backend',
+    department: '',
     address: {
       line1: '',
       line2: '',
@@ -23,6 +24,16 @@ const CreateEmployee = () => {
   });
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const handleCreate = () => {
+    dispatch({
+      type: 'EMPLOYEE:CREATE',
+      payload: { id: 5, ...employee }
+    });
+    navigate('/employees');
+  };
 
   return (
     <HomeLayout>
@@ -135,7 +146,7 @@ const CreateEmployee = () => {
             />
           </div>
           <div className='form-button'>
-            <Button style='primary' onClick={() => {}} text='Create' />
+            <Button style='primary' onClick={handleCreate} text='Create' />
             <Button
               style='secondary'
               onClick={() => {
