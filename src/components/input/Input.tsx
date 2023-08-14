@@ -1,7 +1,7 @@
 import { FC, SyntheticEvent } from 'react';
 import './styles.css';
 
-type InputPropsType = {
+export type InputPropsType = {
   value: string;
   onChange: (e: SyntheticEvent<HTMLInputElement>) => void;
   type: string;
@@ -12,7 +12,7 @@ type InputPropsType = {
 
 const Input: FC<InputPropsType> = ({ value, onChange, type, label, placeholder, inactive }) => {
   return (
-    <div className='input-div'>
+    <div className='input-div' data-testid='input-test'>
       {label !== '' && <label className='input-label'>{label}</label>}
       <input
         className={`input-field ${inactive}`}

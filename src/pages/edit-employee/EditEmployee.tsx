@@ -137,9 +137,9 @@ const EditEmployee = () => {
               />
             </div>
             <div className='form-button'>
-              <Button type='primary' onClick={() => {}} text='Save' />
+              <Button style='primary' onClick={() => {}} text='Save' />
               <Button
-                type='secondary'
+                style='secondary'
                 onClick={() => {
                   navigate(-1);
                 }}

@@ -1,15 +1,15 @@
 import { FC } from 'react';
 import './styles.css';
 
-type ButtonPropsType = {
-  type: string;
+export type ButtonPropsType = {
+  style: 'primary' | 'secondary';
   text: string;
   onClick: () => void;
 };
 
-const Button: FC<ButtonPropsType> = ({ type, text, onClick }) => {
+const Button: FC<ButtonPropsType> = ({ style, text, onClick }) => {
   return (
-    <button className={`${type}-button`} onClick={onClick}>
+    <button className={`${style}-button`} onClick={onClick} data-testid='button-test'>
       {text}
     </button>
   );

@@ -135,9 +135,9 @@ const CreateEmployee = () => {
             />
           </div>
           <div className='form-button'>
-            <Button type='primary' onClick={() => {}} text='Create' />
+            <Button style='primary' onClick={() => {}} text='Create' />
             <Button
-              type='secondary'
+              style='secondary'
               onClick={() => {
                 navigate(-1);
               }}

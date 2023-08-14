@@ -12,7 +12,7 @@ type TablePropsType = {
 
 const Table: FC<TablePropsType> = ({ tableHeadValues, employees, onRowClick, setDeletePopup }) => {
   return (
-    <div className='table'>
+    <table className='table'>
       <TableHead tableHeadValues={tableHeadValues} />
       {employees.map((employee) => (
         <TableRow
@@ -22,7 +22,7 @@ const Table: FC<TablePropsType> = ({ tableHeadValues, employees, onRowClick, set
           setDeletePopup={setDeletePopup}
         />
       ))}
-    </div>
+    </table>
   );
 };
 

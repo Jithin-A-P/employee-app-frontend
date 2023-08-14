@@ -48,7 +48,7 @@ const Login = () => {
             onChange={handlePassowrdChange}
             label='Password'
           />
-          <Button text='Login' type='primary' onClick={handleLogin} />
+          <Button text='Login' style='primary' onClick={handleLogin} />
           {showError && (
             <div className='login-error-message'>Error, username or password is empty</div>
           )}

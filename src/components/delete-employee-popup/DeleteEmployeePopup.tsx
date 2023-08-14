@@ -19,9 +19,9 @@ const DeleteEmployeePopup: FC<DeleteEmployeePopupPropsType> = ({ isVisible, setI
       <div className='delete-poup-title'>Are you sure?</div>
       <div className='delete-employee-message'>Do you really want to delete employee ?</div>
       <div className='delete-employee-buttons'>
-        <Button type='primary' onClick={() => {}} text='Confirm' />
+        <Button style='primary' onClick={() => {}} text='Confirm' />
         <Button
-          type='secondary'
+          style='secondary'
           onClick={() => {
             setIsVisible(false);
           }}
