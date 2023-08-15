@@ -1,15 +1,15 @@
 import { FC } from 'react';
+import StatusEnum from '../../enums/status';
 import './styles.css';
 
 type StatusPropsType = {
-  status: string;
+  status: StatusEnum;
 };
 
 const statuses = {
-  active: { label: 'Active', color: '#D3F4BE' },
-  inactive: { label: 'Inactive', color: '#FFBFBF' },
-  probation: { label: 'Probation', color: '#F5ECB8' },
-  '*': { label: '', color: '#000' }
+  [StatusEnum.ACTIVE]: { label: StatusEnum.ACTIVE, color: '#D3F4BE' },
+  [StatusEnum.INACTIVE]: { label: StatusEnum.INACTIVE, color: '#FFBFBF' },
+  [StatusEnum.PROBATION]: { label: StatusEnum.PROBATION, color: '#F5ECB8' }
 };
 
 const Status: FC<StatusPropsType> = ({ status }) => {

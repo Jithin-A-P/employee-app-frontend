@@ -3,25 +3,18 @@ import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import Select from '../../components/select/Select';
 import Button from '../../components/button/Button';
+import Department from '../../enums/department';
+import Status from '../../enums/status';
+import Role from '../../enums/role';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './styles.css';
 
 const EditEmployee = () => {
-  const [employee, setEmployee] = useState({
-    id: 'E0012',
-    name: '',
-    joiningDate: '',
-    role: '',
-    status: '',
-    experience: null,
-    department: 'Backend',
-    address: {
-      line1: '',
-      line2: '',
-      city: ''
-    }
-  });
+  const [employee, setEmployee] = useState(null);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+  const { id } = useParams();
 
   const navigate = useNavigate();
 
@@ -69,7 +62,7 @@ const EditEmployee = () => {
               setEmployee((prevEmployee) => ({ ...prevEmployee, department: e.target.value }));
             }}
             label='Department'
-            options={['Select Department', 'Backend', 'Frontend', 'UI/UX']}
+            options={Object.values(Department)}
           />
         </div>
         <div className='form-input'>
@@ -79,7 +72,7 @@ const EditEmployee = () => {
               setEmployee((prevEmployee) => ({ ...prevEmployee, role: e.target.value }));
             }}
             label='Role'
-            options={['Select Role', 'HR', 'admin']}
+            options={Object.values(Role)}
           />
         </div>
         <div className='form-input'>
@@ -89,7 +82,7 @@ const EditEmployee = () => {
               setEmployee((prevEmployee) => ({ ...prevEmployee, status: e.target.value }));
             }}
             label='Status'
-            options={['Status', 'Active', 'Inactive', 'Probation']}
+            options={Object.values(Status)}
           />
         </div>
         <div className='form-address-inputs'>
@@ -101,7 +94,7 @@ const EditEmployee = () => {
                 onChange={(e: any) => {
                   setEmployee((prevEmployee) => ({
                     ...prevEmployee,
-                    address: { ...employee.address, line1: e.target.value }
+                    address: { ...prevEmployee.address, line1: e.target.value }
                   }));
                 }}
                 label='Address'
@@ -115,7 +108,7 @@ const EditEmployee = () => {
                 onChange={(e: any) => {
                   setEmployee((prevEmployee) => ({
                     ...prevEmployee,
-                    address: { ...employee.address, line2: e.target.value }
+                    address: { ...prevEmployee.address, line2: e.target.value }
                   }));
                 }}
                 label=''
@@ -129,7 +122,7 @@ const EditEmployee = () => {
                 onChange={(e: any) => {
                   setEmployee((prevEmployee) => ({
                     ...prevEmployee,
-                    address: { ...employee.address, city: e.target.value }
+                    address: { ...prevEmployee.address, city: e.target.value }
                   }));
                 }}
                 label=''

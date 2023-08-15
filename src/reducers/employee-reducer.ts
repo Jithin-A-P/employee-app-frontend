@@ -1,47 +1,48 @@
+import Role from '../enums/role';
+import Status from '../enums/status';
+import EmployeeReducerAction from '../enums/employee-reducer-action';
+
 const initialState = [
   {
     name: 'Name',
     id: 1,
     joiningDate: '2012-02-01',
-    role: 'HR',
-    status: 'active',
+    role: Role.ADMIN,
+    status: Status.ACTIVE,
     experience: 3,
-    address: {
-      line1: 'address line 1',
-      line2: 'address line 2'
-    }
+    address: 'Address'
   },
   {
     name: 'Vishnav',
     id: 2,
     joiningDate: '2012-02-01',
-    role: 'Developer',
-    status: 'active',
+    role: Role.BACKEND_ENGINEER,
+    status: Status.ACTIVE,
     experience: 3
   },
   {
     name: 'Sruthy',
     id: 3,
     joiningDate: '2012-02-01',
-    role: 'QA',
-    status: 'inactive',
+    role: Role.FRONTEND_ENGINEER,
+    status: Status.INACTIVE,
     experience: 3
   },
   {
     name: 'Jithin',
     id: 4,
     joiningDate: '2012-02-01',
-    role: 'DevOps Engineer',
-    status: 'probation',
+    role: Role.UI_UX_DESIGNER,
+    status: Status.PROBATION,
     experience: 3
   }
 ];
 
 const employeeReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'EMPLOYEE:CREATE':
+    case EmployeeReducerAction.CREATE:
       return [...state, action.payload];
-    case 'EMPLOYEE:DELETE':
+    case EmployeeReducerAction.DELETE:
       return [...state.filter((emp) => emp.id != action.payload)];
     default:
       return state;

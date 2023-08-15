@@ -21,7 +21,7 @@ const EmployeeDetails = () => {
           icon='assets/icons/edit-white.svg'
           text='Edit'
           onClick={() => {
-            navigate('/employees/edit');
+            navigate(`/employees/edit/${id}`);
           }}
         />
       </SubHeader>

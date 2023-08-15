@@ -3,6 +3,10 @@ import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import Select from '../../components/select/Select';
 import Button from '../../components/button/Button';
+import Status from '../../enums/status';
+import Role from '../../enums/role';
+import Department from '../../enums/department';
+import EmployeeReducerAction from '../../enums/employee-reducer-action';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -29,7 +33,7 @@ const CreateEmployee = () => {
 
   const handleCreate = () => {
     dispatch({
-      type: 'EMPLOYEE:CREATE',
+      type: EmployeeReducerAction.CREATE,
       payload: { id: 5, ...employee }
     });
     navigate('/employees');
@@ -79,7 +83,7 @@ const CreateEmployee = () => {
               setEmployee((prevEmployee) => ({ ...prevEmployee, department: e.target.value }));
             }}
             label='Department'
-            options={['Select Department', 'Backend', 'Frontend', 'UI/UX']}
+            options={['Select Department', ...Object.values(Department)]}
           />
         </div>
         <div className='form-input'>
@@ -89,7 +93,7 @@ const CreateEmployee = () => {
               setEmployee((prevEmployee) => ({ ...prevEmployee, role: e.target.value }));
             }}
             label='Role'
-            options={['Select Role', 'HR', 'admin']}
+            options={['Select Role', ...Object.values(Role)]}
           />
         </div>
         <div className='form-input'>
@@ -99,7 +103,7 @@ const CreateEmployee = () => {
               setEmployee((prevEmployee) => ({ ...prevEmployee, status: e.target.value }));
             }}
             label='Status'
-            options={['Status', 'Active', 'Inactive', 'Probation']}
+            options={['Status', ...Object.values(Status)]}
           />
         </div>
         <div className='form-address-inputs'>

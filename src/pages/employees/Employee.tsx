@@ -1,11 +1,12 @@
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import SubHeader from '../../components/sub-header/SubHeader';
 import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
 import Table from '../../components/table/Table';
 import DeleteEmployeePopup from '../../components/delete-employee-popup/DeleteEmployeePopup';
+import EmployeeReducerAction from '../../enums/employee-reducer-action';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import './styles.css';
 
 const Employee = () => {
@@ -21,7 +22,7 @@ const Employee = () => {
 
   const handleDelete = (id) => {
     dispatch({
-      type: 'EMPLOYEE:DELETE',
+      type: EmployeeReducerAction.DELETE,
       payload: id
     });
     setPopupIsVisible(false);
