@@ -6,7 +6,7 @@ import Button from '../../components/button/Button';
 import Status from '../../enums/status';
 import Role from '../../enums/role';
 import Department from '../../enums/department';
-import EmployeeReducerAction from '../../enums/employee-reducer-action';
+import addEmployee /*, { Employee } */ from '../../actions/employee/add-employee';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -28,14 +28,10 @@ const CreateEmployee = () => {
   });
 
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   const handleCreate = () => {
-    dispatch({
-      type: EmployeeReducerAction.CREATE,
-      payload: { id: 5, ...employee }
-    });
+    dispatch(addEmployee({ id: 5, ...employee }));
     navigate('/employees');
   };
 
@@ -70,7 +66,10 @@ const CreateEmployee = () => {
             type='number'
             value={employee.experience}
             onChange={(e: any) => {
-              setEmployee((prevEmployee) => ({ ...prevEmployee, experience: e.target.value }));
+              setEmployee((prevEmployee) => ({
+                ...prevEmployee,
+                experience: Number(e.target.value)
+              }));
             }}
             label='Experience'
             placeholder='Experience'

@@ -7,13 +7,15 @@ type TableHeadPropsType = {
 
 const TableHead: FC<TableHeadPropsType> = ({ tableHeadValues }) => {
   return (
-    <tr className='table-head'>
-      {tableHeadValues.map((value) => (
-        <th className='table-head-column' key={value}>
-          {value}
-        </th>
-      ))}
-    </tr>
+    <thead>
+      <tr className='table-head'>
+        {tableHeadValues.map((value) => (
+          <th className='table-head-column' key={value}>
+            {value}
+          </th>
+        ))}
+      </tr>
+    </thead>
   );
 };
 

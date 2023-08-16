@@ -14,14 +14,16 @@ const Table: FC<TablePropsType> = ({ tableHeadValues, employees, onRowClick, set
   return (
     <table className='table'>
       <TableHead tableHeadValues={tableHeadValues} />
-      {employees.map((employee) => (
-        <TableRow
-          onRowClick={onRowClick}
-          key={employee.id}
-          employee={employee}
-          setDeletePopup={setDeletePopup}
-        />
-      ))}
+      <tbody>
+        {employees.map((employee) => (
+          <TableRow
+            onRowClick={onRowClick}
+            key={employee.id}
+            employee={employee}
+            setDeletePopup={setDeletePopup}
+          />
+        ))}
+      </tbody>
     </table>
   );
 };

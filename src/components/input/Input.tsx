@@ -2,7 +2,7 @@ import { FC, SyntheticEvent } from 'react';
 import './styles.css';
 
 export type InputPropsType = {
-  value: string;
+  value: string | number;
   onChange: (e: SyntheticEvent<HTMLInputElement>) => void;
   type: string;
   label: string;

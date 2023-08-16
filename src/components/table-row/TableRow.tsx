@@ -18,7 +18,7 @@ const TableRow: FC<TableRowPropsType> = ({ employee, onRowClick, setDeletePopup 
     joiningDate: employee.joiningDate.split('-').reverse().join('/'),
     role: employee.role,
     status: createElement(Status, { status: employee.status }),
-    experience: employee.experience
+    experience: employee.experience + ' Years'
   };
 
   return (
@@ -31,7 +31,6 @@ const TableRow: FC<TableRowPropsType> = ({ employee, onRowClick, setDeletePopup 
       <td className='table-row-column'>
         <div className='table-row-action'>
           <img
-            style={{ color: '#fA4242' }}
             src='assets/icons/delete.svg'
             alt='Delete'
             onClick={(e) => {
@@ -40,7 +39,6 @@ const TableRow: FC<TableRowPropsType> = ({ employee, onRowClick, setDeletePopup 
             }}
           />
           <img
-            style={{ color: '#10AAC0' }}
             src='assets/icons/edit.svg'
             alt='Edit'
             onClick={(e) => {

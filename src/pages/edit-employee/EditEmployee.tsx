@@ -11,9 +11,20 @@ import { useNavigate, useParams } from 'react-router-dom';
 import './styles.css';
 
 const EditEmployee = () => {
-  const [employee, setEmployee] = useState(null);
+  const [employee, setEmployee] = useState({
+    name: 'Initial Name',
+    joiningDate: '2023-02-23',
+    role: 'Admin',
+    status: 'Active',
+    experience: 2,
+    department: 'IT',
+    address: {
+      line1: 'smartcity',
+      line2: 'kakkanad',
+      city: 'kochi'
+    }
+  });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -143,7 +154,7 @@ const EditEmployee = () => {
           <div className='form-input id-field'>
             <Input
               type='text'
-              value={employee.id}
+              value={id}
               onChange={() => {}}
               label='Employee ID'
               placeholder='Employee ID'

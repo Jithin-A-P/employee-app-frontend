@@ -3,10 +3,11 @@ import SubHeader from '../../components/sub-header/SubHeader';
 import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
 import Table from '../../components/table/Table';
 import DeleteEmployeePopup from '../../components/delete-employee-popup/DeleteEmployeePopup';
-import EmployeeReducerAction from '../../enums/employee-reducer-action';
+import EmployeeDispatchAction from '../../enums/employee-dispatch-action';
+import { useGetEmployeesQuery } from '../../services/employee-service';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { /*useSelector,*/ useDispatch } from 'react-redux';
 import './styles.css';
 
 const Employee = () => {
@@ -14,15 +15,17 @@ const Employee = () => {
   const [popupIsVisible, setPopupIsVisible] = useState(false);
   const [currentEmployeeId, setCurrentEmployeeId] = useState(null);
 
-  const employees = useSelector((state: any) => {
-    return state.employees;
-  });
+  // const employees = useSelector((state: any) => {
+  //   return state.employees;
+  // });
+
+  const { data: employees /*, isLoading, isSuccess, isError, error*/ } = useGetEmployeesQuery('');
 
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
     dispatch({
-      type: EmployeeReducerAction.DELETE,
+      type: EmployeeDispatchAction.DELETE,
       payload: id
     });
     setPopupIsVisible(false);

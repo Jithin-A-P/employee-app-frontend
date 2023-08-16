@@ -1,8 +1,13 @@
 import Role from '../enums/role';
 import Status from '../enums/status';
-import EmployeeReducerAction from '../enums/employee-reducer-action';
+import addEmployee from '../actions/employee/add-employee';
+import deleteEmployee from '../actions/employee/delete-employee';
+import editEmployee from '../actions/employee/edit-employee';
+import { createReducer } from '@reduxjs/toolkit';
+import Employee from '../types/employee';
+import Department from '../enums/department';
 
-const initialState = [
+const initialState: Array<Employee> = [
   {
     name: 'Name',
     id: 1,
@@ -10,7 +15,12 @@ const initialState = [
     role: Role.ADMIN,
     status: Status.ACTIVE,
     experience: 3,
-    address: 'Address'
+    department: Department.ADMINISTRATION,
+    address: {
+      line1: '3rd street',
+      line2: 'Downtown',
+      city: 'Los Angeles'
+    }
   },
   {
     name: 'Vishnav',
@@ -18,7 +28,13 @@ const initialState = [
     joiningDate: '2012-02-01',
     role: Role.BACKEND_ENGINEER,
     status: Status.ACTIVE,
-    experience: 3
+    experience: 3,
+    department: Department.ADMINISTRATION,
+    address: {
+      line1: '3rd street',
+      line2: 'Downtown',
+      city: 'Los Angeles'
+    }
   },
   {
     name: 'Sruthy',
@@ -26,7 +42,13 @@ const initialState = [
     joiningDate: '2012-02-01',
     role: Role.FRONTEND_ENGINEER,
     status: Status.INACTIVE,
-    experience: 3
+    experience: 3,
+    department: Department.ADMINISTRATION,
+    address: {
+      line1: '3rd street',
+      line2: 'Downtown',
+      city: 'Los Angeles'
+    }
   },
   {
     name: 'Jithin',
@@ -34,19 +56,26 @@ const initialState = [
     joiningDate: '2012-02-01',
     role: Role.UI_UX_DESIGNER,
     status: Status.PROBATION,
-    experience: 3
+    experience: 3,
+    department: Department.ADMINISTRATION,
+    address: {
+      line1: '3rd street',
+      line2: 'Downtown',
+      city: 'Los Angeles'
+    }
   }
 ];
 
-const employeeReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case EmployeeReducerAction.CREATE:
-      return [...state, action.payload];
-    case EmployeeReducerAction.DELETE:
-      return [...state.filter((emp) => emp.id != action.payload)];
-    default:
-      return state;
-  }
-};
+const employeeReducer = createReducer(initialState, (builder) => {
+  builder.addCase(addEmployee, (state, action) => {
+    return [...state, action.payload];
+  });
+  builder.addCase(deleteEmployee, (state, action) => {
+    return [...state.filter((emp) => emp.id != action.payload)];
+  });
+  builder.addCase(editEmployee, (state, action) => {
+    return [...state.filter((emp) => emp.id != action.payload.id), action.payload as any];
+  });
+});
 
 export default employeeReducer;
