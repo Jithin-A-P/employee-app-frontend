@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AnimatedInput from '../../components/animated-input/AnimatedInput';
 import Button from '../../components/button/Button';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
+import { useLoginMutation } from '../../api-client/login-api';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -10,6 +11,8 @@ const Login = () => {
   const [showError, setShowError] = useState(false);
 
   const navigate = useNavigate();
+
+  const [login, { data, isSuccess: isLoginSuccess }] = useLoginMutation();
 
   const handleUsernameChange = (e: any) => {
     setUsername(e.target.value);
@@ -21,8 +24,19 @@ const Login = () => {
 
   const handleLogin = () => {
     if (username === '' || password === '') setShowError(true);
-    else navigate('/employees');
+    else
+      login({
+        email: username,
+        password: password
+      });
   };
+
+  useEffect(() => {
+    if (isLoginSuccess) {
+      navigate('/employees');
+      localStorage.setItem('auth-token', data.data.token);
+    }
+  });
 
   return (
     <div className='login-page'>

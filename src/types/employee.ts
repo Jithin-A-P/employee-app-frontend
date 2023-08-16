@@ -3,7 +3,7 @@ import Status from '../enums/status';
 import Department from '../enums/department';
 
 type Employee = {
-  id: number; // TODO: remove later
+  id?: number;
   name: string;
   joiningDate: string;
   role: Role;

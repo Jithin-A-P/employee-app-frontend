@@ -2,6 +2,7 @@ import { FC, createElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Status from '../status/Status';
 import './styles.css';
+import dateFormatter from '../../utils/date-formatter';
 
 type TableRowPropsType = {
   employee: any;
@@ -15,7 +16,7 @@ const TableRow: FC<TableRowPropsType> = ({ employee, onRowClick, setDeletePopup 
   const employeeRender = {
     name: employee.name,
     id: employee.id,
-    joiningDate: employee.joiningDate.split('-').reverse().join('/'),
+    joiningDate: dateFormatter(employee.joiningDate),
     role: employee.role,
     status: createElement(Status, { status: employee.status }),
     experience: employee.experience + ' Years'

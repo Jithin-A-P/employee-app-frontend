@@ -6,11 +6,11 @@ import Button from '../../components/button/Button';
 import Status from '../../enums/status';
 import Role from '../../enums/role';
 import Department from '../../enums/department';
-import addEmployee /*, { Employee } */ from '../../actions/employee/add-employee';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import './styles.css';
+import Employee from '../../types/employee';
+import { useAddAnEmployeeMutation } from '../../api-client/employee-api';
 
 const CreateEmployee = () => {
   const [employee, setEmployee] = useState({
@@ -18,7 +18,7 @@ const CreateEmployee = () => {
     joiningDate: '',
     role: '',
     status: '',
-    experience: null,
+    experience: undefined,
     department: '',
     address: {
       line1: '',
@@ -28,11 +28,16 @@ const CreateEmployee = () => {
   });
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [login, { data, isSuccess: isEmployeeCreated, isError, error }] =
+    useAddAnEmployeeMutation();
 
   const handleCreate = () => {
-    dispatch(addEmployee({ id: 5, ...employee }));
-    navigate('/employees');
+    login(employee as Employee);
+    if (isError) console.log(error);
+    if (isEmployeeCreated) {
+      console.log(data);
+      navigate('/employees');
+    }
   };
 
   return (
