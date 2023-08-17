@@ -8,7 +8,7 @@ import {
   useGetEmployeeListQuery
 } from '../../api-client/employee-api';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './styles.css';
 
 const Employee = () => {
@@ -17,15 +17,16 @@ const Employee = () => {
   const [currentEmployeeId, setCurrentEmployeeId] = useState(null);
 
   const { data: response } = useGetEmployeeListQuery('');
-  const employees = response ? response.data : null;
 
-  const [deleteEmployeeById] = useDeleteAnEmployeeMutation();
+  const [deleteEmployeeById, { isSuccess: employeeDeleted }] = useDeleteAnEmployeeMutation();
 
   const handleDelete = (id) => {
     deleteEmployeeById(id);
-
-    setPopupIsVisible(false);
   };
+
+  useEffect(() => {
+    setPopupIsVisible(false);
+  }, [employeeDeleted]);
 
   return (
     <HomeLayout>
@@ -38,7 +39,7 @@ const Employee = () => {
           text='Create employee'
         />
       </SubHeader>
-      {employees ? (
+      {response ? (
         <Table
           tableHeadValues={[
             'Employee Name',
@@ -49,7 +50,7 @@ const Employee = () => {
             'Experience',
             'Action'
           ]}
-          employees={employees}
+          employees={response?.data}
           onRowClick={(id: number) => {
             navigate(`/employees/${id}`);
           }}

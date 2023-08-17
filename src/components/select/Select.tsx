@@ -13,9 +13,10 @@ const Select: FC<SelectPropsType> = ({ value, onChange, label, options }) => {
     <div className='select-div'>
       <label className='select-label'>{label}</label>
       <select className='select-field' onChange={onChange} value={value}>
-        {options.map((value) => (
-          <option value={value} key={value}>
-            {value}
+        <option value={-1} key={label}>{`Choose ${label}`}</option>
+        {options.map((option) => (
+          <option value={option.id} key={option.id}>
+            {option.name}
           </option>
         ))}
       </select>

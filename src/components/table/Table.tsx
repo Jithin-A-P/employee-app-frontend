@@ -14,7 +14,7 @@ const Table: FC<TablePropsType> = ({ tableHeadValues, employees, onRowClick, set
   return (
     <table className='table'>
       <TableHead tableHeadValues={tableHeadValues} />
-      <tbody>
+      <tbody className='table-body'>
         {employees.map((employee) => (
           <TableRow
             onRowClick={onRowClick}

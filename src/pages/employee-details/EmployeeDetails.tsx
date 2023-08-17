@@ -13,9 +13,7 @@ const EmployeeDetails = () => {
   const navigate = useNavigate();
 
   const { data: response } = useGetAnEmployeeQuery(id);
-  const employee = response ? response.data : null;
-
-  console.log(employee);
+  const employee = response?.data;
 
   return (
     <HomeLayout>

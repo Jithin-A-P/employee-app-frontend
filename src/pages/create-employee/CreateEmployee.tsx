@@ -3,14 +3,13 @@ import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import Select from '../../components/select/Select';
 import Button from '../../components/button/Button';
-import Status from '../../enums/status';
-import Role from '../../enums/role';
-import Department from '../../enums/department';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles.css';
-import Employee from '../../types/employee';
 import { useAddAnEmployeeMutation } from '../../api-client/employee-api';
+import createEmployeePayload from '../../utils/tmp-employee-creator';
+import { useGetDepartmentsQuery } from '../../api-client/department-api';
+import { useGetRolesQuery } from '../../api-client/role-api';
 
 const CreateEmployee = () => {
   const [employee, setEmployee] = useState({
@@ -19,7 +18,7 @@ const CreateEmployee = () => {
     role: '',
     status: '',
     experience: undefined,
-    department: '',
+    departmentId: '',
     address: {
       line1: '',
       line2: '',
@@ -28,17 +27,35 @@ const CreateEmployee = () => {
   });
 
   const navigate = useNavigate();
-  const [login, { data, isSuccess: isEmployeeCreated, isError, error }] =
-    useAddAnEmployeeMutation();
 
-  const handleCreate = () => {
-    login(employee as Employee);
-    if (isError) console.log(error);
-    if (isEmployeeCreated) {
-      console.log(data);
-      navigate('/employees');
-    }
+  const [createEmployee, { isSuccess, isError, error }] = useAddAnEmployeeMutation();
+  const { data: departments } = useGetDepartmentsQuery('');
+  const { data: roles } = useGetRolesQuery('');
+
+  let departmentOptions = departments?.data.map((department) => ({
+    id: department.id,
+    name: department.name
+  }));
+
+  let roleOptions = roles?.data.map((role) => ({
+    id: role,
+    name: role
+  }));
+
+  let statusOptions = [
+    { id: 'active', name: 'Active' },
+    { id: 'inactive', name: 'Inactive' },
+    { id: 'probation', name: 'Probation' }
+  ];
+
+  const handleCreateEmployee = () => {
+    createEmployee(createEmployeePayload(employee));
   };
+
+  useEffect(() => {
+    if (isSuccess) navigate(-1);
+    if (isError) console.log(error);
+  }, [isSuccess, isError]);
 
   return (
     <HomeLayout>
@@ -71,34 +88,35 @@ const CreateEmployee = () => {
             type='number'
             value={employee.experience}
             onChange={(e: any) => {
-              setEmployee((prevEmployee) => ({
-                ...prevEmployee,
-                experience: Number(e.target.value)
-              }));
+              setEmployee((prevEmployee) => ({ ...prevEmployee, experience: e.target.value }));
             }}
             label='Experience'
             placeholder='Experience'
           />
         </div>
         <div className='form-input'>
-          <Select
-            value={employee.department}
-            onChange={(e: any) => {
-              setEmployee((prevEmployee) => ({ ...prevEmployee, department: e.target.value }));
-            }}
-            label='Department'
-            options={['Select Department', ...Object.values(Department)]}
-          />
+          {departmentOptions && (
+            <Select
+              value={employee.departmentId}
+              onChange={(e: any) => {
+                setEmployee((prevEmployee) => ({ ...prevEmployee, departmentId: e.target.value }));
+              }}
+              label='Department'
+              options={departmentOptions}
+            />
+          )}
         </div>
         <div className='form-input'>
-          <Select
-            value={employee.role}
-            onChange={(e: any) => {
-              setEmployee((prevEmployee) => ({ ...prevEmployee, role: e.target.value }));
-            }}
-            label='Role'
-            options={['Select Role', ...Object.values(Role)]}
-          />
+          {roleOptions && (
+            <Select
+              value={employee.role}
+              onChange={(e: any) => {
+                setEmployee((prevEmployee) => ({ ...prevEmployee, role: e.target.value }));
+              }}
+              label='Role'
+              options={roleOptions}
+            />
+          )}
         </div>
         <div className='form-input'>
           <Select
@@ -107,7 +125,7 @@ const CreateEmployee = () => {
               setEmployee((prevEmployee) => ({ ...prevEmployee, status: e.target.value }));
             }}
             label='Status'
-            options={['Status', ...Object.values(Status)]}
+            options={statusOptions}
           />
         </div>
         <div className='form-address-inputs'>
@@ -154,7 +172,7 @@ const CreateEmployee = () => {
             />
           </div>
           <div className='form-button'>
-            <Button style='primary' onClick={handleCreate} text='Create' />
+            <Button style='primary' onClick={handleCreateEmployee} text='Create' />
             <Button
               style='secondary'
               onClick={() => {
