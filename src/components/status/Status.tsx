@@ -6,12 +6,6 @@ type StatusPropsType = {
   status: StatusEnum;
 };
 
-// const statuses = {
-//   [StatusEnum.ACTIVE]: { label: StatusEnum.ACTIVE, color: '#D3F4BE' },
-//   [StatusEnum.INACTIVE]: { label: StatusEnum.INACTIVE, color: '#FFBFBF' },
-//   [StatusEnum.PROBATION]: { label: StatusEnum.PROBATION, color: '#F5ECB8' }
-// };
-
 const statuses = {
   active: { label: StatusEnum.ACTIVE, color: '#D3F4BE' },
   inactive: { label: StatusEnum.INACTIVE, color: '#FFBFBF' },

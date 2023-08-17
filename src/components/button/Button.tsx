@@ -9,7 +9,7 @@ export type ButtonPropsType = {
 
 const Button: FC<ButtonPropsType> = ({ style, text, onClick }) => {
   return (
-    <button className={`${style}-button`} onClick={onClick} data-testid='button-test'>
+    <button className={`button ${style}-button`} onClick={onClick} data-testid='button-test'>
       {text}
     </button>
   );

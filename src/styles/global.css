@@ -9,6 +9,10 @@ body {
     "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 * {
   box-sizing: border-box;
 }
