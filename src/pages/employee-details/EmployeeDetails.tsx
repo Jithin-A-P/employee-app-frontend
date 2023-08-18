@@ -7,6 +7,7 @@ import dateFormatter from '../../utils/date-formatter';
 import { useGetAnEmployeeQuery } from '../../api-client/employee-api';
 import { useNavigate, useParams } from 'react-router-dom';
 import './styles.css';
+import getCurrentUser from '../../utils/get-current-user';
 
 const EmployeeDetails = () => {
   const { id } = useParams();
@@ -15,16 +16,21 @@ const EmployeeDetails = () => {
   const { data: response } = useGetAnEmployeeQuery(id);
   const employee = response?.data;
 
+  const currenUserRole = getCurrentUser().role;
+  const adminPrivileges = currenUserRole === 'admin' || currenUserRole === 'hr';
+
   return (
     <HomeLayout>
       <SubHeader title='Employee Details'>
-        <MaterialIconButton
-          icon='assets/icons/edit-white.svg'
-          text='Edit'
-          onClick={() => {
-            navigate(`/employees/edit/${id}`);
-          }}
-        />
+        {adminPrivileges && (
+          <MaterialIconButton
+            icon='assets/icons/edit-white.svg'
+            text='Edit'
+            onClick={() => {
+              navigate(`/employees/edit/${id}`);
+            }}
+          />
+        )}
       </SubHeader>
       {employee && (
         <div className='employee-details-card'>

@@ -14,3 +14,7 @@
     font: normal normal bold 16px/22px "Nunito Sans";
     padding-left: 24px;
 }
+
+.admin-false {
+    flex: 0.1667;
+}

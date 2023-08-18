@@ -10,6 +10,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './styles.css';
+import getCurrentUser from '../../utils/get-current-user';
 
 const Employee = () => {
   const navigate = useNavigate();
@@ -24,6 +25,24 @@ const Employee = () => {
     deleteEmployeeById(id);
   };
 
+  const currenUserRole = getCurrentUser().role;
+  const adminPrivileges = currenUserRole === 'admin' || currenUserRole === 'hr';
+
+  const tableHeadValues = [
+    'Employee Name',
+    'Employee Id',
+    'Joining Date',
+    'Role',
+    'Status',
+    'Experience'
+  ];
+
+  if (adminPrivileges) tableHeadValues.push('Action');
+
+  // const currentUser = useSelector((state: any) => state.currentUser);
+
+  // console.log(getCurrentUser());
+
   useEffect(() => {
     setPopupIsVisible(false);
   }, [employeeDeleted]);
@@ -31,25 +50,19 @@ const Employee = () => {
   return (
     <HomeLayout>
       <SubHeader title={'Employee List'}>
-        <MaterialIconButton
-          icon='assets/icons/plus.svg'
-          onClick={() => {
-            navigate('/employees/create');
-          }}
-          text='Create employee'
-        />
+        {adminPrivileges && (
+          <MaterialIconButton
+            icon='assets/icons/plus.svg'
+            onClick={() => {
+              navigate('/employees/create');
+            }}
+            text='Create employee'
+          />
+        )}
       </SubHeader>
       {response ? (
         <Table
-          tableHeadValues={[
-            'Employee Name',
-            'Employee Id',
-            'Joining Date',
-            'Role',
-            'Status',
-            'Experience',
-            'Action'
-          ]}
+          tableHeadValues={tableHeadValues}
           employees={response?.data}
           onRowClick={(id: number) => {
             navigate(`/employees/${id}`);

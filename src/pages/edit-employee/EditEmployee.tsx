@@ -21,17 +21,14 @@ const EditEmployee = () => {
   const { data: departments } = useGetDepartmentsQuery('');
   const { data: roles } = useGetRolesQuery('');
 
-  let departmentOptions = departments?.data.map((department) => ({
+  const departmentOptions = departments?.data.map((department) => ({
     id: department.id,
     name: department.name
   }));
 
-  let roleOptions = roles?.data.map((role) => ({
-    id: role,
-    name: role
-  }));
+  const roleOptions = roles?.data;
 
-  let statusOptions = [
+  const statusOptions = [
     { id: 'active', name: 'Active' },
     { id: 'inactive', name: 'Inactive' },
     { id: 'probation', name: 'Probation' }

@@ -4,6 +4,8 @@ import Button from '../../components/button/Button';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../api-client/login-api';
+import setCurrentUser from '../../actions/set-current-user';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -11,6 +13,8 @@ const Login = () => {
   const [showError, setShowError] = useState(false);
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const [login, { data, isSuccess: isLoginSuccess }] = useLoginMutation();
 
@@ -33,10 +37,11 @@ const Login = () => {
 
   useEffect(() => {
     if (isLoginSuccess) {
-      navigate('/employees');
       localStorage.setItem('auth-token', data.data.token);
+      dispatch(setCurrentUser(data.data.employee));
+      navigate('/employees');
     }
-  });
+  }, [isLoginSuccess]);
 
   return (
     <div className='login-page'>

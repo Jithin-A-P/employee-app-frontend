@@ -37,10 +37,7 @@ const CreateEmployee = () => {
     name: department.name
   }));
 
-  let roleOptions = roles?.data.map((role) => ({
-    id: role,
-    name: role
-  }));
+  let roleOptions = roles?.data.map((role) => ({ id: role, name: role }));
 
   let statusOptions = [
     { id: 'active', name: 'Active' },
