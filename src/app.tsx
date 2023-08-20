@@ -6,6 +6,7 @@ import Employee from './pages/employees/Employee';
 import EmployeeDetails from './pages/employee-details/EmployeeDetails';
 import CreateEmployee from './pages/create-employee/CreateEmployee';
 import EditEmployee from './pages/edit-employee/EditEmployee';
+import BooksArya from './pages/books-arya/BooksArya';
 
 const App: FC = () => {
   return (
@@ -14,6 +15,7 @@ const App: FC = () => {
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/employees' element={<Employee />} />
+          <Route path='/booksarya' element={<BooksArya />} />
           <Route path='/employees/:id' element={<EmployeeDetails />} />
           <Route path='/employees/create' element={<CreateEmployee />} />
           <Route path='/employees/edit/:id' element={<EditEmployee />} />

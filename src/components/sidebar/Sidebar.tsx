@@ -15,6 +15,13 @@ const Sidebar: FC = () => {
           navigate('/employees');
         }}
       />
+      <NavItem
+        icon='assets/icons/employees.svg'
+        title='KV Library'
+        onClick={() => {
+          navigate('/employees');
+        }}
+      />
     </div>
   );
 };

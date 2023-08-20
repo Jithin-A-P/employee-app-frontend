@@ -2,6 +2,8 @@
     background-color: #ffffff;
     width: 100%;
     height: 77px;
+    display: flex;
+    flex-direction: row;
 }
 
 .header-logo-container {
@@ -11,6 +13,19 @@
     align-items: center;
     justify-content: center;
     background-color: #E2E8FA;
+}
+
+.profile-container{
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-image{
+    height: 40px;
+    margin-top: 20px;
+    margin-right: 20px;
 }
 
 .header-logo {
