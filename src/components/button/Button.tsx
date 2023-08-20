@@ -2,7 +2,7 @@ import { FC } from 'react';
 import './styles.css';
 
 export type ButtonPropsType = {
-  style: 'primary' | 'secondary';
+  style: 'primary' | 'secondary' | 'library';
   text: string;
   onClick: () => void;
 };
