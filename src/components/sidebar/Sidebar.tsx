@@ -2,6 +2,7 @@ import { FC } from 'react';
 import NavItem from '../navitem/Navitem';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
+import NavItemDropDown from '../navitem-dropdown/navitem-dropdown';
 
 const Sidebar: FC = () => {
   const navigate = useNavigate();
@@ -15,13 +16,7 @@ const Sidebar: FC = () => {
           navigate('/employees');
         }}
       />
-      <NavItem
-        icon='assets/icons/employees.svg'
-        title='KV Library'
-        onClick={() => {
-          navigate('/employees');
-        }}
-      />
+      <NavItemDropDown icon='assets/img/book.png' title='KV Library' />
     </div>
   );
 };
