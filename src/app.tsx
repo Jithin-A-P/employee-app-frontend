@@ -10,7 +10,7 @@ import CreateUpdateBook from './pages/create-book/create-update-book';
 import BookListing from './pages/books-l-listing/books-l-listing';
 import ShelfGrid from './pages/shelf-grid/ShelfGrid';
 import CreateShelf from './pages/create-edit-shelf/createEditShelf';
-        
+
 const App: FC = () => {
   return (
     <div className='app'>
