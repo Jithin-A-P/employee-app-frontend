@@ -34,3 +34,16 @@
   width: 132px;
   margin-top: 0px;
 }
+
+.notify-button {
+  border-radius: 20px;
+  border: none;
+  margin-top: 0px;
+  width: 227px;
+  height: 51px;
+  background-color: #F6F3D7;
+  color: #E4BF3E;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -5,11 +5,15 @@ import Button from '../button/Button';
 export type ShelfCardPropTypes = {
   location: string;
   onClick?: () => void;
+  setDeletePopup?: (isVisible: boolean) => void;
 };
 
-const handleClick = () => {};
+const ShelfCard: FC<ShelfCardPropTypes> = ({ location, setDeletePopup }) => {
+  const handleClick = (e) => {
+    e.stopPropagation();
+    setDeletePopup(true);
+  };
 
-const ShelfCard: FC<ShelfCardPropTypes> = ({ location }) => {
   return (
     <div className='shelf-card'>
       <div className='shelf-icon'>
