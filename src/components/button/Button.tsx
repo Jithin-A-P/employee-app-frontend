@@ -4,7 +4,7 @@ import './styles.css';
 export type ButtonPropsType = {
   style: 'primary' | 'secondary' | 'library' | 'notify';
   text: string;
-  onClick: (e?) => void;
+  onClick?: () => void;
 };
 
 const Button: FC<ButtonPropsType> = ({ style, text, onClick }) => {

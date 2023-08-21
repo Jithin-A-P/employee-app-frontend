@@ -6,10 +6,11 @@ import Employee from './pages/employees/Employee';
 import EmployeeDetails from './pages/employee-details/EmployeeDetails';
 import CreateEmployee from './pages/create-employee/CreateEmployee';
 import EditEmployee from './pages/edit-employee/EditEmployee';
+import CreateUpdateBook from './pages/create-book/create-update-book';
 import BookListing from './pages/books-l-listing/books-l-listing';
 import ShelfGrid from './pages/shelf-grid/ShelfGrid';
 import CreateShelf from './pages/create-edit-shelf/createEditShelf';
-
+        
 const App: FC = () => {
   return (
     <div className='app'>
@@ -17,6 +18,8 @@ const App: FC = () => {
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/employees' element={<Employee />} />
+          <Route path='/library/books/create' element={<CreateUpdateBook />} />
+          <Route path='/library/books/:isbn' element={<CreateUpdateBook />} />
           <Route path='/employees/:id' element={<EmployeeDetails />} />
           <Route path='/employees/create' element={<CreateEmployee />} />
           <Route path='/employees/edit/:id' element={<EditEmployee />} />

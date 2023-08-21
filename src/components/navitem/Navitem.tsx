@@ -4,7 +4,7 @@ import './styles.css';
 type NavItemPropsType = {
   title: string;
   icon: string;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const NavItem: FC<NavItemPropsType> = ({ icon, title, onClick }) => {
