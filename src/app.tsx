@@ -7,6 +7,7 @@ import EmployeeDetails from './pages/employee-details/EmployeeDetails';
 import CreateEmployee from './pages/create-employee/CreateEmployee';
 import EditEmployee from './pages/edit-employee/EditEmployee';
 import BookListing from './pages/books-l-listing/books-l-listing';
+import CreateShelf from './pages/create-shelf/createShelf';
 
 const App: FC = () => {
   return (
@@ -19,6 +20,7 @@ const App: FC = () => {
           <Route path='/employees/create' element={<CreateEmployee />} />
           <Route path='/employees/edit/:id' element={<EditEmployee />} />
           <Route path='/library/books' element={<BookListing />} />
+          <Route path='/library/shelf/create' element={<CreateShelf />} />
         </Routes>
       </BrowserRouter>
     </div>
