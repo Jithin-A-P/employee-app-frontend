@@ -10,7 +10,7 @@
     color: #ffffff;
     cursor: pointer;
     position: relative;
-    z-index: 6;
+    /* z-index: 6; */
 }
 
 .nav-item-icon-container-dd {

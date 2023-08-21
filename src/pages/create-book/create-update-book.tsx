@@ -14,7 +14,11 @@ const CreateUpdateBook = () => {
     category: '',
     totalCount: '',
     availableCount: '',
-    shelfCode: []
+    shelfCode: '',
+    publisher: '',
+    description: '',
+    releaseDate: '',
+    thumbnailUrl: ''
   });
 
   const navigate = useNavigate();
@@ -93,15 +97,61 @@ const CreateUpdateBook = () => {
             placeholder='Total Count'
           />
         </div>
+        {/* {isbn ? (
+          <div className='form-input'>
+            <Input
+              type='number'
+              value={book.availableCount}
+              onChange={(e: any) => {
+                setBook((prevBook) => ({ ...prevBook, availableCount: e.target.value }));
+              }}
+              label='Available Count'
+              placeholder='Available Count'
+            />
+          </div>
+        ) : null} */}
         <div className='form-input'>
           <Input
-            type='number'
-            value={book.availableCount}
+            type='text'
+            value={book.shelfCode}
             onChange={(e: any) => {
-              setBook((prevBook) => ({ ...prevBook, availableCount: e.target.value }));
+              setBook((prevBook) => ({ ...prevBook, shelfCode: e.target.value }));
             }}
-            label='Available Count'
-            placeholder='Available Count'
+            label='Shelf Code'
+            placeholder='Shelf Code'
+          />
+        </div>
+        <div className='form-input'>
+          <Input
+            type='text'
+            value={book.publisher}
+            onChange={(e: any) => {
+              setBook((prevBook) => ({ ...prevBook, publisher: e.target.value }));
+            }}
+            label='Publisher'
+            placeholder='Publisher'
+          />
+        </div>
+        <div className='form-input'>
+          <Input
+            type='text'
+            value={book.releaseDate}
+            onChange={(e: any) => {
+              setBook((prevBook) => ({ ...prevBook, releaseDate: e.target.value }));
+            }}
+            label='Release Date'
+            placeholder='Release Date'
+          />
+        </div>
+        <div className='form-input'>
+          <Input
+            type='text'
+            value={book.thumbnailUrl}
+            onChange={(e: any) => {
+              setBook((prevBook) => ({ ...prevBook, thumbnailUrl: e.target.value }));
+            }}
+            label='Thumbnail URL'
+            placeholder='Thumbnail URL'
           />
         </div>
         <div className='form-button-book'>

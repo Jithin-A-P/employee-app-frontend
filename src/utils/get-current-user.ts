@@ -3,6 +3,8 @@ const getCurrentUser = () => {
   const authPayload = JSON.parse(atob(authToken.split('.')[1]));
   const { name, email, role } = authPayload;
 
+  console.log(authPayload);
+
   return {
     name: name,
     email: email,
