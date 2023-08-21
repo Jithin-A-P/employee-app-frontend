@@ -1,0 +1,35 @@
+.create-shelf-form {
+    background-color: #FDFDFD;
+    box-shadow: 0px 3px 6px #9D9D9D29;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 34px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap; 
+    justify-content: space-evenly;
+    align-items: flex-start; 
+}
+
+.create-shelf-form .form-input {
+    width: 450px;
+    margin-right: 40px;
+}
+
+.create-shelf-form .form-button {
+    display: flex;
+    width: 500px;
+    
+}
+
+.create-shelf-form .form-button Button {
+    margin-right: 10px;
+    max-width: 150px;
+    height: 35px;
+    font: normal normal 600 16px/22px "Nunito Sans";
+}
+
+.input-rows{
+    display: flex;
+    flex-direction: row;
+}
