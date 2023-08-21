@@ -24,7 +24,7 @@ const Header: FC = () => {
       <div className='header-logo-container'>
         <img className='header-logo' src='assets/img/kv-logo.png' alt='KeyValue Logo' />
       </div>
-      {location.pathname === '/library/books' ? (
+      {location.pathname === '/library/books/create' ? (
         <SearchBar placeholder='Search here' />
       ) : (
         <div></div>

@@ -7,8 +7,6 @@ import EmployeeDetails from './pages/employee-details/EmployeeDetails';
 import CreateEmployee from './pages/create-employee/CreateEmployee';
 import EditEmployee from './pages/edit-employee/EditEmployee';
 import CreateUpdateBook from './pages/create-book/create-update-book';
-// import BooksArya from './pages/books-arya/BooksArya';
-
 const App: FC = () => {
   return (
     <div className='app'>

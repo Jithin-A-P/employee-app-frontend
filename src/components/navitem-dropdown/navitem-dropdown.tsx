@@ -32,7 +32,7 @@ const NavItemDropDown: FC<NavItemDDPropsType> = ({ icon, title }) => {
           <div
             className='dd-options'
             onClick={() => {
-              navigate('/booksarya');
+              navigate('/library/books');
             }}
           >
             Locate Books
