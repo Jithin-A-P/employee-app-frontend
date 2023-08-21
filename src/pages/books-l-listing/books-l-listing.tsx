@@ -5,15 +5,23 @@ import MaterialIconButton from '../../components/material-icon-button/MaterialIc
 import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import './books-l-listing.css';
+import { useNavigate } from 'react-router-dom';
 
 const BookListing = () => {
   const [popupIsVisible, setPopupIsVisible] = useState(false);
   const handleDelete = () => {};
+  const navigate = useNavigate();
 
   return (
     <HomeLayout>
       <SubHeader title='Books Listing'>
-        <MaterialIconButton icon='assets/icons/plus.svg' text='Add Book' onClick={() => {}} />
+        <MaterialIconButton
+          icon='assets/icons/plus.svg'
+          text='Add Book'
+          onClick={() => {
+            navigate('/library/books/create');
+          }}
+        />
       </SubHeader>
       <div className='main'>
         <BookCard

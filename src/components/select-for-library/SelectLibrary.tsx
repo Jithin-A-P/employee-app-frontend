@@ -10,8 +10,8 @@ type SelectPropsType = {
 
 const SelectForLibrary: FC<SelectPropsType> = ({ value, onChange, label, options }) => {
   return (
-    <div className='select-div'>
-      <select className='select-field' onChange={onChange} value={value}>
+    <div className='select-div-library'>
+      <select className='select-field-library' onChange={onChange} value={value}>
         <option value={-1} key={label}>
           {`${label}`}
         </option>

@@ -1,4 +1,4 @@
-.select-div{
+.select-div-library{
     width: 227px;
     display: flex;
     justify-content: center;
@@ -7,6 +7,6 @@
     background-color: #C3ECFB
 }
 
-.select-field option{
+.select-field-library option{
     background-color: #C3ECFB;
 }

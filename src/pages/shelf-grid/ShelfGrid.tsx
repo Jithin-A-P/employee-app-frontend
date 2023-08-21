@@ -5,15 +5,23 @@ import ShelfCard from '../../components/shelf-card/ShelfCard';
 import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import './style.css';
+import { useNavigate } from 'react-router-dom';
 
 const ShelfGrid = () => {
   const [popupIsVisible, setPopupIsVisible] = useState(false);
   const handleDelete = () => {};
+  const navigate = useNavigate();
 
   return (
     <HomeLayout>
-      <SubHeader title='Shelfs'>
-        <MaterialIconButton icon='assets/icons/plus.svg' text='Create Shelf' onClick={() => {}} />
+      <SubHeader title='Shelves'>
+        <MaterialIconButton
+          icon='assets/icons/plus.svg'
+          text='Create Shelf'
+          onClick={() => {
+            navigate('/library/shelves/create');
+          }}
+        />
       </SubHeader>
       <div className='grid'>
         <ShelfCard
