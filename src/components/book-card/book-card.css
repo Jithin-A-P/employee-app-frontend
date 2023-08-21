@@ -1,0 +1,39 @@
+.book-card-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 262px;
+  width: 205px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  transition: 0.3s;
+}
+
+.book-card-main:hover {
+    transform: translate(0,-10px);
+}
+
+.details-div {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.button-div {
+  align-items: center;
+}
+
+.book-img {
+  height: 130px;
+  width: 130px;
+}
+
+.book-title {
+  padding-top: 5px;
+}
