@@ -1,0 +1,28 @@
+.create-book-form {
+    background-color: #FDFDFD;
+    box-shadow: 0px 3px 6px #9D9D9D29;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 34px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.create-book-form .form-input {
+    width: 450px;
+}
+
+.form-button-book {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.create-book-form .form-button-book Button {
+    margin-right: 10px;
+    max-width: 150px;
+    height: 35px;
+    font: normal normal 600 16px/22px "Nunito Sans";
+}

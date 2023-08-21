@@ -3,7 +3,7 @@ import './styles.css';
 
 export type InputPropsType = {
   value: string | number;
-  onChange: (e: SyntheticEvent<HTMLInputElement>) => void;
+  onChange?: (e: SyntheticEvent<HTMLInputElement>) => void;
   type: string;
   label: string;
   placeholder: string;
