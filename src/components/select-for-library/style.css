@@ -1,0 +1,12 @@
+.select-div{
+    width: 227px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    background-color: #C3ECFB
+}
+
+.select-field option{
+    background-color: #C3ECFB;
+}

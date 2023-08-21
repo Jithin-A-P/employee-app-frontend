@@ -7,6 +7,10 @@ import EmployeeDetails from './pages/employee-details/EmployeeDetails';
 import CreateEmployee from './pages/create-employee/CreateEmployee';
 import EditEmployee from './pages/edit-employee/EditEmployee';
 import CreateUpdateBook from './pages/create-book/create-update-book';
+import BookListing from './pages/books-l-listing/books-l-listing';
+import ShelfGrid from './pages/shelf-grid/ShelfGrid';
+import CreateShelf from './pages/create-edit-shelf/createEditShelf';
+        
 const App: FC = () => {
   return (
     <div className='app'>
@@ -19,6 +23,10 @@ const App: FC = () => {
           <Route path='/employees/:id' element={<EmployeeDetails />} />
           <Route path='/employees/create' element={<CreateEmployee />} />
           <Route path='/employees/edit/:id' element={<EditEmployee />} />
+          <Route path='/library/books' element={<BookListing />} />
+          <Route path='/library/shelves' element={<ShelfGrid />} />
+          <Route path='/library/shelf/create' element={<CreateShelf />} />
+          <Route path='/library/shelf/edit/:id' element={<CreateShelf />} />
         </Routes>
       </BrowserRouter>
     </div>

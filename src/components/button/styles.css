@@ -1,26 +1,49 @@
 .button {
-    height: 50px;
-    width: 100%;
-    margin-top: 50px;
-    cursor: pointer;
-    font: normal normal 600 16px/22px "Nunito Sans";
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    outline: none;
+  height: 50px;
+  width: 100%;
+  margin-top: 50px;
+  cursor: pointer;
+  font: normal normal 600 16px/22px 'Nunito Sans';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
 }
 
 .primary-button {
-    background-color: #03AEEE;
-    border-radius: 3px;
-    border: none;
-    color: white;
+  background-color: #03aeee;
+  border-radius: 3px;
+  border: none;
+  color: white;
 }
 
 .secondary-button {
-    background-color: transparent;
-    box-shadow: 0px 3px 6px #C9C9C929;
-    border: 1px solid #8A8C8F;
-    border-radius: 3px;
-    color: #8A8C8F;
+  background-color: transparent;
+  box-shadow: 0px 3px 6px #c9c9c929;
+  border: 1px solid #8a8c8f;
+  border-radius: 3px;
+  color: #8a8c8f;
+}
+
+.library-button {
+  background-color: #e18383;
+  border-radius: 20px;
+  border: none;
+  color: white;
+  height: 34px;
+  width: 132px;
+  margin-top: 0px;
+}
+
+.notify-button {
+  border-radius: 20px;
+  border: none;
+  margin-top: 0px;
+  width: 227px;
+  height: 51px;
+  background-color: #F6F3D7;
+  color: #E4BF3E;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
