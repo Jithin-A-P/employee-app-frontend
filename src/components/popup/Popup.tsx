@@ -8,7 +8,7 @@ type PopupPropsType = {
   children: any;
 };
 
-const Popup: FC<PopupPropsType> = ({ style, isVisible, setIsVisible, children }) => {
+const Popup: FC<PopupPropsType> = ({ isVisible, setIsVisible, children, style }) => {
   const close = () => {
     setIsVisible(false);
   };

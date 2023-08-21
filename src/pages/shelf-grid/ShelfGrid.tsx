@@ -1,37 +1,34 @@
 import { useState } from 'react';
-import BookCard from '../../components/book-card/book-card';
 import BookQuckViewPopup from '../../components/book-quick-view-popup/BookQuickViewPopup';
 import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
+import ShelfCard from '../../components/shelf-card/ShelfCard';
 import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
-import './books-l-listing.css';
+import './style.css';
 
-const BookListing = () => {
+const ShelfGrid = () => {
   const [popupIsVisible, setPopupIsVisible] = useState(false);
   const handleDelete = () => {};
 
   return (
     <HomeLayout>
-      <SubHeader title='Books Listing'>
-        <MaterialIconButton icon='assets/icons/plus.svg' text='Add Book' onClick={() => {}} />
+      <SubHeader title='Shelfs'>
+        <MaterialIconButton icon='assets/icons/plus.svg' text='Create Shelf' onClick={() => {}} />
       </SubHeader>
-      <div className='main'>
-        <BookCard
-          setQuickViewPopup={(isVisible) => {
+      <div className='grid'>
+        <ShelfCard
+          location={'Office 1'}
+          setDeletePopup={(isVisible) => {
             setPopupIsVisible(isVisible);
           }}
         />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
+        <ShelfCard location={'Office 2'} />
+        <ShelfCard location={'Office 2'} />
+        <ShelfCard location={'Office 2'} />
+        <ShelfCard location={'Office 2'} />
+        <ShelfCard location={'Office 2'} />
+        <ShelfCard location={'Office 2'} />
+        <ShelfCard location={'Office 2'} />
       </div>
       <BookQuckViewPopup
         isVisible={popupIsVisible}
@@ -47,4 +44,4 @@ const BookListing = () => {
   );
 };
 
-export default BookListing;
+export default ShelfGrid;
