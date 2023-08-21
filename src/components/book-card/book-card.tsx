@@ -7,13 +7,16 @@ type BookcardPropTypes = {
   title?: string;
   author?: string;
   onQuickView?: () => void;
+  setQuickViewPopup?: (isVisible: boolean) => void;
 };
 
-const onQuickView = () => {
-  console.log('Quick view clicked');
-};
+const BookCard: FC<BookcardPropTypes> = ({ setQuickViewPopup }) => {
+  const onQuickView = (e) => {
+    console.log('dqifdgu');
+    e.stopPropagation();
+    setQuickViewPopup(true);
+  };
 
-const BookCard: FC<BookcardPropTypes> = () => {
   return (
     <div className='book-card-main'>
       <div className='details-div'>
