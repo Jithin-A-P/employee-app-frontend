@@ -6,7 +6,7 @@ import Employee from './pages/employees/Employee';
 import EmployeeDetails from './pages/employee-details/EmployeeDetails';
 import CreateEmployee from './pages/create-employee/CreateEmployee';
 import EditEmployee from './pages/edit-employee/EditEmployee';
-import CreateUpdateBook from './pages/create-book/create-update-book';
+import CreateUpdateBook from './pages/create-update-book/create-update-book';
 import BookListing from './pages/books-l-listing/books-l-listing';
 import ShelfGrid from './pages/shelf-grid/ShelfGrid';
 import CreateShelf from './pages/create-edit-shelf/createEditShelf';

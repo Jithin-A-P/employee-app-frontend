@@ -12,9 +12,9 @@ const CreateUpdateBook = () => {
     title: '',
     author: '',
     category: '',
-    totalCount: '',
-    availableCount: '',
-    shelfCode: '',
+    shelves: [],
+    // totalCount: '',
+    // shelfCode: '',
     publisher: '',
     description: '',
     releaseDate: '',
@@ -86,7 +86,7 @@ const CreateUpdateBook = () => {
             placeholder='Category'
           />
         </div>
-        <div className='form-input'>
+        {/* <div className='form-input'>
           <Input
             type='number'
             value={book.totalCount}
@@ -96,7 +96,7 @@ const CreateUpdateBook = () => {
             label='Total Count'
             placeholder='Total Count'
           />
-        </div>
+        </div> */}
         {/* {isbn ? (
           <div className='form-input'>
             <Input
@@ -110,7 +110,7 @@ const CreateUpdateBook = () => {
             />
           </div>
         ) : null} */}
-        <div className='form-input'>
+        {/* <div className='form-input'>
           <Input
             type='text'
             value={book.shelfCode}
@@ -120,7 +120,7 @@ const CreateUpdateBook = () => {
             label='Shelf Code'
             placeholder='Shelf Code'
           />
-        </div>
+        </div> */}
         <div className='form-input'>
           <Input
             type='text'
