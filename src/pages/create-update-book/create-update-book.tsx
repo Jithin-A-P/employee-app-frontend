@@ -141,6 +141,17 @@ const CreateUpdateBook = () => {
         <div className='form-input'>
           <Input
             type='text'
+            value={book.description}
+            onChange={(e: any) => {
+              setBook((prevBook) => ({ ...prevBook, description: e.target.value }));
+            }}
+            label='Description'
+            placeholder='Description'
+          />
+        </div>
+        <div className='form-input'>
+          <Input
+            type='text'
             value={book.publisher}
             onChange={(e: any) => {
               setBook((prevBook) => ({ ...prevBook, publisher: e.target.value }));
