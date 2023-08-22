@@ -26,13 +26,14 @@
 }
 
 .library-button {
-  background-color: #e18383;
+  background-color: #c3e9f8;
   border-radius: 20px;
   border: none;
-  color: white;
+  color: rgb(3, 103, 143);
   height: 34px;
   width: 132px;
   margin-top: 0px;
+
 }
 
 .notify-button {
