@@ -27,7 +27,7 @@ const App: FC = () => {
           <Route path='/library/shelves' element={<ShelfGrid />} />
           <Route path='/library/shelves/:id' element={<BookListing />} />
           <Route path='/library/shelves/create' element={<CreateShelf />} />
-          <Route path='/library/shelves/edit/:id' element={<CreateShelf />} />
+          <Route path='/library/shelves/:id/edit' element={<CreateShelf />} />
         </Routes>
       </BrowserRouter>
     </div>

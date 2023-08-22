@@ -21,7 +21,7 @@ const BookCard: FC<BookcardPropTypes> = ({ setQuickViewPopup, isbn, count, title
   };
 
   const onClick = () => {
-    navigate(`/library/books/${isbn}`);
+    navigate(`/library/books/${isbn}/edit`);
   };
 
   return (

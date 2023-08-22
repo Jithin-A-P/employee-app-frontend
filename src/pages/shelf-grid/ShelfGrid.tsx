@@ -27,7 +27,7 @@ const ShelfGrid = () => {
             id={item.id}
             location={item.location}
             onClick={(id: string) => {
-              navigate(`/library/shelves/edit/${id}`);
+              navigate(`/library/shelves/${id}/edit`);
             }}
             onViewBooks={(id: string, e) => {
               console.log('view books clicked');
