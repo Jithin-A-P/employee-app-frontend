@@ -5,8 +5,8 @@ import './styles.css';
 
 type TablePropsType = {
   tableHeadValues: any;
-  employees: any;
-  onRowClick: (id: number) => void;
+  employees?: any;
+  onRowClick?: (id: number) => void;
   setDeletePopup?: (isVisible: boolean, id: number) => void;
 };
 
