@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '../../components/input/Input';
 import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import './style.css';
 import Button from '../../components/button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useCreateShelfMutation, useEditShelfMutation } from '../../api-client/shelf-api';
+import {
+  useCreateShelfMutation,
+  useEditShelfMutation,
+  useGetShelfQuery
+} from '../../api-client/shelf-api';
 
 const CreateShelf = () => {
   const [shelf, setShelf] = useState({
@@ -18,16 +22,24 @@ const CreateShelf = () => {
   const handleCreateShelf = () => {
     console.log(shelf);
     createShelf(shelf);
+    navigate('/library/shelves');
   };
 
   const handleEditShelf = () => {
     console.log(shelf);
     editShelf({ id: id, body: shelf });
+    navigate('/library/shelves');
   };
 
   const [createShelf] = useCreateShelfMutation();
   const { id } = useParams();
   const [editShelf] = useEditShelfMutation();
+
+  const { data: response, isSuccess } = useGetShelfQuery(id);
+
+  useEffect(() => {
+    if (isSuccess) setShelf(response?.data);
+  }, [response, isSuccess]);
 
   return (
     <HomeLayout>

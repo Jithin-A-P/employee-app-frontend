@@ -4,10 +4,12 @@ import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import './style.css';
 import { useNavigate } from 'react-router-dom';
-import { Shelves } from '../../constants/shelves';
+import { useGetShelflistQuery } from '../../api-client/shelf-api';
 
 const ShelfGrid = () => {
   const navigate = useNavigate();
+
+  const { data: response } = useGetShelflistQuery('');
 
   return (
     <HomeLayout>
@@ -21,21 +23,22 @@ const ShelfGrid = () => {
         />
       </SubHeader>
       <div className='grid'>
-        {Shelves.map((item) => (
-          <ShelfCard
-            key={item.id}
-            id={item.id}
-            location={item.location}
-            onClick={(id: string) => {
-              navigate(`/library/shelves/${id}/edit`);
-            }}
-            onViewBooks={(id: string, e) => {
-              console.log('view books clicked');
-              navigate(`/library/shelves/${id}`);
-              e.stopPropagation();
-            }}
-          />
-        ))}
+        {response &&
+          response.data.map((item) => (
+            <ShelfCard
+              key={item.id}
+              id={item.id}
+              location={item.location}
+              onClick={(id: string) => {
+                navigate(`/library/shelves/${id}/edit`);
+              }}
+              onViewBooks={(id: string, e) => {
+                console.log('view books clicked');
+                navigate(`/library/shelves/${id}`);
+                e.stopPropagation();
+              }}
+            />
+          ))}
       </div>
     </HomeLayout>
   );
