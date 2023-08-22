@@ -7,6 +7,7 @@ import Button from '../../components/button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
 import ShelfInput from '../../components/input-shelves/input-shelves';
 import Select from '../../components/select/Select';
+import { useCreateBookMutation } from '../../api-client/book-api';
 
 const CreateUpdateBook = () => {
   const [book, setBook] = useState({
@@ -61,6 +62,7 @@ const CreateUpdateBook = () => {
   };
 
   const handleShelfCodeChange = (e, i) => {
+    console.log(newShelfDetails);
     let currentShelfDetails = [...newShelfDetails];
 
     currentShelfDetails[i].shelfCode = e.target.value;
@@ -69,11 +71,18 @@ const CreateUpdateBook = () => {
   };
 
   const handleBookCountChange = (e, i) => {
+    console.log(newShelfDetails);
     let currentShelfDetails = [...newShelfDetails];
 
-    currentShelfDetails[i].bookCount = e.target.value;
+    currentShelfDetails[i].bookCount = Number(e.target.value);
 
     setNewShelfDetails(currentShelfDetails);
+  };
+
+  const [createBook] = useCreateBookMutation();
+
+  const handleCreateBook = () => {
+    createBook(book);
   };
 
   return (
@@ -222,7 +231,11 @@ const CreateUpdateBook = () => {
           })}
         </div>
         <div className='form-button-book'>
-          {isbn ? <Button style='primary' text='Save' /> : <Button style='primary' text='Create' />}
+          {isbn ? (
+            <Button style='primary' text='Save' onClick={handleCreateBook} />
+          ) : (
+            <Button style='primary' text='Create' />
+          )}
           <Button
             style='secondary'
             onClick={() => {
