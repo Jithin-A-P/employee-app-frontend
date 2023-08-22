@@ -7,7 +7,6 @@ import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import './books-l-listing.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SearchBar from '../../components/search-bar/search-bar';
-import { useNavigate } from 'react-router-dom';
 import { Books } from '../../constants/books';
 
 const BookListing = () => {
@@ -33,7 +32,7 @@ const BookListing = () => {
         />
       </SubHeader>
 
-      <div className='main'>
+      <div className='book-main'>
         {Books.map((item) => (
           <BookCard
             key={item.isbn}
@@ -47,7 +46,6 @@ const BookListing = () => {
             }}
           />
         ))}
-
       </div>
       <BookQuckViewPopup
         isVisible={popupIsVisible}

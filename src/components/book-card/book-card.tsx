@@ -40,7 +40,7 @@ const BookCard: FC<BookcardPropTypes> = ({ setQuickViewPopup, isbn, count, title
         <div className='book-title'>{title}</div>
       </div>
       <div className='button-div'>
-        <Button style='library' text='Quick view' onClick={onQuickView} />
+        <Button style='library' text='View' onClick={onQuickView} />
       </div>
     </div>
   );
