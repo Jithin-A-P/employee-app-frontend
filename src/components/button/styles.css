@@ -37,7 +37,7 @@
 }
 
 .notify-button {
-  border-radius: 20px;
+  border-radius: 5px;
   border: none;
   margin-top: 0px;
   width: 227px;
@@ -48,3 +48,18 @@
   justify-content: center;
   align-items: center;
 }
+
+.book-history-button{
+  background-color: #65c4ec;
+  border-radius: 3px;
+  border: none;
+  color: white;
+}
+
+.logout-button{
+  background-color: #f7931e;
+  border-radius: 3px;
+  border: none;
+  color: white;
+}
+
