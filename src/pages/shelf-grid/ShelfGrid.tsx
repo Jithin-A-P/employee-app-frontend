@@ -4,6 +4,7 @@ import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import './style.css';
 import { useNavigate } from 'react-router-dom';
+import { Shelves } from '../../constants/shelves';
 
 const ShelfGrid = () => {
   const navigate = useNavigate();
@@ -20,14 +21,21 @@ const ShelfGrid = () => {
         />
       </SubHeader>
       <div className='grid'>
-        <ShelfCard location={'Office 1'} />
-        <ShelfCard location={'Office 2'} />
-        <ShelfCard location={'Office 2'} />
-        <ShelfCard location={'Office 2'} />
-        <ShelfCard location={'Office 2'} />
-        <ShelfCard location={'Office 2'} />
-        <ShelfCard location={'Office 2'} />
-        <ShelfCard location={'Office 2'} />
+        {Shelves.map((item) => (
+          <ShelfCard
+            key={item.id}
+            id={item.id}
+            location={item.location}
+            onClick={(id: string) => {
+              navigate(`/library/shelves/${id}/edit`);
+            }}
+            onViewBooks={(id: string, e) => {
+              console.log('view books clicked');
+              navigate(`/library/shelves/${id}`);
+              e.stopPropagation();
+            }}
+          />
+        ))}
       </div>
     </HomeLayout>
   );
