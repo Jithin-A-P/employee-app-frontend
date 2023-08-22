@@ -2,7 +2,7 @@ import { FC } from 'react';
 import './styles.css';
 
 export type ButtonPropsType = {
-  style: 'primary' | 'secondary' | 'library' | 'notify';
+  style: 'primary' | 'secondary' | 'library' | 'notify' | 'book-history' | 'logout';
   text: string;
   onClick?: (e?) => void;
 };

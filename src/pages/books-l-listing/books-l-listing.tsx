@@ -40,6 +40,13 @@ const BookListing = () => {
         <BookCard />
         <BookCard />
         <BookCard />
+        <BookCard />
+        <BookCard />
+        <BookCard />
+        <BookCard />
+        <BookCard />
+        <BookCard />
+        <BookCard />
       </div>
       <BookQuckViewPopup
         isVisible={popupIsVisible}

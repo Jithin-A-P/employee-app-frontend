@@ -35,7 +35,14 @@ const ProfilePopup: FC<ProfilePopupPropsType> = ({ isVisible, setIsVisible }) =>
           X
         </button>
         <div className='delete-poup-title'>Hi, {currenUserName}</div>
-        <Button style='primary' onClick={handleLogout} text='Logout' />
+        <Button
+          style='book-history'
+          onClick={() => {
+            navigate('/library/books');
+          }}
+          text='My Book History'
+        />
+        <Button style='logout' onClick={handleLogout} text='Logout' />
       </div>
     </div>
   ) : (
