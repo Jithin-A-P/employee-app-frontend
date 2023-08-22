@@ -3,7 +3,7 @@
     margin-left: 20px;
     display: flex;
     flex-wrap: wrap;
-
+    height: 100;
 }
 
 .main >*{
