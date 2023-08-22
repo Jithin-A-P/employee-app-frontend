@@ -37,7 +37,7 @@ const TableBookRow: FC<TableRowBookType> = ({ bookReturn, bookBorrow }) => {
       ))}
       {bookBorrow ? (
         <td>
-          <Button text='Return' style='library' />
+          <Button text='Return' style='borrowed' />
         </td>
       ) : (
         <div></div>

@@ -36,6 +36,17 @@
 
 }
 
+.borrowed-button {
+  background-color: #f2ac5d;
+  border-radius: 20px;
+  border: none;
+  color: white;
+  height: 34px;
+  width: 132px;
+  margin-top: 0px;
+}
+
+
 .notify-button {
   border-radius: 5px;
   border: none;

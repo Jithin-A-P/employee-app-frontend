@@ -38,7 +38,7 @@ const ProfilePopup: FC<ProfilePopupPropsType> = ({ isVisible, setIsVisible }) =>
         <Button
           style='book-history'
           onClick={() => {
-            navigate('/library/books');
+            navigate('/employees/:id/books');
           }}
           text='My Book History'
         />

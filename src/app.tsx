@@ -27,7 +27,7 @@ const App: FC = () => {
           <Route path='/library/books' element={<BookListing />} />
           <Route path='/library/shelves' element={<ShelfGrid />} />
           <Route path='/library/shelves/:id' element={<BookListing />} />
-          <Route path='/library/shelves/create' element={<CreateShelf />} />  
+          <Route path='/library/shelves/create' element={<CreateShelf />} />
           <Route path='/employees/:id/books' element={<BorrowedBooks />} />
           <Route path='/library/shelves/:id/edit' element={<CreateShelf />} />
         </Routes>
