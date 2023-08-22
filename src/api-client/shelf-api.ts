@@ -3,6 +3,18 @@ import baseApi from './base-api';
 
 const shelfApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getShelflist: builder.query({
+      query: () => ({
+        url: '/shelfs',
+        method: 'GET'
+      })
+    }),
+    getShelf: builder.query({
+      query: (id) => ({
+        url: `/shelfs/${id}`,
+        method: 'GET'
+      })
+    }),
     createShelf: builder.mutation({
       query: (body: Shelf) => ({
         url: '/shelfs',
@@ -18,9 +30,22 @@ const shelfApi = baseApi.injectEndpoints({
         body
       }),
       invalidatesTags: ['Employees']
+    }),
+    deleteShelf: builder.mutation({
+      query: (id) => ({
+        url: `/shelfs/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['Employees']
     })
   })
 });
 
 export default shelfApi;
-export const { useCreateShelfMutation, useEditShelfMutation } = shelfApi;
+export const {
+  useCreateShelfMutation,
+  useEditShelfMutation,
+  useDeleteShelfMutation,
+  useGetShelfQuery,
+  useGetShelflistQuery
+} = shelfApi;

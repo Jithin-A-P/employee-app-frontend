@@ -7,7 +7,6 @@ import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import './books-l-listing.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SearchBar from '../../components/search-bar/search-bar';
-import { useNavigate } from 'react-router-dom';
 import { Books } from '../../constants/books';
 
 const BookListing = () => {
