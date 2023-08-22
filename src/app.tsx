@@ -10,6 +10,7 @@ import CreateUpdateBook from './pages/create-update-book/create-update-book';
 import BookListing from './pages/books-l-listing/books-l-listing';
 import ShelfGrid from './pages/shelf-grid/ShelfGrid';
 import CreateShelf from './pages/create-edit-shelf/createEditShelf';
+import BorrowedBooks from './pages/borrowed-books/borrowedBooks';
 
 const App: FC = () => {
   return (
@@ -26,7 +27,8 @@ const App: FC = () => {
           <Route path='/library/books' element={<BookListing />} />
           <Route path='/library/shelves' element={<ShelfGrid />} />
           <Route path='/library/shelves/:id' element={<BookListing />} />
-          <Route path='/library/shelves/create' element={<CreateShelf />} />
+          <Route path='/library/shelves/create' element={<CreateShelf />} />  
+          <Route path='/employees/:id/books' element={<BorrowedBooks />} />
           <Route path='/library/shelves/:id/edit' element={<CreateShelf />} />
         </Routes>
       </BrowserRouter>
