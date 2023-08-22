@@ -14,7 +14,7 @@
     text-align: left;
     font: normal normal 600 14px/19px "Nunito Sans";
     letter-spacing: 0px;
-    opacity: 0.95;
+    /* opacity: 0.95; */
 }
 
 .input-field::placeholder {

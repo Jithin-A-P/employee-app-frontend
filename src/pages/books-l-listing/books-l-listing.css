@@ -1,11 +1,15 @@
-.main{
-    margin-top: 20px;
+.book-main{
+    /* margin-top: 20px; */
     margin-left: 20px;
     display: flex;
     flex-wrap: wrap;
     height: 100;
+    /* padding-top: 120px; */
+    padding-bottom: 30px;
+    overflow: scroll;
+    height: calc(100% - 100px);
 }
 
-.main >*{
+.book-main >*{
  margin: 20px;
 }
