@@ -8,12 +8,16 @@ import './books-l-listing.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SearchBar from '../../components/search-bar/search-bar';
 import { Books } from '../../constants/books';
+import getCurrentUser from '../../utils/get-current-user';
 
 const BookListing = () => {
   const [popupIsVisible, setPopupIsVisible] = useState(false);
   const handleDelete = () => {};
   const navigate = useNavigate();
   const location = useLocation();
+
+  const currenUserRole = getCurrentUser().role;
+  const adminPrivileges = currenUserRole === 'admin' || currenUserRole === 'hr';
 
   return (
     <HomeLayout>
@@ -23,16 +27,18 @@ const BookListing = () => {
         ) : (
           <div></div>
         )}
-        <MaterialIconButton
-          icon='assets/icons/plus.svg'
-          text='Add Book'
-          onClick={() => {
-            navigate('/library/books/create');
-          }}
-        />
+        {adminPrivileges && (
+          <MaterialIconButton
+            icon='assets/icons/plus.svg'
+            text='Add Book'
+            onClick={() => {
+              navigate('/library/books/create');
+            }}
+          />
+        )}
       </SubHeader>
 
-      <div className='main'>
+      <div className='book-main'>
         {Books.map((item) => (
           <BookCard
             key={item.isbn}
@@ -46,7 +52,6 @@ const BookListing = () => {
             }}
           />
         ))}
-
       </div>
       <BookQuckViewPopup
         isVisible={popupIsVisible}
