@@ -4,6 +4,7 @@
     height: 77px;
     display: flex;
     flex-direction: row;
+    position: fixed;
 }
 
 .header-logo-container {

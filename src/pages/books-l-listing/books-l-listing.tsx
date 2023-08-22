@@ -23,7 +23,7 @@ const BookListing = () => {
           }}
         />
       </SubHeader>
-      <div className='main'>
+      <div className='book-main'>
         <BookCard
           setQuickViewPopup={(isVisible) => {
             setPopupIsVisible(isVisible);

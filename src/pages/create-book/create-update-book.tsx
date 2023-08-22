@@ -26,7 +26,7 @@ const CreateUpdateBook = () => {
 
   return (
     <HomeLayout>
-      {isbn ? <SubHeader title='Edit Book' /> : <SubHeader title='Create Book' />}
+      {isbn ? <SubHeader title='Edit Book' /> : <SubHeader title='Add Book' />}
       <div className='create-book-form'>
         {isbn ? (
           <div className='form-input'>

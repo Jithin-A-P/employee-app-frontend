@@ -12,7 +12,7 @@ type BookcardPropTypes = {
 
 const BookCard: FC<BookcardPropTypes> = ({ setQuickViewPopup }) => {
   const onQuickView = (e) => {
-    console.log('dqifdgu');
+    // console.log('dqifdgu');
     e.stopPropagation();
     setQuickViewPopup(true);
   };
