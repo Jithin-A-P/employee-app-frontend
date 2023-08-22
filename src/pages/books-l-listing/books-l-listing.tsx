@@ -28,6 +28,7 @@ const BookListing = () => {
           setQuickViewPopup={(isVisible) => {
             setPopupIsVisible(isVisible);
           }}
+          isbn='12345'
         />
         <BookCard />
         <BookCard />
