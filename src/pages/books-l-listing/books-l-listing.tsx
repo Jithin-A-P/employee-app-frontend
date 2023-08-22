@@ -57,6 +57,11 @@ const BookListing = () => {
           handleDelete();
         }}
         isAvailable={false}
+        title='Harry Potter'
+        author='J K Rowling'
+        publisher='Bookphiles'
+        bookCount={5}
+        isbn='123456'
       />
     </HomeLayout>
   );
