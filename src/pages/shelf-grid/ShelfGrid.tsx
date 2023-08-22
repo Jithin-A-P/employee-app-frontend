@@ -1,15 +1,12 @@
-import { useState } from 'react';
-import BookQuckViewPopup from '../../components/book-quick-view-popup/BookQuickViewPopup';
 import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
 import ShelfCard from '../../components/shelf-card/ShelfCard';
 import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import './style.css';
 import { useNavigate } from 'react-router-dom';
+import { Shelves } from '../../constants/shelves';
 
 const ShelfGrid = () => {
-  const [popupIsVisible, setPopupIsVisible] = useState(false);
-  const handleDelete = () => {};
   const navigate = useNavigate();
 
   return (
@@ -24,30 +21,22 @@ const ShelfGrid = () => {
         />
       </SubHeader>
       <div className='grid'>
-        <ShelfCard
-          location={'Office 1'}
-          setDeletePopup={(isVisible) => {
-            setPopupIsVisible(isVisible);
-          }}
-        />
-        <ShelfCard location={'Office 2'} />
-        <ShelfCard location={'Office 2'} />
-        <ShelfCard location={'Office 2'} />
-        <ShelfCard location={'Office 2'} />
-        <ShelfCard location={'Office 2'} />
-        <ShelfCard location={'Office 2'} />
-        <ShelfCard location={'Office 2'} />
+        {Shelves.map((item) => (
+          <ShelfCard
+            key={item.id}
+            id={item.id}
+            location={item.location}
+            onClick={(id: string) => {
+              navigate(`/library/shelves/edit/${id}`);
+            }}
+            onViewBooks={(id: string, e) => {
+              console.log('view books clicked');
+              navigate(`/library/shelves/${id}`);
+              e.stopPropagation();
+            }}
+          />
+        ))}
       </div>
-      <BookQuckViewPopup
-        isVisible={popupIsVisible}
-        setIsVisible={(isVisible) => {
-          setPopupIsVisible(isVisible);
-        }}
-        handleNotify={() => {
-          handleDelete();
-        }}
-        isAvailable={false}
-      />
     </HomeLayout>
   );
 };
