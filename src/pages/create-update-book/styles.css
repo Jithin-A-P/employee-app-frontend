@@ -27,3 +27,52 @@
     height: 35px;
     font: normal normal 600 16px/22px "Nunito Sans";
 }
+
+.shelf-input-container-div{
+    width: 100%;
+    margin-top: 30px;
+    /* display: flex;
+    flex-direction: row; */
+}
+
+.label-button-div{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+.shelf-input-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.half-size{
+    width: 450px;
+}
+
+.add-shelf-button{
+    background-color: #65c4ec;
+    height: 30px;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 50px;
+    color: white;
+}
+
+.delete-shelf-button{
+    background-color: #f7931e;
+    height: 30px;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 50px;
+    color: white;
+}
+
+.shelves-text{
+    margin-top: 5px;
+}

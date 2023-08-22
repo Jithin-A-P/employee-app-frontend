@@ -1,18 +1,15 @@
-.shelf-input-div {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-}
-
 .shelf-input-field {
     outline: none;
     border: 1px solid #B4B7BD;
     height: 50px;
-    width: 100%;
+    width: 450px;
     border-radius: 5px;
     padding-left: 17px;
+    margin-right: 50px;
     text-align: left;
     font: normal normal 600 14px/19px "Nunito Sans";
     letter-spacing: 0px;
     opacity: 0.95;
+    margin-top: 40px;
+    margin-left: 50px;
 }

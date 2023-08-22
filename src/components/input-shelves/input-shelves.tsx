@@ -2,25 +2,23 @@ import { FC, SyntheticEvent } from 'react';
 import './styles.css';
 
 export type InputShelfPropsType = {
-  value: string | number;
+  value?: string | number;
   onChange?: (e: SyntheticEvent<HTMLInputElement>) => void;
   type: string;
-  label: string;
   placeholder: string;
 };
 
-const ShelfInput: FC<InputShelfPropsType> = ({ value, onChange, type, label, placeholder }) => {
+const ShelfInput: FC<InputShelfPropsType> = ({ onChange, type, value, placeholder }) => {
+  console.log('shelf');
+
   return (
-    <div className='shelf-input-div'>
-      <label className='input-label'>{label}</label>
-      <input
-        className='shelf-input-field'
-        type={type}
-        onChange={onChange}
-        value={value}
-        placeholder={placeholder}
-      />
-    </div>
+    <input
+      className='shelf-input-field'
+      type={type}
+      onChange={onChange}
+      value={value}
+      placeholder={placeholder}
+    />
   );
 };
 
