@@ -5,16 +5,24 @@ import MaterialIconButton from '../../components/material-icon-button/MaterialIc
 import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import './books-l-listing.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import SearchBar from '../../components/search-bar/search-bar';
+import { Books } from '../../constants/books';
 
 const BookListing = () => {
   const [popupIsVisible, setPopupIsVisible] = useState(false);
   const handleDelete = () => {};
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <HomeLayout>
       <SubHeader title='Books Listing'>
+        {location.pathname === '/library/books' ? (
+          <SearchBar placeholder='Search here' />
+        ) : (
+          <div></div>
+        )}
         <MaterialIconButton
           icon='assets/icons/plus.svg'
           text='Add Book'
@@ -23,23 +31,21 @@ const BookListing = () => {
           }}
         />
       </SubHeader>
-      <div className='main'>
-        <BookCard
-          setQuickViewPopup={(isVisible) => {
-            setPopupIsVisible(isVisible);
-          }}
-        />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
+
+      <div className='book-main'>
+        {Books.map((item) => (
+          <BookCard
+            key={item.isbn}
+            isbn={item.isbn}
+            title={item.title}
+            imgsrc={item.imgsrc}
+            author={item.imgsrc}
+            count={item.count}
+            setQuickViewPopup={(isVisible) => {
+              setPopupIsVisible(isVisible);
+            }}
+          />
+        ))}
       </div>
       <BookQuckViewPopup
         isVisible={popupIsVisible}
@@ -50,6 +56,11 @@ const BookListing = () => {
           handleDelete();
         }}
         isAvailable={false}
+        title='Harry Potter'
+        author='J K Rowling'
+        publisher='Bookphiles'
+        bookCount={5}
+        isbn='123456'
       />
     </HomeLayout>
   );

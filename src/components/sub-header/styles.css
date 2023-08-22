@@ -1,6 +1,7 @@
 .sub-header {
     background-color: #FDFDFD;
-    width: 100% - 20px;
+    /* width: 100% - 20px; */
+    width: 98.5%;
     height: 100px;
     border-radius: 10px;
     box-shadow: 0px 3px 6px #9D9D9D29;
@@ -9,6 +10,7 @@
     padding: 20px;
     align-items: center;
     justify-content: space-between;
+    /* z-index: 0; */
 }
 
 .sub-header-title {

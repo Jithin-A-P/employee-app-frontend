@@ -4,4 +4,7 @@
     flex-wrap: wrap;
     flex-direction: row;
     align-content: space-between;
+    height: 100%;
+    /* padding-top: 120px; */
+    overflow: scroll;
 }
