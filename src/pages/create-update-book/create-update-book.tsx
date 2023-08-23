@@ -7,7 +7,8 @@ import Button from '../../components/button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
 import ShelfInput from '../../components/input-shelves/input-shelves';
 import Select from '../../components/select/Select';
-import { useCreateBookMutation } from '../../api-client/book-api';
+import { useCreateBookMutation, useDeleteBookMutation } from '../../api-client/book-api';
+import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
 
 const CreateUpdateBook = () => {
   const [book, setBook] = useState({
@@ -62,7 +63,7 @@ const CreateUpdateBook = () => {
   };
 
   const handleShelfCodeChange = (e, i) => {
-    console.log(newShelfDetails);
+    // console.log(newShelfDetails);
     let currentShelfDetails = [...newShelfDetails];
 
     currentShelfDetails[i].shelfCode = e.target.value;
@@ -85,9 +86,26 @@ const CreateUpdateBook = () => {
     createBook(book);
   };
 
+  const [deleteBook] = useDeleteBookMutation();
+
+  const handleDelete = (id) => {
+    deleteBook(id);
+    console.log(`Deleting ...${id}`);
+  };
+
   return (
     <HomeLayout>
-      {isbn ? <SubHeader title='Edit Book' /> : <SubHeader title='Add Book' />}
+      {isbn ? (
+        <SubHeader title='Edit Book'>
+          <MaterialIconButton
+            icon='assets/icons/plus.svg'
+            text='Delete Book'
+            onClick={() => handleDelete(isbn)}
+          />
+        </SubHeader>
+      ) : (
+        <SubHeader title='Add Book' />
+      )}
       <div className='create-book-form'>
         {isbn ? (
           <div className='form-input'>
