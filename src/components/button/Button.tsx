@@ -2,9 +2,9 @@ import { FC } from 'react';
 import './styles.css';
 
 export type ButtonPropsType = {
-  style: 'primary' | 'secondary';
+  style: 'primary' | 'secondary' | 'library' | 'notify' | 'book-history' | 'logout' | 'borrowed';
   text: string;
-  onClick: () => void;
+  onClick?: (e?) => void;
 };
 
 const Button: FC<ButtonPropsType> = ({ style, text, onClick }) => {

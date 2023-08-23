@@ -1,0 +1,78 @@
+.create-book-form {
+    background-color: #FDFDFD;
+    box-shadow: 0px 3px 6px #9D9D9D29;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 34px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* margin-top: 120px; */
+}
+
+.create-book-form .form-input {
+    width: 450px;
+}
+
+.form-button-book {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.create-book-form .form-button-book Button {
+    margin-right: 10px;
+    max-width: 150px;
+    height: 35px;
+    font: normal normal 600 16px/22px "Nunito Sans";
+}
+
+.shelf-input-container-div{
+    width: 100%;
+    margin-top: 30px;
+    /* display: flex;
+    flex-direction: row; */
+}
+
+.label-button-div{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+.shelf-input-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.half-size{
+    width: 450px;
+}
+
+.add-shelf-button{
+    background-color: #65c4ec;
+    height: 30px;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 50px;
+    color: white;
+}
+
+.delete-shelf-button{
+    background-color: #f7931e;
+    height: 30px;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 50px;
+    color: white;
+}
+
+.shelves-text{
+    margin-top: 5px;
+}

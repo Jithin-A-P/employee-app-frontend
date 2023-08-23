@@ -1,0 +1,45 @@
+.bookData{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 80%;
+}
+
+.book-image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50%
+}
+
+.book-details{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width:50%;
+    height: 100%;
+    font: normal normal 600 14px/19px "Nunito Sans";
+}
+
+.book-details>div{
+    padding:10px;
+    padding-left: 20px;
+}
+
+.book-count{
+    width: 227px;
+    height: 51px;
+    background-color: #DAF6D7;
+    color: #59C064;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.popup-buttons{
+    margin-bottom: 50px;
+}
