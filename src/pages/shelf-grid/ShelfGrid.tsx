@@ -5,22 +5,28 @@ import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import { useGetShelflistQuery } from '../../api-client/shelf-api';
+import getCurrentUser from '../../utils/get-current-user';
 
 const ShelfGrid = () => {
   const navigate = useNavigate();
 
   const { data: response } = useGetShelflistQuery('');
 
+  const currenUserRole = getCurrentUser().role;
+  const adminPrivileges = currenUserRole === 'admin' || currenUserRole === 'hr';
+
   return (
     <HomeLayout>
       <SubHeader title='Shelves'>
-        <MaterialIconButton
-          icon='assets/icons/plus.svg'
-          text='Create Shelf'
-          onClick={() => {
-            navigate('/library/shelves/create');
-          }}
-        />
+        {adminPrivileges && (
+          <MaterialIconButton
+            icon='assets/icons/plus.svg'
+            text='Create Shelf'
+            onClick={() => {
+              navigate('/library/shelves/create');
+            }}
+          />
+        )}
       </SubHeader>
       <div className='grid'>
         {response &&
