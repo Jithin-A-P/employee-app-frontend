@@ -12,7 +12,7 @@ import {
   useGetShelfQuery
 } from '../../api-client/shelf-api';
 import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
-import DeleteBookPopup from '../../components/delete-book-popup/DeleteBookPopup';
+import DeleteEntityPopup from '../../components/delete-employee-popup/DeleteEmployeePopup';
 
 const CreateShelf = () => {
   const [shelf, setShelf] = useState({
@@ -58,7 +58,7 @@ const CreateShelf = () => {
       {id ? (
         <SubHeader title='Edit Book'>
           <MaterialIconButton
-            icon='assets/icons/plus.svg'
+            icon='assets/icons/delete.svg'
             text='Delete Shelf'
             onClick={() => setPopupIsVisible(true)}
           />
@@ -110,8 +110,9 @@ const CreateShelf = () => {
           </div>
         </div>
       </div>
-      <DeleteBookPopup
+      <DeleteEntityPopup
         isVisible={popupIsVisible}
+        entity='shelf'
         setIsVisible={(isVisible) => {
           setPopupIsVisible(isVisible);
         }}

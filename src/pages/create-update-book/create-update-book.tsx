@@ -16,7 +16,7 @@ import {
 } from '../../api-client/book-api';
 import { useGetShelflistQuery } from '../../api-client/shelf-api';
 import Book from '../../types/create-book-payload';
-import DeleteBookPopup from '../../components/delete-book-popup/DeleteBookPopup';
+import DeleteEntityPopup from '../../components/delete-employee-popup/DeleteEmployeePopup';
 
 const CreateUpdateBook = () => {
   const [book, setBook] = useState({
@@ -138,7 +138,7 @@ const CreateUpdateBook = () => {
       {id ? (
         <SubHeader title='Edit Book'>
           <MaterialIconButton
-            icon='assets/icons/plus.svg'
+            icon='assets/icons/delete.svg'
             text='Delete Book'
             onClick={() => setPopupIsVisible(true)}
           />
@@ -303,8 +303,9 @@ const CreateUpdateBook = () => {
           />
         </div>
       </div>
-      <DeleteBookPopup
+      <DeleteEntityPopup
         isVisible={popupIsVisible}
+        entity='book'
         setIsVisible={(isVisible) => {
           setPopupIsVisible(isVisible);
         }}
