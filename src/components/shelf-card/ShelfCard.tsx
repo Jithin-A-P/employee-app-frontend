@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import './style.css';
 import Button from '../button/Button';
+import getCurrentUser from '../../utils/get-current-user';
 
 export type ShelfCardPropTypes = {
   id?: string;
@@ -10,8 +11,11 @@ export type ShelfCardPropTypes = {
 };
 
 const ShelfCard: FC<ShelfCardPropTypes> = ({ location, onClick, onViewBooks, id }) => {
+  const currenUserRole = getCurrentUser().role;
+  const adminPrivileges = currenUserRole === 'admin' || currenUserRole === 'hr';
+
   return (
-    <div className='shelf-card' onClick={() => onClick(id)}>
+    <div className='shelf-card' onClick={adminPrivileges ? () => onClick(id) : () => {}}>
       <div className='shelf-icon'>
         <img src='../../../assets/img/bookshelf.png' alt='shelf icon' />
       </div>
