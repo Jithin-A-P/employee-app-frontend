@@ -10,11 +10,13 @@ import Select from '../../components/select/Select';
 import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
 import {
   useCreateBookMutation,
+  useDeleteBookMutation,
   useEditBookMutation,
   useGetBookQuery
 } from '../../api-client/book-api';
 import { useGetShelflistQuery } from '../../api-client/shelf-api';
 import Book from '../../types/create-book-payload';
+import DeleteEntityPopup from '../../components/delete-employee-popup/DeleteEmployeePopup';
 
 const CreateUpdateBook = () => {
   const [book, setBook] = useState({
@@ -44,6 +46,8 @@ const CreateUpdateBook = () => {
   };
 
   const { data: response, isSuccess } = useGetShelflistQuery('');
+
+  const [popupIsVisible, setPopupIsVisible] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -77,7 +81,7 @@ const CreateUpdateBook = () => {
   };
 
   const handleShelfCodeChange = (e, i) => {
-     console.log(newShelfDetails);
+    console.log(newShelfDetails);
     let currentShelfDetails = [...newShelfDetails];
 
     currentShelfDetails[i].shelfCode = e.target.value;
@@ -111,22 +115,8 @@ const CreateUpdateBook = () => {
 
   const handleDelete = (id) => {
     deleteBook(id);
-    console.log(`Deleting ...${id}`);
+    navigate('/library/books');
   };
-
-  return (
-    <HomeLayout>
-      {isbn ? (
-        <SubHeader title='Edit Book'>
-          <MaterialIconButton
-            icon='assets/icons/plus.svg'
-            text='Delete Book'
-            onClick={() => handleDelete(isbn)}
-          />
-        </SubHeader>
-      ) : (
-        <SubHeader title='Add Book' />
-      )}
   let [shelves, setShelves] = useState([]);
 
   useEffect(() => {
@@ -145,7 +135,17 @@ const CreateUpdateBook = () => {
 
   return (
     <HomeLayout>
-      {id ? <SubHeader title='Edit Book' /> : <SubHeader title='Add Book' />}
+      {id ? (
+        <SubHeader title='Edit Book'>
+          <MaterialIconButton
+            icon='assets/icons/delete.svg'
+            text='Delete Book'
+            onClick={() => setPopupIsVisible(true)}
+          />
+        </SubHeader>
+      ) : (
+        <SubHeader title='Add Book' />
+      )}
       <div className='create-book-form'>
         {id ? (
           <div className='form-input'>
@@ -303,6 +303,16 @@ const CreateUpdateBook = () => {
           />
         </div>
       </div>
+      <DeleteEntityPopup
+        isVisible={popupIsVisible}
+        entity='book'
+        setIsVisible={(isVisible) => {
+          setPopupIsVisible(isVisible);
+        }}
+        handleDelete={() => {
+          handleDelete(id);
+        }}
+      />
     </HomeLayout>
   );
 };

@@ -2,7 +2,7 @@ import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import SubHeader from '../../components/sub-header/SubHeader';
 import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
 import Table from '../../components/table/Table';
-import DeleteEmployeePopup from '../../components/delete-employee-popup/DeleteEmployeePopup';
+import DeleteEntityPopup from '../../components/delete-employee-popup/DeleteEmployeePopup';
 import {
   useDeleteAnEmployeeMutation,
   useGetEmployeeListQuery
@@ -75,8 +75,9 @@ const Employee = () => {
       ) : (
         <></>
       )}
-      <DeleteEmployeePopup
+      <DeleteEntityPopup
         isVisible={popupIsVisible}
+        entity='employee'
         setIsVisible={(isVisible) => {
           setPopupIsVisible(isVisible);
         }}
