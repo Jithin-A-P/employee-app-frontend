@@ -51,24 +51,6 @@ const BookListing = () => {
           />
         ))}
       </div>
-      {responseBookList?.data.map((item) => (
-        <BookQuckViewPopup
-          key={item.id}
-          isVisible={popupIsVisible}
-          setIsVisible={(isVisible) => {
-            setPopupIsVisible(isVisible);
-          }}
-          handleNotify={() => {
-            handleDelete();
-          }}
-          title={item.title}
-          imgsrc={item.thumbnailUrl}
-          author={item.author}
-          count={item.count}
-          publisher={item.publisher}
-          isbn={item.isbn}
-        />
-      ))}
     </HomeLayout>
   );
 };

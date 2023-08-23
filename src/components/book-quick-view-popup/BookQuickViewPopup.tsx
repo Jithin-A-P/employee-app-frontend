@@ -6,6 +6,7 @@ import Button from '../button/Button';
 
 type BookQuckViewPopupPropsType = {
   isVisible: boolean;
+  isAvailable: boolean;
   setIsVisible: (isVisible: boolean) => void;
   handleNotify: () => void;
   title: string;

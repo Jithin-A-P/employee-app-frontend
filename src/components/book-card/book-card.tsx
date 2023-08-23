@@ -15,7 +15,7 @@ type BookcardPropTypes = {
   publisher: string;
 };
 
-const BookCard: FC<BookcardPropTypes> = ({ setQuickViewPopup, id, count, title, imgsrc }) => {
+const BookCard: FC<BookcardPropTypes> = ({ id, isbn, count, title, imgsrc, publisher, author }) => {
   const navigate = useNavigate();
 
   const setQuickViewPopup = (isVisible) => {
@@ -66,9 +66,9 @@ const BookCard: FC<BookcardPropTypes> = ({ setQuickViewPopup, id, count, title, 
         title={title}
         author={author}
         publisher={publisher}
-        bookCount={count}
+        count={count}
         isbn={isbn}
-        bookImage={imgsrc}
+        imgsrc={imgsrc}
       />
     </>
   );
