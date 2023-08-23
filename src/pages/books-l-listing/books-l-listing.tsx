@@ -7,13 +7,16 @@ import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import './books-l-listing.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SearchBar from '../../components/search-bar/search-bar';
-import { Books } from '../../constants/books';
+import { useGetBookListQuery } from '../../api-client/book-api';
+// import { Books } from '../../constants/books';
 
 const BookListing = () => {
   const [popupIsVisible, setPopupIsVisible] = useState(false);
   const handleDelete = () => {};
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { data: responseBookList } = useGetBookListQuery('');
 
   return (
     <HomeLayout>
@@ -33,13 +36,14 @@ const BookListing = () => {
       </SubHeader>
 
       <div className='book-main'>
-        {Books.map((item) => (
+        {responseBookList?.data.map((item) => (
           <BookCard
-            key={item.isbn}
+            key={item.id}
+            id={item.id}
             isbn={item.isbn}
             title={item.title}
-            imgsrc={item.imgsrc}
-            author={item.imgsrc}
+            imgsrc={item.thumbnailUrl}
+            author={item.author}
             count={item.count}
             setQuickViewPopup={(isVisible) => {
               setPopupIsVisible(isVisible);
@@ -47,21 +51,24 @@ const BookListing = () => {
           />
         ))}
       </div>
-      <BookQuckViewPopup
-        isVisible={popupIsVisible}
-        setIsVisible={(isVisible) => {
-          setPopupIsVisible(isVisible);
-        }}
-        handleNotify={() => {
-          handleDelete();
-        }}
-        isAvailable={false}
-        title='Harry Potter'
-        author='J K Rowling'
-        publisher='Bookphiles'
-        bookCount={5}
-        isbn='123456'
-      />
+      {responseBookList?.data.map((item) => (
+        <BookQuckViewPopup
+          key={item.id}
+          isVisible={popupIsVisible}
+          setIsVisible={(isVisible) => {
+            setPopupIsVisible(isVisible);
+          }}
+          handleNotify={() => {
+            handleDelete();
+          }}
+          title={item.title}
+          imgsrc={item.thumbnailUrl}
+          author={item.author}
+          count={item.count}
+          publisher={item.publisher}
+          isbn={item.isbn}
+        />
+      ))}
     </HomeLayout>
   );
 };

@@ -20,7 +20,7 @@ const App: FC = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/employees' element={<Employee />} />
           <Route path='/library/books/create' element={<CreateUpdateBook />} />
-          <Route path='/library/books/:isbn/edit' element={<CreateUpdateBook />} />
+          <Route path='/library/books/:id/edit' element={<CreateUpdateBook />} />
           <Route path='/employees/:id' element={<EmployeeDetails />} />
           <Route path='/employees/create' element={<CreateEmployee />} />
           <Route path='/employees/edit/:id' element={<EditEmployee />} />

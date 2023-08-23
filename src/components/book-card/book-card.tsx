@@ -8,12 +8,13 @@ type BookcardPropTypes = {
   title: string;
   author: string;
   isbn: string;
+  id: number;
   count: number;
   onQuickView?: () => void;
   setQuickViewPopup?: (isVisible: boolean) => void;
 };
 
-const BookCard: FC<BookcardPropTypes> = ({ setQuickViewPopup, isbn, count, title, imgsrc }) => {
+const BookCard: FC<BookcardPropTypes> = ({ setQuickViewPopup, id, count, title, imgsrc }) => {
   const navigate = useNavigate();
   const onQuickView = (e) => {
     e.stopPropagation();
@@ -21,7 +22,7 @@ const BookCard: FC<BookcardPropTypes> = ({ setQuickViewPopup, isbn, count, title
   };
 
   const onClick = () => {
-    navigate(`/library/books/${isbn}/edit`);
+    navigate(`/library/books/${id}/edit`);
   };
 
   return (

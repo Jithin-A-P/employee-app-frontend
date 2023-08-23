@@ -19,17 +19,18 @@ const Select: FC<SelectPropsType> = ({ value, onChange, label, options, style })
       )}
       <select className='select-field' onChange={onChange} value={value}>
         {label == 'Shelf Code' ? (
-          <></>
+          <>
+            {options.map((option) => (
+              <option value={option.id} key={option.id}>
+                {option.name}
+              </option>
+            ))}
+          </>
         ) : (
           <option value={-1} key={label}>
             {style == 'library' ? `${label}` : `Choose ${label}`}
           </option>
         )}
-        {options.map((option) => (
-          <option value={option.id} key={option.id}>
-            {option.name}
-          </option>
-        ))}
       </select>
     </div>
   );

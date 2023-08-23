@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import SubHeader from '../../components/sub-header/SubHeader';
 import Input from '../../components/input/Input';
@@ -7,11 +7,17 @@ import Button from '../../components/button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
 import ShelfInput from '../../components/input-shelves/input-shelves';
 import Select from '../../components/select/Select';
-import { useCreateBookMutation } from '../../api-client/book-api';
+import {
+  useCreateBookMutation,
+  useEditBookMutation,
+  useGetBookQuery
+} from '../../api-client/book-api';
+import { useGetShelflistQuery } from '../../api-client/shelf-api';
+import Book from '../../types/create-book-payload';
 
 const CreateUpdateBook = () => {
   const [book, setBook] = useState({
-    ISBN: '',
+    isbn: '',
     title: '',
     author: '',
     category: '',
@@ -24,14 +30,22 @@ const CreateUpdateBook = () => {
     thumbnailUrl: ''
   });
 
-  const statusOptions = [
-    { id: 'active', name: 'Active' },
-    { id: 'inactive', name: 'Inactive' },
-    { id: 'probation', name: 'Probation' }
-  ];
+  const bookToSend: Book = {
+    isbn: book.isbn,
+    title: book.title,
+    author: book.author,
+    category: book.category,
+    description: book.description,
+    publisher: book.publisher,
+    releaseDate: book.releaseDate,
+    thumbnailUrl: book.thumbnailUrl,
+    shelves: book.shelves
+  };
+
+  const { data: response, isSuccess } = useGetShelflistQuery('');
 
   const navigate = useNavigate();
-  const { isbn } = useParams();
+  const { id } = useParams();
 
   const [newShelf, setNewShelf] = useState({ customDiv: ['shelf1'] });
   const [newShelfDetails, setNewShelfDetails] = useState([{ shelfCode: ' ', bookCount: 0 }]);
@@ -62,7 +76,6 @@ const CreateUpdateBook = () => {
   };
 
   const handleShelfCodeChange = (e, i) => {
-    console.log(newShelfDetails);
     let currentShelfDetails = [...newShelfDetails];
 
     currentShelfDetails[i].shelfCode = e.target.value;
@@ -71,7 +84,6 @@ const CreateUpdateBook = () => {
   };
 
   const handleBookCountChange = (e, i) => {
-    console.log(newShelfDetails);
     let currentShelfDetails = [...newShelfDetails];
 
     currentShelfDetails[i].bookCount = Number(e.target.value);
@@ -82,22 +94,46 @@ const CreateUpdateBook = () => {
   const [createBook] = useCreateBookMutation();
 
   const handleCreateBook = () => {
-    createBook(book);
+    createBook(bookToSend);
+    navigate('/library/books');
   };
+
+  const [editBook] = useEditBookMutation();
+
+  const handleEditBook = () => {
+    editBook({ id: id, body: bookToSend });
+    navigate('/library/books');
+  };
+
+  let [shelves, setShelves] = useState([]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      const results = response?.data.map((item) => ({ id: item.shelfCode, name: item.shelfCode }));
+
+      setShelves(results);
+    }
+  }, [response, isSuccess]);
+
+  const { data: responseBook, isSuccess: isGetBookSuccess } = useGetBookQuery(id);
+
+  useEffect(() => {
+    if (isGetBookSuccess) setBook(responseBook?.data);
+  }, [responseBook, isGetBookSuccess]);
 
   return (
     <HomeLayout>
-      {isbn ? <SubHeader title='Edit Book' /> : <SubHeader title='Add Book' />}
+      {id ? <SubHeader title='Edit Book' /> : <SubHeader title='Add Book' />}
       <div className='create-book-form'>
-        {isbn ? (
+        {id ? (
           <div className='form-input'>
             <Input
               type='text'
-              value={isbn}
+              value={book.isbn}
               // onChange={(e: any) => {
-              //   setBook((prevBook) => ({ ...prevBook, ISBN: e.target.value }));
+              //   setBook((prevBook) => ({ ...prevBook, isbn: e.target.value }));
               // }}
-              label='Book ISBN'
+              label='Book ISBN *'
               placeholder='Book ISBN'
             />
           </div>
@@ -105,11 +141,11 @@ const CreateUpdateBook = () => {
           <div className='form-input'>
             <Input
               type='text'
-              value={book.ISBN}
+              value={book.isbn}
               onChange={(e: any) => {
-                setBook((prevBook) => ({ ...prevBook, ISBN: e.target.value }));
+                setBook((prevBook) => ({ ...prevBook, isbn: e.target.value }));
               }}
-              label='Book ISBN'
+              label='Book ISBN *'
               placeholder='Book ISBN'
             />
           </div>
@@ -121,7 +157,7 @@ const CreateUpdateBook = () => {
             onChange={(e: any) => {
               setBook((prevBook) => ({ ...prevBook, title: e.target.value }));
             }}
-            label='Title'
+            label='Title *'
             placeholder='Title'
           />
         </div>
@@ -132,7 +168,7 @@ const CreateUpdateBook = () => {
             onChange={(e: any) => {
               setBook((prevBook) => ({ ...prevBook, author: e.target.value }));
             }}
-            label='Author'
+            label='Author *'
             placeholder='Author'
           />
         </div>
@@ -143,7 +179,7 @@ const CreateUpdateBook = () => {
             onChange={(e: any) => {
               setBook((prevBook) => ({ ...prevBook, category: e.target.value }));
             }}
-            label='Category'
+            label='Category *'
             placeholder='Category'
           />
         </div>
@@ -154,7 +190,7 @@ const CreateUpdateBook = () => {
             onChange={(e: any) => {
               setBook((prevBook) => ({ ...prevBook, description: e.target.value }));
             }}
-            label='Description'
+            label='Description *'
             placeholder='Description'
           />
         </div>
@@ -202,7 +238,7 @@ const CreateUpdateBook = () => {
             </div>
           </div>
           {newShelf.customDiv.map((shelf, i) => {
-            console.log(newShelfDetails[0]);
+            console.log(newShelfDetails);
 
             return (
               <>
@@ -213,7 +249,7 @@ const CreateUpdateBook = () => {
                       onChange={(e) => handleShelfCodeChange(e, i)}
                       key={`${shelf}code`}
                       label='Shelf Code'
-                      options={statusOptions}
+                      options={shelves}
                     />
                   </div>
                   <div className='half-size'>
@@ -231,10 +267,10 @@ const CreateUpdateBook = () => {
           })}
         </div>
         <div className='form-button-book'>
-          {isbn ? (
-            <Button style='primary' text='Save' onClick={handleCreateBook} />
+          {id ? (
+            <Button style='primary' text='Save' onClick={handleEditBook} />
           ) : (
-            <Button style='primary' text='Create' />
+            <Button style='primary' text='Create' onClick={handleCreateBook} />
           )}
           <Button
             style='secondary'
