@@ -39,7 +39,16 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
     >
       <div className='bookData'>
         <div className='book-image'>
-          <img src={bookImage ? bookImage : '../../../assets/img/book1.png'} alt='Book Image' />
+          {/* <img src={bookImage ? bookImage : '../../../assets/img/book1.png'} alt='Book Image' /> */}
+          <div
+            style={{
+              width: '200px',
+              height: '300px',
+              backgroundPosition: 'center',
+              background: `url(${bookImage ? bookImage : 'assets/img/book1.png'}) no-repeat`,
+              backgroundSize: 'contain'
+            }}
+          ></div>
         </div>
         <div className='book-details'>
           <div>Title : {title}</div>

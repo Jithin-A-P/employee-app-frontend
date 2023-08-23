@@ -1,6 +1,6 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import BookCard from '../../components/book-card/book-card';
-import BookQuckViewPopup from '../../components/book-quick-view-popup/BookQuickViewPopup';
+// import BookQuckViewPopup from '../../components/book-quick-view-popup/BookQuickViewPopup';
 import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
 import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
@@ -11,8 +11,6 @@ import { Books } from '../../constants/books';
 import getCurrentUser from '../../utils/get-current-user';
 
 const BookListing = () => {
-  const [popupIsVisible, setPopupIsVisible] = useState(false);
-  const handleDelete = () => {};
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -45,29 +43,12 @@ const BookListing = () => {
             isbn={item.isbn}
             title={item.title}
             imgsrc={item.imgsrc}
-            author={item.imgsrc}
+            author={item.author}
             count={item.count}
-            setQuickViewPopup={(isVisible) => {
-              setPopupIsVisible(isVisible);
-            }}
+            publisher={item.publisher}
           />
         ))}
       </div>
-      <BookQuckViewPopup
-        isVisible={popupIsVisible}
-        setIsVisible={(isVisible) => {
-          setPopupIsVisible(isVisible);
-        }}
-        handleNotify={() => {
-          handleDelete();
-        }}
-        isAvailable={false}
-        title='Harry Potter'
-        author='J K Rowling'
-        publisher='Bookphiles'
-        bookCount={5}
-        isbn='123456'
-      />
     </HomeLayout>
   );
 };
