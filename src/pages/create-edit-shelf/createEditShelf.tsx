@@ -7,9 +7,12 @@ import Button from '../../components/button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   useCreateShelfMutation,
+  useDeleteShelfMutation,
   useEditShelfMutation,
   useGetShelfQuery
 } from '../../api-client/shelf-api';
+import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
+import DeleteBookPopup from '../../components/delete-book-popup/DeleteBookPopup';
 
 const CreateShelf = () => {
   const [shelf, setShelf] = useState({
@@ -18,6 +21,8 @@ const CreateShelf = () => {
   });
 
   const navigate = useNavigate();
+
+  const [popupIsVisible, setPopupIsVisible] = useState(false);
 
   const handleCreateShelf = () => {
     console.log(shelf);
@@ -37,13 +42,30 @@ const CreateShelf = () => {
 
   const { data: response, isSuccess } = useGetShelfQuery(id);
 
+  const [deleteShelf] = useDeleteShelfMutation();
+
+  const handleDelete = (id) => {
+    deleteShelf(id);
+    navigate('/library/shelves');
+  };
+
   useEffect(() => {
     if (isSuccess) setShelf(response?.data);
   }, [response, isSuccess]);
 
   return (
     <HomeLayout>
-      {id ? <SubHeader title='Edit Shelf' /> : <SubHeader title='Create Shelf' />}
+      {id ? (
+        <SubHeader title='Edit Book'>
+          <MaterialIconButton
+            icon='assets/icons/plus.svg'
+            text='Delete Shelf'
+            onClick={() => setPopupIsVisible(true)}
+          />
+        </SubHeader>
+      ) : (
+        <SubHeader title='Create Shelf' />
+      )}
 
       <div className='create-shelf-form'>
         <div className='input-rows'>
@@ -88,6 +110,15 @@ const CreateShelf = () => {
           </div>
         </div>
       </div>
+      <DeleteBookPopup
+        isVisible={popupIsVisible}
+        setIsVisible={(isVisible) => {
+          setPopupIsVisible(isVisible);
+        }}
+        handleDelete={() => {
+          handleDelete(id);
+        }}
+      />
     </HomeLayout>
   );
 };
