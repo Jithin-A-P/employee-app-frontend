@@ -3,6 +3,7 @@ import './book-card.css';
 import Button from '../button/Button';
 import { useNavigate } from 'react-router-dom';
 import BookQuckViewPopup from '../book-quick-view-popup/BookQuickViewPopup';
+import getCurrentUser from '../../utils/get-current-user';
 
 type BookcardPropTypes = {
   imgsrc?: string;
@@ -25,6 +26,9 @@ const BookCard: FC<BookcardPropTypes> = ({ isbn, count, title, imgsrc, author, p
     setQuickViewPopup(true);
   };
 
+  const currenUserRole = getCurrentUser().role;
+  const adminPrivileges = currenUserRole === 'admin' || currenUserRole === 'hr';
+
   const [popupIsVisible, setPopupIsVisible] = useState(false);
 
   const onClick = () => {
@@ -33,7 +37,7 @@ const BookCard: FC<BookcardPropTypes> = ({ isbn, count, title, imgsrc, author, p
 
   return (
     <>
-      <div className='book-card-main' onClick={onClick}>
+      <div className='book-card-main' onClick={adminPrivileges ? onClick : () => {}}>
         <div className='book-card'>
           {count !== 0 ? (
             <div className='not-available-icon'></div>
