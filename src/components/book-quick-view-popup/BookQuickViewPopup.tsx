@@ -12,13 +12,11 @@ type BookQuckViewPopupPropsType = {
   author: string;
   isbn: string;
   publisher: string;
-  isAvailable: boolean;
-  bookCount?: number;
-  bookImage?: string;
+  count?: number;
+  imgsrc?: string;
 };
 
 const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
-  isAvailable,
   isVisible,
   setIsVisible,
   handleNotify,
@@ -26,8 +24,8 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
   author,
   isbn,
   publisher,
-  bookCount,
-  bookImage
+  count,
+  imgsrc
 }) => {
   return (
     <Popup
@@ -39,13 +37,12 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
     >
       <div className='bookData'>
         <div className='book-image'>
-          {/* <img src={bookImage ? bookImage : '../../../assets/img/book1.png'} alt='Book Image' /> */}
           <div
             style={{
               width: '200px',
               height: '300px',
               backgroundPosition: 'center',
-              background: `url(${bookImage ? bookImage : 'assets/img/book1.png'}) no-repeat`,
+              background: `url(${imgsrc ? imgsrc : 'assets/img/book1.png'}) no-repeat`,
               backgroundSize: 'contain'
             }}
           ></div>
@@ -58,9 +55,9 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
         </div>
       </div>
       <div className='popup-buttons'>
-        {isAvailable ? (
+        {count ? (
           <>
-            <div className='book-count'>{`AVAILABLE:${bookCount}`}</div>
+            <div className='book-count'>{`AVAILABLE:${count}`}</div>
             <div>
               <SelectForLibrary
                 value='lend'
