@@ -9,8 +9,6 @@ export type InputShelfPropsType = {
 };
 
 const ShelfInput: FC<InputShelfPropsType> = ({ onChange, type, value, placeholder }) => {
-  console.log('shelf');
-
   return (
     <input
       className='shelf-input-field'
