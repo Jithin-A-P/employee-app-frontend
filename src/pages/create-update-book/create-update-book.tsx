@@ -7,6 +7,7 @@ import Button from '../../components/button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
 import ShelfInput from '../../components/input-shelves/input-shelves';
 import Select from '../../components/select/Select';
+import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
 import {
   useCreateBookMutation,
   useEditBookMutation,
@@ -76,6 +77,7 @@ const CreateUpdateBook = () => {
   };
 
   const handleShelfCodeChange = (e, i) => {
+     console.log(newShelfDetails);
     let currentShelfDetails = [...newShelfDetails];
 
     currentShelfDetails[i].shelfCode = e.target.value;
@@ -105,6 +107,26 @@ const CreateUpdateBook = () => {
     navigate('/library/books');
   };
 
+  const [deleteBook] = useDeleteBookMutation();
+
+  const handleDelete = (id) => {
+    deleteBook(id);
+    console.log(`Deleting ...${id}`);
+  };
+
+  return (
+    <HomeLayout>
+      {isbn ? (
+        <SubHeader title='Edit Book'>
+          <MaterialIconButton
+            icon='assets/icons/plus.svg'
+            text='Delete Book'
+            onClick={() => handleDelete(isbn)}
+          />
+        </SubHeader>
+      ) : (
+        <SubHeader title='Add Book' />
+      )}
   let [shelves, setShelves] = useState([]);
 
   useEffect(() => {
