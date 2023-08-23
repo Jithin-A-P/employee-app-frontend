@@ -26,7 +26,7 @@ const EditEmployee = () => {
     name: department.name
   }));
 
-  const roleOptions = roles?.data;
+  let roleOptions = roles?.data.map((role) => ({ id: role, name: role }));
 
   const statusOptions = [
     { id: 'active', name: 'Active' },
@@ -63,6 +63,28 @@ const EditEmployee = () => {
               }}
               label='Employee Name'
               placeholder='Employee Name'
+            />
+          </div>
+          <div className='form-input'>
+            <Input
+              type='text'
+              value={employee.email}
+              onChange={(e: any) => {
+                setEmployee((prevEmployee) => ({ ...prevEmployee, email: e.target.value }));
+              }}
+              label='Email'
+              placeholder='Email'
+            />
+          </div>
+          <div className='form-input'>
+            <Input
+              type='text'
+              value={employee.password}
+              onChange={(e: any) => {
+                setEmployee((prevEmployee) => ({ ...prevEmployee, password: e.target.value }));
+              }}
+              label='Password'
+              placeholder='Password'
             />
           </div>
           <div className='form-input'>
@@ -124,6 +146,16 @@ const EditEmployee = () => {
               options={statusOptions}
             />
           </div>
+          <div className='form-input id-field'>
+            <Input
+              type='text'
+              value={id}
+              onChange={() => {}}
+              label='Employee ID'
+              placeholder='Employee ID'
+              inactive='inactive'
+            />
+          </div>
           <div className='form-address-inputs'>
             <div>
               <div className='form-input'>
@@ -168,6 +200,48 @@ const EditEmployee = () => {
                   placeholder='City'
                 />
               </div>
+              <div className='form-input'>
+                <Input
+                  type='text'
+                  value={employee.address.state}
+                  onChange={(e: any) => {
+                    setEmployee((prevEmployee) => ({
+                      ...prevEmployee,
+                      address: { ...employee.address, state: e.target.value }
+                    }));
+                  }}
+                  label=''
+                  placeholder='State'
+                />
+              </div>
+              <div className='form-input'>
+                <Input
+                  type='text'
+                  value={employee.address.country}
+                  onChange={(e: any) => {
+                    setEmployee((prevEmployee) => ({
+                      ...prevEmployee,
+                      address: { ...employee.address, country: e.target.value }
+                    }));
+                  }}
+                  label=''
+                  placeholder='Country'
+                />
+              </div>
+              <div className='form-input'>
+                <Input
+                  type='text'
+                  value={employee.address.pincode}
+                  onChange={(e: any) => {
+                    setEmployee((prevEmployee) => ({
+                      ...prevEmployee,
+                      address: { ...employee.address, pincode: e.target.value }
+                    }));
+                  }}
+                  label=''
+                  placeholder='Pincode'
+                />
+              </div>
               <div className='form-button'>
                 <Button style='primary' onClick={handleEditEmployee} text='Save' />
                 <Button
@@ -178,16 +252,6 @@ const EditEmployee = () => {
                   text='Cancel'
                 />
               </div>
-            </div>
-            <div className='form-input id-field'>
-              <Input
-                type='text'
-                value={id}
-                onChange={() => {}}
-                label='Employee ID'
-                placeholder='Employee ID'
-                inactive='inactive'
-              />
             </div>
           </div>
         </div>

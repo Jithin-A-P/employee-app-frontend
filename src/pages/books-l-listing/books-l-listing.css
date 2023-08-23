@@ -13,3 +13,18 @@
 .book-main >*{
  margin: 20px;
 }
+
+.filter{
+    background-color: #03AEEE;
+    border: none;
+    border-radius: 50px;
+    width: 120px;
+    height: 40px;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 10px;
+    color: white;
+    font-size: 15px;
+}
+

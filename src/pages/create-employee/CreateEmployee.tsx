@@ -14,6 +14,8 @@ import { useGetRolesQuery } from '../../api-client/role-api';
 const CreateEmployee = () => {
   const [employee, setEmployee] = useState({
     name: '',
+    email: '',
+    password: '',
     joiningDate: '',
     role: '',
     status: '',
@@ -22,7 +24,10 @@ const CreateEmployee = () => {
     address: {
       line1: '',
       line2: '',
-      city: ''
+      city: '',
+      state: '',
+      country: '',
+      pincode: ''
     }
   });
 
@@ -71,6 +76,28 @@ const CreateEmployee = () => {
         </div>
         <div className='form-input'>
           <Input
+            type='text'
+            value={employee.email}
+            onChange={(e: any) => {
+              setEmployee((prevEmployee) => ({ ...prevEmployee, email: e.target.value }));
+            }}
+            label='Email'
+            placeholder='Email'
+          />
+        </div>
+        <div className='form-input'>
+          <Input
+            type='text'
+            value={employee.password}
+            onChange={(e: any) => {
+              setEmployee((prevEmployee) => ({ ...prevEmployee, password: e.target.value }));
+            }}
+            label='Password'
+            placeholder='Password'
+          />
+        </div>
+        <div className='form-input'>
+          <Input
             type='date'
             value={employee.joiningDate}
             onChange={(e: any) => {
@@ -102,28 +129,6 @@ const CreateEmployee = () => {
               options={departmentOptions}
             />
           )}
-        </div>
-        <div className='form-input'>
-          {roleOptions && (
-            <Select
-              value={employee.role}
-              onChange={(e: any) => {
-                setEmployee((prevEmployee) => ({ ...prevEmployee, role: e.target.value }));
-              }}
-              label='Role'
-              options={roleOptions}
-            />
-          )}
-        </div>
-        <div className='form-input'>
-          <Select
-            value={employee.status}
-            onChange={(e: any) => {
-              setEmployee((prevEmployee) => ({ ...prevEmployee, status: e.target.value }));
-            }}
-            label='Status'
-            options={statusOptions}
-          />
         </div>
         <div className='form-address-inputs'>
           <div className='form-input'>
@@ -168,6 +173,48 @@ const CreateEmployee = () => {
               placeholder='City'
             />
           </div>
+          <div className='form-input'>
+            <Input
+              type='text'
+              value={employee.address.state}
+              onChange={(e: any) => {
+                setEmployee((prevEmployee) => ({
+                  ...prevEmployee,
+                  address: { ...employee.address, state: e.target.value }
+                }));
+              }}
+              label=''
+              placeholder='State'
+            />
+          </div>
+          <div className='form-input'>
+            <Input
+              type='text'
+              value={employee.address.country}
+              onChange={(e: any) => {
+                setEmployee((prevEmployee) => ({
+                  ...prevEmployee,
+                  address: { ...employee.address, country: e.target.value }
+                }));
+              }}
+              label=''
+              placeholder='Country'
+            />
+          </div>
+          <div className='form-input'>
+            <Input
+              type='text'
+              value={employee.address.pincode}
+              onChange={(e: any) => {
+                setEmployee((prevEmployee) => ({
+                  ...prevEmployee,
+                  address: { ...employee.address, pincode: e.target.value }
+                }));
+              }}
+              label=''
+              placeholder='Pincode'
+            />
+          </div>
           <div className='form-button'>
             <Button style='primary' onClick={handleCreateEmployee} text='Create' />
             <Button
@@ -178,6 +225,28 @@ const CreateEmployee = () => {
               text='Cancel'
             />
           </div>
+        </div>
+        <div className='form-input'>
+          {roleOptions && (
+            <Select
+              value={employee.role}
+              onChange={(e: any) => {
+                setEmployee((prevEmployee) => ({ ...prevEmployee, role: e.target.value }));
+              }}
+              label='Role'
+              options={roleOptions}
+            />
+          )}
+        </div>
+        <div className='form-input'>
+          <Select
+            value={employee.status}
+            onChange={(e: any) => {
+              setEmployee((prevEmployee) => ({ ...prevEmployee, status: e.target.value }));
+            }}
+            label='Status'
+            options={statusOptions}
+          />
         </div>
       </div>
     </HomeLayout>

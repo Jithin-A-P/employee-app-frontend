@@ -26,6 +26,13 @@ const BookListing = () => {
         ) : (
           <div></div>
         )}
+        <div>
+          <label>Filter by</label>
+          <select className='filter'>
+            <option value={`Category`}>Category</option>
+            <option value={`Availability`}>Availability</option>
+          </select>
+        </div>
         {adminPrivileges && (
           <MaterialIconButton
             icon='assets/icons/plus.svg'
