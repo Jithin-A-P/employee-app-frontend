@@ -14,7 +14,7 @@ type BookcardPropTypes = {
   isbn: string;
   id: string;
   availableCount: number;
-  totalCount: number;
+  totalCount?: number;
   publisher: string;
 };
 
@@ -70,8 +70,11 @@ const BookCard: FC<BookcardPropTypes> = ({
 
   const results = book?.data?.shelves.map((item) => ({
     id: item.shelfCode,
-    name: item.shelfCode
+    name: item.shelfCode,
+    availableCount: item.availableBookCount
   }));
+
+  console.log('results..', results);
 
   const borrowedByList = book?.data?.borrowedBy.map((item) => ({
     id: item.id,
@@ -121,12 +124,12 @@ const BookCard: FC<BookcardPropTypes> = ({
           }}
           shelves={results}
           borrowedBy={borrowedByList}
-          isAvailable={count == 0 ? false : true}
+          isAvailable={availableCount == 0 ? false : true}
           id={id}
           title={title}
           author={author}
           publisher={publisher}
-          count={count}
+          availableCount={availableCount}
           isbn={isbn}
           imgsrc={imgsrc}
         />

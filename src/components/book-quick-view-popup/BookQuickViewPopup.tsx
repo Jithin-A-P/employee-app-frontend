@@ -9,7 +9,7 @@ import getCurrentUser from '../../utils/get-current-user';
 type BookQuckViewPopupPropsType = {
   isVisible: boolean;
   isAvailable: boolean;
-  shelves: { id: string; name: string }[];
+  shelves: { id: string; name: string; availableCount: number }[];
   borrowedBy: { id: string; name: string }[];
   setIsVisible: (isVisible: boolean) => void;
   handleNotify: () => void;
@@ -18,7 +18,7 @@ type BookQuckViewPopupPropsType = {
   author: string;
   isbn: string;
   publisher: string;
-  count: number;
+  availableCount: number;
   imgsrc?: string;
 };
 
@@ -31,7 +31,7 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
   author,
   isbn,
   publisher,
-  count,
+  availableCount,
   imgsrc,
   shelves,
   borrowedBy
@@ -96,9 +96,9 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
         </div>
       </div>
       <div className='popup-buttons'>
-        {count != 0 ? (
+        {availableCount != 0 ? (
           <>
-            <div className='book-count'>{`AVAILABLE: ${count}`}</div>
+            <div className='book-count'>{`AVAILABLE: ${availableCount}`}</div>
             <div>
               <SelectForLibrary
                 value={shelf}
@@ -106,7 +106,7 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
                   setShelf(e.target.value);
                 }}
                 label='LEND'
-                options={shelves}
+                options={shelves.filter((item) => item.availableCount > 0)}
               />
             </div>
             <div>
