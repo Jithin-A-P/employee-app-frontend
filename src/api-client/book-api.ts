@@ -45,6 +45,30 @@ const bookApi = baseApi.injectEndpoints({
         method: 'GET'
       }),
       providesTags: ['Books']
+    }),
+    notifyMe: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/books/${id}/subscribe`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['Books']
+    }),
+    lendBook: builder.mutation({
+      query: ({ isbn, body }) => ({
+        url: `/books/${isbn}/lend`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['Books']
+    }),
+    requestBook: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/books/${id}/subscribe`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['Books']
     })
   })
 });
@@ -56,5 +80,8 @@ export const {
   useEditBookMutation,
   useGetBookListQuery,
   useGetBookQuery,
-  useGetCategoryListQuery
+  useGetCategoryListQuery,
+  useNotifyMeMutation,
+  useLendBookMutation,
+  useRequestBookMutation
 } = bookApi;

@@ -53,7 +53,7 @@ const BookListing = () => {
             title={item.title}
             imgsrc={item.thumbnailUrl}
             author={item.author}
-            count={item.count}
+            count={item.availableCount}
             publisher={item.publisher}
           />
         ))}

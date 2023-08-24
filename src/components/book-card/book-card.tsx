@@ -4,6 +4,8 @@ import Button from '../button/Button';
 import { useNavigate } from 'react-router-dom';
 import BookQuckViewPopup from '../book-quick-view-popup/BookQuickViewPopup';
 import getCurrentUser from '../../utils/get-current-user';
+import { useGetBookQuery, useNotifyMeMutation } from '../../api-client/book-api';
+// import { useGetShelflistQuery } from '../../api-client/shelf-api';
 
 type BookcardPropTypes = {
   imgsrc?: string;
@@ -17,6 +19,7 @@ type BookcardPropTypes = {
 
 const BookCard: FC<BookcardPropTypes> = ({ id, isbn, count, title, imgsrc, publisher, author }) => {
   const navigate = useNavigate();
+  const empId = getCurrentUser().id;
 
   const setQuickViewPopup = (isVisible) => {
     setPopupIsVisible(isVisible);
@@ -25,6 +28,7 @@ const BookCard: FC<BookcardPropTypes> = ({ id, isbn, count, title, imgsrc, publi
   const onQuickView = (e) => {
     e.stopPropagation();
     setQuickViewPopup(true);
+    console.log('Viewed...');
   };
 
   const currenUserRole = getCurrentUser().role;
@@ -35,6 +39,35 @@ const BookCard: FC<BookcardPropTypes> = ({ id, isbn, count, title, imgsrc, publi
   const onClick = () => {
     navigate(`/library/books/${id}/edit`);
   };
+
+  const [notifyMe, { isSuccess: isNotifySuccess }] = useNotifyMeMutation();
+
+  console.log(isNotifySuccess);
+
+  const handleNotify = (empId, isbn) => {
+    notifyMe({
+      id: id,
+      body: {
+        requestedBy: empId,
+        bookISBN: isbn,
+        status: 'active'
+      }
+    });
+  };
+
+  const { data: book } = useGetBookQuery(id);
+
+  console.log('book');
+
+  const results = book?.data?.shelves.map((item) => ({
+    id: item.shelfCode,
+    name: item.shelfCode
+  }));
+
+  const borrowedByList = book?.data?.borrowedBy.map((item) => ({
+    id: item.id,
+    name: item.name
+  }));
 
   return (
     <>
@@ -56,20 +89,27 @@ const BookCard: FC<BookcardPropTypes> = ({ id, isbn, count, title, imgsrc, publi
           <Button style='library' text='View' onClick={onQuickView} />
         </div>
       </div>
-      <BookQuckViewPopup
-        isVisible={popupIsVisible}
-        setIsVisible={(isVisible) => {
-          setPopupIsVisible(isVisible);
-        }}
-        handleNotify={() => {}}
-        isAvailable={count == 0 ? false : true}
-        title={title}
-        author={author}
-        publisher={publisher}
-        count={count}
-        isbn={isbn}
-        imgsrc={imgsrc}
-      />
+      {results && (
+        <BookQuckViewPopup
+          isVisible={popupIsVisible}
+          setIsVisible={(isVisible) => {
+            setPopupIsVisible(isVisible);
+          }}
+          handleNotify={() => {
+            handleNotify(empId, isbn);
+          }}
+          shelves={results}
+          borrowedBy={borrowedByList}
+          isAvailable={count == 0 ? false : true}
+          id={id}
+          title={title}
+          author={author}
+          publisher={publisher}
+          count={count}
+          isbn={isbn}
+          imgsrc={imgsrc}
+        />
+      )}
     </>
   );
 };
