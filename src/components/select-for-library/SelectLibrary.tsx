@@ -3,7 +3,7 @@ import './style.css';
 
 type SelectPropsType = {
   value: string;
-  onChange: (e: any) => void;
+  onChange: (e?: any) => void;
   label: string;
   options: any[];
 };
