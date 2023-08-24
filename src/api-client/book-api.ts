@@ -64,7 +64,7 @@ const bookApi = baseApi.injectEndpoints({
         body
       }),
       invalidatesTags: ['Employee']
-
+    }),
     notifyMe: builder.mutation({
       query: ({ id, body }) => ({
         url: `/books/${id}/subscribe`,
@@ -109,13 +109,10 @@ export const {
   useLazyGetBookListQuery,
   useGetBookQuery,
   useGetCategoryListQuery,
-
-  useReturnBookMutation
-
+  useReturnBookMutation,
   useUploadBookMutation,
   useNotifyMeMutation,
   useLendBookMutation,
   useRequestBookMutation,
   useLazySearchQuery
-
 } = bookApi;
