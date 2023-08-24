@@ -78,15 +78,7 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
     >
       <div className='bookData'>
         <div className='book-image'>
-          <div
-            style={{
-              width: '200px',
-              height: '300px',
-              backgroundPosition: 'center',
-              background: `url(${imgsrc ? imgsrc : 'assets/img/book1.png'}) no-repeat`,
-              backgroundSize: 'contain'
-            }}
-          ></div>
+          <img src={imgsrc ? imgsrc : 'assets/img/book1.png'} alt='Book image' />
         </div>
         <div className='book-details'>
           <div>Title : {title}</div>
@@ -109,15 +101,17 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
                 options={shelves.filter((item) => item.availableCount > 0)}
               />
             </div>
-            <div>
-              <Button
-                text='LEND'
-                style='notify'
-                onClick={() => {
-                  handleLend(empId, isbn);
-                }}
-              />
-            </div>
+            {shelf && (
+              <div>
+                <Button
+                  text='LEND'
+                  style='notify'
+                  onClick={() => {
+                    handleLend(empId, isbn);
+                  }}
+                />
+              </div>
+            )}
           </>
         ) : (
           <>

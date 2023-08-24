@@ -1,6 +1,5 @@
 import { FC, useState } from 'react';
 import './book-card.css';
-import Button from '../button/Button';
 import { useNavigate } from 'react-router-dom';
 import BookQuckViewPopup from '../book-quick-view-popup/BookQuickViewPopup';
 import getCurrentUser from '../../utils/get-current-user';
@@ -86,22 +85,17 @@ const BookCard: FC<BookcardPropTypes> = ({
       <div className='book-card-main' onClick={onQuickView}>
         <div className='book-card'>
           <div className='book-card-top'>
-            {availableCount !== 0 ? (
-              <div className='not-available-icon'></div>
-            ) : (
-              <div className='not-available-icon'>
-                <img src='../../../assets/img/icons8-not-available-48.png' alt='Not Available!' />
-              </div>
-            )}
             <div
               className='book-edit-icon-container'
               onClick={adminPrivileges ? onClick : () => {}}
             >
-              <img
-                className='book-edit-icon'
-                src='../../../assets/icons/edit.svg'
-                alt='Edit book'
-              />
+              {adminPrivileges && (
+                <img
+                  className='book-edit-icon'
+                  src='../../../assets/icons/edit.svg'
+                  alt='Edit book'
+                />
+              )}
             </div>
           </div>
           <div className='book-img'>
@@ -109,8 +103,15 @@ const BookCard: FC<BookcardPropTypes> = ({
           </div>
           <div className='book-title'>{title}</div>
         </div>
-        <div className='button-div'>
-          <Button style='library' text='View' onClick={onQuickView} />
+        <div
+          className='button-div'
+          style={
+            availableCount
+              ? { backgroundColor: 'rgb(192 255 177)', color: '#345d3f' }
+              : { backgroundColor: '#ffb2b2', color: 'red' }
+          }
+        >
+          {availableCount ? 'AVAILABLE' : 'NOT AVAILABLE'}
         </div>
       </div>
       {results && (
