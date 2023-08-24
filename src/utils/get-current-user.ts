@@ -10,8 +10,7 @@ const getCurrentUser = () => {
     id: id,
     name: name,
     email: email,
-    role: role,
-    id: id
+    role: role
   };
 };
 

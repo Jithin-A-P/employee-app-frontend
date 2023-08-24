@@ -1,6 +1,4 @@
-// import { useState } from 'react';
 import BookCard from '../../components/book-card/book-card';
-// import BookQuckViewPopup from '../../components/book-quick-view-popup/BookQuickViewPopup';
 import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
 import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
@@ -15,41 +13,45 @@ const BookListing = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log('location', location);
   const pattern = /^\/library\/shelves\/[a-fA-F0-9-]+$/;
   const isMatch = pattern.test(location.pathname);
 
-  const [fetchData, { data: responseBookList }] = useLazyGetBookListQuery();
   const currenUserRole = getCurrentUser().role;
   const adminPrivileges = currenUserRole === 'admin' || currenUserRole === 'hr';
 
-  const [searchQuery, setSearchQuery] = useState();
-  // const [bookData, setBookData] = useState({ data: null });
-
-  useEffect(() => {
-    fetchData({});
-  }, []);
-
-  // const [search, { data: searchResult }] = useLazySearchQuery(searchQuery);
+  const [queryParams, setQueryParams] = useState({
+    pageNumber: 1,
+    rowsPerPage: 12,
+    searchQuery: null,
+    category: null,
+    availability: null
+  });
 
   const handler = (event) => {
-    if (event.key === 'Enter') fetchData({ searchQuery: searchQuery });
+    if (event.key === 'Enter') fetchData(queryParams);
   };
+
+  const [fetchData, { data: responseBookList }] = useLazyGetBookListQuery();
+
+  useEffect(() => {
+    fetchData(queryParams);
+  }, [queryParams]);
 
   return (
     <HomeLayout>
       <SubHeader title='Books Listing'>
-        {location.pathname === '/library/books' || isMatch ? (
+        {(location.pathname === '/library/books' || isMatch) && (
           <SearchBar
-            value={searchQuery}
+            value={queryParams.searchQuery}
             onChange={(e) => {
-              setSearchQuery(e.target.value);
+              setQueryParams((prevQueryParams) => ({
+                ...prevQueryParams,
+                searchQuery: e.target.value
+              }));
             }}
             onKeyPress={(e) => handler(e)}
             placeholder='Search here'
           />
-        ) : (
-          <div></div>
         )}
         <div>
           <label>Filter by</label>
@@ -68,7 +70,6 @@ const BookListing = () => {
           />
         )}
       </SubHeader>
-
       {responseBookList?.data && (
         <div className='book-main'>
           {responseBookList?.data.map((item) => (

@@ -37,7 +37,6 @@ const BookCard: FC<BookcardPropTypes> = ({
   const onQuickView = (e) => {
     e.stopPropagation();
     setQuickViewPopup(true);
-    console.log('Viewed...');
   };
 
   const currenUserRole = getCurrentUser().role;
