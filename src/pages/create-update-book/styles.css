@@ -6,7 +6,7 @@
     padding: 34px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 30px;
     align-items: flex-start;
     /* margin-top: 120px; */
 }
@@ -43,6 +43,8 @@
 .shelf-input-div {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
+    gap: 30px;
 }
 
 .half-size{

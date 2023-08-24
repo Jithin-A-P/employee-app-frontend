@@ -13,11 +13,20 @@ type BookcardPropTypes = {
   author: string;
   isbn: string;
   id: string;
-  count: number;
+  availableCount: number;
+  totalCount: number;
   publisher: string;
 };
 
-const BookCard: FC<BookcardPropTypes> = ({ id, isbn, count, title, imgsrc, publisher, author }) => {
+const BookCard: FC<BookcardPropTypes> = ({
+  id,
+  isbn,
+  availableCount,
+  title,
+  imgsrc,
+  publisher,
+  author
+}) => {
   const navigate = useNavigate();
   const empId = getCurrentUser().id;
 
@@ -71,15 +80,27 @@ const BookCard: FC<BookcardPropTypes> = ({ id, isbn, count, title, imgsrc, publi
 
   return (
     <>
-      <div className='book-card-main' onClick={adminPrivileges ? onClick : () => {}}>
+      <div className='book-card-main' onClick={onQuickView}>
         <div className='book-card'>
-          {count !== 0 ? (
-            <div className='not-available-icon'></div>
-          ) : (
-            <div className='not-available-icon'>
-              <img src='../../../assets/img/icons8-not-available-48.png' alt='Not Available!' />
+          <div className='book-card-top'>
+            {availableCount !== 0 ? (
+              <div className='not-available-icon'></div>
+            ) : (
+              <div className='not-available-icon'>
+                <img src='../../../assets/img/icons8-not-available-48.png' alt='Not Available!' />
+              </div>
+            )}
+            <div
+              className='book-edit-icon-container'
+              onClick={adminPrivileges ? onClick : () => {}}
+            >
+              <img
+                className='book-edit-icon'
+                src='../../../assets/icons/edit.svg'
+                alt='Edit book'
+              />
             </div>
-          )}
+          </div>
           <div className='book-img'>
             <img src={imgsrc ? imgsrc : 'assets/img/book1.png'} />
           </div>
