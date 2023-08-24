@@ -35,6 +35,7 @@ const BookListing = () => {
 
   const [fetchData, { data: responseBookList }] = useLazyGetBookListQuery();
   const books = responseBookList?.data;
+  const totalBookCount = responseBookList?.meta?.total;
 
   useEffect(() => {
     fetchData(queryParams);
@@ -116,6 +117,8 @@ const BookListing = () => {
       )}
       <PaginationNav
         pageNumber={queryParams.pageNumber}
+        total={totalBookCount}
+        rowsPerPage={queryParams.rowsPerPage}
         setPageNumber={(pageNumber) => {
           setQueryParams((prevQueryParams) => ({
             ...prevQueryParams,

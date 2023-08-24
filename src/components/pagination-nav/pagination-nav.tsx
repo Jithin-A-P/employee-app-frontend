@@ -1,13 +1,13 @@
 import { FC } from 'react';
 import './styles.css';
 
-const PaginationNav: FC<any> = ({ pageNumber, setPageNumber }) => {
+const PaginationNav: FC<any> = ({ pageNumber, setPageNumber, total, rowsPerPage }) => {
   return (
     <div className='pagination-nav-container'>
       <div
         className='pagination-button'
         onClick={() => {
-          setPageNumber(pageNumber - 1);
+          setPageNumber(pageNumber > 1 ? pageNumber - 1 : 1);
         }}
       >
         {'<'}
@@ -16,7 +16,7 @@ const PaginationNav: FC<any> = ({ pageNumber, setPageNumber }) => {
       <div
         className='pagination-button'
         onClick={() => {
-          setPageNumber(pageNumber + 1);
+          if (pageNumber * rowsPerPage < total) setPageNumber(pageNumber + 1);
         }}
       >
         {'>'}
