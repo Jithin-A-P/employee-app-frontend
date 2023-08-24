@@ -1,11 +1,12 @@
 import Book from '../types/create-book-payload';
+// import { ResponseDataType } from '../utils/response-type';
 import baseApi from './base-api';
 
 const bookApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getBookList: builder.query({
-      query: () => ({
-        url: '/books',
+      query: ({ searchQuery }) => ({
+        url: searchQuery ? `/books?searchQuery=${searchQuery}` : '/books',
         method: 'GET'
       }),
       providesTags: ['Books']
@@ -39,6 +40,15 @@ const bookApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Books']
     }),
+    uploadBook: builder.mutation({
+      query: (file) => ({
+        url: '/books/upload',
+        method: 'POST',
+        body: file,
+        formData: true
+      }),
+      invalidatesTags: ['Books']
+    }),
     getCategoryList: builder.query({
       query: () => ({
         url: '/book-categories',
@@ -46,6 +56,7 @@ const bookApi = baseApi.injectEndpoints({
       }),
       providesTags: ['Books']
     }),
+
     returnBook: builder.mutation({
       query: ({ id, body }) => ({
         url: `/books/${id}/return`,
@@ -53,6 +64,38 @@ const bookApi = baseApi.injectEndpoints({
         body
       }),
       invalidatesTags: ['Employee']
+
+    notifyMe: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/books/${id}/subscribe`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['Books']
+    }),
+    lendBook: builder.mutation({
+      query: ({ isbn, body }) => ({
+        url: `/books/${isbn}/lend`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['Books']
+    }),
+    requestBook: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/books/${id}/subscribe`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['Books']
+    }),
+    search: builder.query({
+      query: (searchQuery) => ({
+        url: `/books?searchQuery=${searchQuery}`,
+        method: 'GET'
+      }),
+      providesTags: ['Books']
+
     })
   })
 });
@@ -63,7 +106,16 @@ export const {
   useDeleteBookMutation,
   useEditBookMutation,
   useGetBookListQuery,
+  useLazyGetBookListQuery,
   useGetBookQuery,
   useGetCategoryListQuery,
+
   useReturnBookMutation
+
+  useUploadBookMutation,
+  useNotifyMeMutation,
+  useLendBookMutation,
+  useRequestBookMutation,
+  useLazySearchQuery
+
 } = bookApi;

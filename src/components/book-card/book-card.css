@@ -24,6 +24,25 @@
   height: 80%;
 }
 
+.book-card-top {
+  margin: 0px;
+  padding-top: 5px;
+  padding-left: 5px;
+  width: inherit;
+  display: flex;
+  align-items: flex-start;
+}
+
+.book-edit-icon-container {
+  padding: 0px;
+  margin: 0px;
+}
+
+.book-edit-icon {
+  width: 18px;
+  filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(59deg) brightness(99%) contrast(103%);
+}
+
 .details-div {
   display: flex;
   justify-content: center;
