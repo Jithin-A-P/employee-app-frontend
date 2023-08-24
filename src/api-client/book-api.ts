@@ -56,6 +56,15 @@ const bookApi = baseApi.injectEndpoints({
       }),
       providesTags: ['Books']
     }),
+
+    returnBook: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/books/${id}/return`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['Employee']
+
     notifyMe: builder.mutation({
       query: ({ id, body }) => ({
         url: `/books/${id}/subscribe`,
@@ -86,6 +95,7 @@ const bookApi = baseApi.injectEndpoints({
         method: 'GET'
       }),
       providesTags: ['Books']
+
     })
   })
 });
@@ -99,9 +109,13 @@ export const {
   useLazyGetBookListQuery,
   useGetBookQuery,
   useGetCategoryListQuery,
+
+  useReturnBookMutation
+
   useUploadBookMutation,
   useNotifyMeMutation,
   useLendBookMutation,
   useRequestBookMutation,
   useLazySearchQuery
+
 } = bookApi;
