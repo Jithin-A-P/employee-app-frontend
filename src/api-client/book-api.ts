@@ -7,7 +7,8 @@ const bookApi = baseApi.injectEndpoints({
       query: () => ({
         url: '/books',
         method: 'GET'
-      })
+      }),
+      providesTags: ['Books']
     }),
     getBook: builder.query({
       query: (id) => ({
@@ -21,7 +22,7 @@ const bookApi = baseApi.injectEndpoints({
         method: 'POST',
         body
       }),
-      invalidatesTags: ['Employees']
+      invalidatesTags: ['Books']
     }),
     editBook: builder.mutation({
       query: ({ id, body }) => ({
@@ -29,14 +30,21 @@ const bookApi = baseApi.injectEndpoints({
         method: 'PUT',
         body
       }),
-      invalidatesTags: ['Employees']
+      invalidatesTags: ['Books']
     }),
     deleteBook: builder.mutation({
       query: (id) => ({
         url: `/books/${id}`,
         method: 'DELETE'
       }),
-      invalidatesTags: ['Employees']
+      invalidatesTags: ['Books']
+    }),
+    getCategoryList: builder.query({
+      query: () => ({
+        url: '/book-categories',
+        method: 'GET'
+      }),
+      providesTags: ['Books']
     })
   })
 });
@@ -47,5 +55,6 @@ export const {
   useDeleteBookMutation,
   useEditBookMutation,
   useGetBookListQuery,
-  useGetBookQuery
+  useGetBookQuery,
+  useGetCategoryListQuery
 } = bookApi;

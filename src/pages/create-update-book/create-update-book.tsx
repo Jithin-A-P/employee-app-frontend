@@ -12,7 +12,8 @@ import {
   useCreateBookMutation,
   useDeleteBookMutation,
   useEditBookMutation,
-  useGetBookQuery
+  useGetBookQuery,
+  useGetCategoryListQuery
 } from '../../api-client/book-api';
 import { useGetShelflistQuery } from '../../api-client/shelf-api';
 import Book from '../../types/create-book-payload';
@@ -33,28 +34,17 @@ const CreateUpdateBook = () => {
     thumbnailUrl: ''
   });
 
-  const bookToSend: Book = {
-    isbn: book.isbn,
-    title: book.title,
-    author: book.author,
-    category: book.category,
-    description: book.description,
-    publisher: book.publisher,
-    releaseDate: book.releaseDate,
-    thumbnailUrl: book.thumbnailUrl,
-    shelves: book.shelves
-  };
-
   const { data: response, isSuccess } = useGetShelflistQuery('');
+  const { data: categoryResponse, isSuccess: isCategorySuccess } = useGetCategoryListQuery('');
 
   const [popupIsVisible, setPopupIsVisible] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [newShelf, setNewShelf] = useState({ customDiv: ['shelf1'] });
-  const [newShelfDetails, setNewShelfDetails] = useState([{ shelfCode: ' ', bookCount: 0 }]);
-  let shelfCount = 1;
+  const [newShelf, setNewShelf] = useState({ customDiv: [] });
+  const [newShelfDetails, setNewShelfDetails] = useState([]);
+  let shelfCount = 0;
 
   const addNewShelf = () => {
     let currentShelfs = newShelf.customDiv;
@@ -81,7 +71,6 @@ const CreateUpdateBook = () => {
   };
 
   const handleShelfCodeChange = (e, i) => {
-    console.log(newShelfDetails);
     let currentShelfDetails = [...newShelfDetails];
 
     currentShelfDetails[i].shelfCode = e.target.value;
@@ -118,6 +107,7 @@ const CreateUpdateBook = () => {
     navigate('/library/books');
   };
   let [shelves, setShelves] = useState([]);
+  let [categories, setCategories] = useState([]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -127,11 +117,48 @@ const CreateUpdateBook = () => {
     }
   }, [response, isSuccess]);
 
+  useEffect(() => {
+    if (isCategorySuccess) {
+      const results = categoryResponse?.data.map((item) => ({ id: item, name: item }));
+
+      setCategories(results);
+    }
+  }, [categoryResponse, isCategorySuccess]);
+
   const { data: responseBook, isSuccess: isGetBookSuccess } = useGetBookQuery(id);
 
   useEffect(() => {
-    if (isGetBookSuccess) setBook(responseBook?.data);
+    if (id)
+      if (isGetBookSuccess) {
+        setBook(responseBook?.data);
+        const results = responseBook?.data?.shelves.map((item) => ({
+          shelfCode: item.shelfCode,
+          bookCount: item.availableBookCount
+        }));
+
+        results.map(() => {
+          let currentShelfs = newShelf.customDiv;
+
+          shelfCount++;
+          currentShelfs.push(`shelf${shelfCount}`);
+
+          setNewShelf({ customDiv: currentShelfs });
+        });
+        setNewShelfDetails(results);
+      }
   }, [responseBook, isGetBookSuccess]);
+
+  const bookToSend: Book = {
+    isbn: book.isbn,
+    title: book.title,
+    author: book.author,
+    category: book.category,
+    description: book.description,
+    publisher: book.publisher,
+    releaseDate: book.releaseDate,
+    thumbnailUrl: book.thumbnailUrl,
+    shelves: newShelfDetails
+  };
 
   return (
     <HomeLayout>
@@ -195,14 +222,13 @@ const CreateUpdateBook = () => {
           />
         </div>
         <div className='form-input'>
-          <Input
-            type='text'
+          <Select
             value={book.category}
             onChange={(e: any) => {
               setBook((prevBook) => ({ ...prevBook, category: e.target.value }));
             }}
-            label='Category *'
-            placeholder='Category'
+            label='Category'
+            options={categories}
           />
         </div>
         <div className='form-input'>
@@ -259,34 +285,33 @@ const CreateUpdateBook = () => {
               Delete Shelf
             </div>
           </div>
-          {newShelf.customDiv.map((shelf, i) => {
-            console.log(newShelfDetails);
-
-            return (
-              <>
-                <div className='shelf-input-div'>
-                  <div className='half-size'>
-                    <Select
-                      value={newShelfDetails[i].shelfCode}
-                      onChange={(e) => handleShelfCodeChange(e, i)}
-                      key={`${shelf}code`}
-                      label='Shelf Code'
-                      options={shelves}
-                    />
+          {newShelfDetails.length > 1 &&
+            newShelf.customDiv.map((shelf, i) => {
+              return (
+                <>
+                  <div className='shelf-input-div'>
+                    <div className='half-size'>
+                      <Select
+                        value={newShelfDetails[i].shelfCode}
+                        onChange={(e) => handleShelfCodeChange(e, i)}
+                        key={`${shelf}code`}
+                        label='Shelf Code'
+                        options={shelves}
+                      />
+                    </div>
+                    <div className='half-size'>
+                      <ShelfInput
+                        value={newShelfDetails[i].bookCount}
+                        onChange={(e) => handleBookCountChange(e, i)}
+                        key={`${shelf}count`}
+                        type='text'
+                        placeholder='Book Count'
+                      />
+                    </div>
                   </div>
-                  <div className='half-size'>
-                    <ShelfInput
-                      value={newShelfDetails[i].bookCount}
-                      onChange={(e) => handleBookCountChange(e, i)}
-                      key={`${shelf}count`}
-                      type='text'
-                      placeholder='Book Count'
-                    />
-                  </div>
-                </div>
-              </>
-            );
-          })}
+                </>
+              );
+            })}
         </div>
         <div className='form-button-book'>
           {id ? (

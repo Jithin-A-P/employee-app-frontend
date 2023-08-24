@@ -10,7 +10,7 @@ type BookcardPropTypes = {
   title: string;
   author: string;
   isbn: string;
-  id: number;
+  id: string;
   count: number;
   publisher: string;
 };

@@ -4,7 +4,7 @@ const createEmployeePayload = (employee) => ({
   password: 'password',
   status: employee.status.toLowerCase(),
   role: employee.role.toLowerCase(),
-  departmentId: Number(employee.departmentId),
+  departmentId: employee.departmentId,
   experience: Number(employee.experience),
   address: {
     ...employee.address,

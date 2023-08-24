@@ -7,7 +7,8 @@ const shelfApi = baseApi.injectEndpoints({
       query: () => ({
         url: '/shelfs',
         method: 'GET'
-      })
+      }),
+      providesTags: ['Shelves']
     }),
     getShelf: builder.query({
       query: (id) => ({
@@ -21,7 +22,7 @@ const shelfApi = baseApi.injectEndpoints({
         method: 'POST',
         body
       }),
-      invalidatesTags: ['Employees']
+      invalidatesTags: ['Shelves']
     }),
     editShelf: builder.mutation({
       query: ({ id, body }) => ({
@@ -29,14 +30,14 @@ const shelfApi = baseApi.injectEndpoints({
         method: 'PUT',
         body
       }),
-      invalidatesTags: ['Employees']
+      invalidatesTags: ['Shelves']
     }),
     deleteShelf: builder.mutation({
       query: (id) => ({
         url: `/shelfs/${id}`,
         method: 'DELETE'
       }),
-      invalidatesTags: ['Employees']
+      invalidatesTags: ['Shelves']
     })
   })
 });

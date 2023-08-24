@@ -64,7 +64,7 @@ const Employee = () => {
         <Table
           tableHeadValues={tableHeadValues}
           employees={response?.data}
-          onRowClick={(id: number) => {
+          onRowClick={(id: string) => {
             navigate(`/employees/${id}`);
           }}
           setDeletePopup={(isVisible, id) => {
