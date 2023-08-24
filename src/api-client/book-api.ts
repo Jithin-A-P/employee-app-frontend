@@ -1,4 +1,5 @@
 import Book from '../types/create-book-payload';
+// import { ResponseDataType } from '../utils/response-type';
 import baseApi from './base-api';
 
 const bookApi = baseApi.injectEndpoints({
@@ -39,6 +40,15 @@ const bookApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Books']
     }),
+    uploadBook: builder.mutation({
+      query: (file) => ({
+        url: '/books/upload',
+        method: 'POST',
+        body: file,
+        formData: true
+      }),
+      invalidatesTags: ['Books']
+    }),
     getCategoryList: builder.query({
       query: () => ({
         url: '/book-categories',
@@ -56,5 +66,6 @@ export const {
   useEditBookMutation,
   useGetBookListQuery,
   useGetBookQuery,
-  useGetCategoryListQuery
+  useGetCategoryListQuery,
+  useUploadBookMutation
 } = bookApi;
