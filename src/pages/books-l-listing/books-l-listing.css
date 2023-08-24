@@ -24,7 +24,16 @@
     padding-left: 20px;
     padding-right: 20px;
     margin-left: 10px;
-    color: white;
+    color: black;
     font-size: 15px;
 }
 
+.sub-option{
+    background-color: blue;
+    offset-position: right 100px;
+}
+
+.filter>option{
+    color: black;
+    background-color: #7c1e1e;
+}

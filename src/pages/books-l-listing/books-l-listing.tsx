@@ -7,7 +7,7 @@ import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import './books-l-listing.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SearchBar from '../../components/search-bar/search-bar';
-import { useLazyGetBookListQuery } from '../../api-client/book-api';
+import { useGetCategoryListQuery, useLazyGetBookListQuery } from '../../api-client/book-api';
 import getCurrentUser from '../../utils/get-current-user';
 import { useEffect, useState } from 'react';
 
@@ -24,6 +24,7 @@ const BookListing = () => {
   const adminPrivileges = currenUserRole === 'admin' || currenUserRole === 'hr';
 
   const [searchQuery, setSearchQuery] = useState();
+  const [category, setCategory] = useState('category');
   // const [bookData, setBookData] = useState({ data: null });
 
   useEffect(() => {
@@ -35,6 +36,11 @@ const BookListing = () => {
   const handler = (event) => {
     if (event.key === 'Enter') fetchData({ searchQuery: searchQuery });
   };
+
+  const { data: categoryResponse } = useGetCategoryListQuery('');
+  const categories = categoryResponse?.data.map((item) => ({ id: item, name: item }));
+
+  console.log('categores...', categories);
 
   return (
     <HomeLayout>
@@ -53,10 +59,24 @@ const BookListing = () => {
         )}
         <div>
           <label>Filter by</label>
-          <select className='filter'>
-            <option value={`Category`}>Category</option>
-            <option value={`Availability`}>Availability</option>
-          </select>
+          <div>
+            <select
+              onChange={(e) => {
+                setCategory(e.target.value);
+              }}
+              value={category}
+              className='filter'
+            >
+              <option selected hidden>
+                Category
+              </option>
+              {categories?.map((item) => <option key={item.id}>{item.name}</option>)}
+            </select>
+            <select className='filter'>
+              <option value={`Category`}>Category</option>
+              <option value={`Availability`}>Availability</option>
+            </select>
+          </div>
         </div>
         {adminPrivileges && (
           <MaterialIconButton
