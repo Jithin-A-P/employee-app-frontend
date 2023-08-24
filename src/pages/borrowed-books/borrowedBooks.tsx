@@ -3,6 +3,7 @@ import { useGetAnEmployeeQuery } from '../../api-client/employee-api';
 import SubHeader from '../../components/sub-header/SubHeader';
 import Table from '../../components/table/Table';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
+import './styles.css';
 
 const BorrowedBooks = () => {
   const { id } = useParams();
@@ -50,7 +51,7 @@ const BorrowedBooks = () => {
         </>
       )}
       {borrowedBooks.length == 0 && booksReturned.length == 0 && (
-        <div>Please read some books!!!</div>
+        <div className='history'>Ooops ! You have no book history</div>
       )}
     </HomeLayout>
   );
