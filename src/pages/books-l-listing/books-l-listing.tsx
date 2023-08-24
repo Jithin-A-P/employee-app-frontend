@@ -5,9 +5,10 @@ import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import './books-l-listing.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SearchBar from '../../components/search-bar/search-bar';
-import { useLazyGetBookListQuery } from '../../api-client/book-api';
+import { useGetCategoryListQuery, useLazyGetBookListQuery } from '../../api-client/book-api';
 import getCurrentUser from '../../utils/get-current-user';
 import { useEffect, useState } from 'react';
+import PaginationNav from '../../components/pagination-nav/pagination-nav';
 
 const BookListing = () => {
   const navigate = useNavigate();
@@ -27,11 +28,13 @@ const BookListing = () => {
     availability: null
   });
 
-  const handler = (event) => {
-    if (event.key === 'Enter') fetchData(queryParams);
-  };
+  console.log('Query', queryParams);
+
+  const { data: responseCategoriesList } = useGetCategoryListQuery('');
+  const categories = responseCategoriesList?.data.map((item) => ({ id: item, name: item }));
 
   const [fetchData, { data: responseBookList }] = useLazyGetBookListQuery();
+  const books = responseBookList?.data;
 
   useEffect(() => {
     fetchData(queryParams);
@@ -49,16 +52,41 @@ const BookListing = () => {
                 searchQuery: e.target.value
               }));
             }}
-            onKeyPress={(e) => handler(e)}
+            // onKeyPress={(e) => handler(e)}
             placeholder='Search here'
           />
         )}
         <div>
           <label>Filter by</label>
-          <select className='filter'>
-            <option value={`Category`}>Category</option>
-            <option value={`Availability`}>Availability</option>
-          </select>
+          <div>
+            <select
+              onChange={(e) => {
+                setQueryParams((prevQueryParams) => ({
+                  ...prevQueryParams,
+                  category: e.target.value
+                }));
+              }}
+              value={queryParams.category}
+              className='filter'
+            >
+              <option selected hidden>
+                Category
+              </option>
+              {categories?.map((item) => <option key={item.id}>{item.name}</option>)}
+            </select>
+            <select
+              className='filter'
+              onChange={(e) => {
+                setQueryParams((prevQueryParams) => ({
+                  ...prevQueryParams,
+                  availability: e.target.value
+                }));
+              }}
+            >
+              <option value={'false'}>All</option>
+              <option value={'true'}>Available</option>
+            </select>
+          </div>
         </div>
         {adminPrivileges && (
           <MaterialIconButton
@@ -70,9 +98,9 @@ const BookListing = () => {
           />
         )}
       </SubHeader>
-      {responseBookList?.data && (
+      {books && (
         <div className='book-main'>
-          {responseBookList?.data.map((item) => (
+          {books.map((item) => (
             <BookCard
               key={item.id}
               id={item.id}
@@ -86,6 +114,15 @@ const BookListing = () => {
           ))}
         </div>
       )}
+      <PaginationNav
+        pageNumber={queryParams.pageNumber}
+        setPageNumber={(pageNumber) => {
+          setQueryParams((prevQueryParams) => ({
+            ...prevQueryParams,
+            pageNumber: pageNumber
+          }));
+        }}
+      />
     </HomeLayout>
   );
 };
