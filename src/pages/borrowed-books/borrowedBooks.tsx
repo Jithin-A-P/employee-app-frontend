@@ -1,14 +1,29 @@
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useGetAnEmployeeQuery } from '../../api-client/employee-api';
 import SubHeader from '../../components/sub-header/SubHeader';
 import Table from '../../components/table/Table';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
-import { borrowedBooks, ReturnedBooks } from '../../utils/tmp-borrowed-books';
 
 const BorrowedBooks = () => {
-  //to be used to fetch details from emp-book-junction
-  //const { empid } = useParams();
-  const booksBorrowed = borrowedBooks;
-  const booksReturned = ReturnedBooks;
+  const { id } = useParams();
+
+  console.log('emp id', id);
+
+  const { data: response } = useGetAnEmployeeQuery(id);
+  const employee = response?.data;
+
+  console.log('history page ', employee?.borrowedBooks);
+
+  let borrowedBooks = [];
+  let booksReturned = [];
+
+  if (employee)
+    if (employee?.borrowedBooks)
+      employee?.borrowedBooks.map((item) => {
+        console.log(item);
+        if (item.returnedAt) booksReturned.push(item);
+        else borrowedBooks.push(item);
+      });
 
   const tableHeadValuesBorrowed = ['Book Title', 'Book ISBN', 'Author', 'Taken On', 'Return'];
   const tableHeadValuesReturned = ['Book Title', 'Book ISBN', 'Author', 'Taken On', 'Returned On'];
@@ -16,13 +31,11 @@ const BorrowedBooks = () => {
   return (
     <HomeLayout>
       <SubHeader title='Borrowed Books' />
-      <Table tableHeadValues={tableHeadValuesBorrowed} booksBorrowed={booksBorrowed} />
+      <Table tableHeadValues={tableHeadValuesBorrowed} booksBorrowed={borrowedBooks} />
       <SubHeader title='Returned Books' />
       <Table tableHeadValues={tableHeadValuesReturned} booksReturned={booksReturned} />
     </HomeLayout>
   );
 };
-
-// this page should use table , input data to be taken from employee junction table.
 
 export default BorrowedBooks;
