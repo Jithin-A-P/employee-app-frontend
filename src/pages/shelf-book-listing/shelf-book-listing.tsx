@@ -1,25 +1,25 @@
-// import { useState } from 'react';
 import BookCard from '../../components/book-card/book-card';
-// import BookQuckViewPopup from '../../components/book-quick-view-popup/BookQuickViewPopup';
 import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
 import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
-import './books-l-listing.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import './styles.css';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import SearchBar from '../../components/search-bar/search-bar';
-import { useGetCategoryListQuery, useLazyGetBookListQuery } from '../../api-client/book-api';
+import { useGetCategoryListQuery } from '../../api-client/book-api';
 import getCurrentUser from '../../utils/get-current-user';
 import { useEffect, useState } from 'react';
+import { useLazyGetShelfQuery } from '../../api-client/shelf-api';
 
-const BookListing = () => {
+const ShelfBookListing = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { shelfId } = useParams();
 
   console.log('location', location);
   const pattern = /^\/library\/shelves\/[a-fA-F0-9-]+$/;
   const isMatch = pattern.test(location.pathname);
 
-  const [fetchData, { data: responseBookList }] = useLazyGetBookListQuery();
+  const [fetchData, { data: responseBookList }] = useLazyGetShelfQuery();
   const currenUserRole = getCurrentUser().role;
   const adminPrivileges = currenUserRole === 'admin' || currenUserRole === 'hr';
 
@@ -27,7 +27,7 @@ const BookListing = () => {
   const [category, setCategory] = useState('category');
 
   useEffect(() => {
-    fetchData({});
+    fetchData({ id: shelfId });
   }, []);
 
   const handler = (event) => {
@@ -41,7 +41,7 @@ const BookListing = () => {
 
   return (
     <HomeLayout>
-      <SubHeader title='Books Listing'>
+      <SubHeader title='Shelf'>
         {location.pathname === '/library/books' || isMatch ? (
           <SearchBar
             value={searchQuery}
@@ -88,7 +88,7 @@ const BookListing = () => {
 
       {responseBookList?.data && (
         <div className='book-main'>
-          {responseBookList?.data.map((item) => (
+          {responseBookList?.data?.books.map((item) => (
             <BookCard
               key={item.id}
               id={item.id}
@@ -106,4 +106,4 @@ const BookListing = () => {
   );
 };
 
-export default BookListing;
+export default ShelfBookListing;
