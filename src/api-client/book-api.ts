@@ -5,8 +5,8 @@ import baseApi from './base-api';
 const bookApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getBookList: builder.query({
-      query: () => ({
-        url: '/books',
+      query: ({ searchQuery }) => ({
+        url: searchQuery ? `/books?searchQuery=${searchQuery}` : '/books',
         method: 'GET'
       }),
       providesTags: ['Books']
@@ -55,6 +55,37 @@ const bookApi = baseApi.injectEndpoints({
         method: 'GET'
       }),
       providesTags: ['Books']
+    }),
+    notifyMe: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/books/${id}/subscribe`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['Books']
+    }),
+    lendBook: builder.mutation({
+      query: ({ isbn, body }) => ({
+        url: `/books/${isbn}/lend`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['Books']
+    }),
+    requestBook: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/books/${id}/subscribe`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['Books']
+    }),
+    search: builder.query({
+      query: (searchQuery) => ({
+        url: `/books?searchQuery=${searchQuery}`,
+        method: 'GET'
+      }),
+      providesTags: ['Books']
     })
   })
 });
@@ -65,7 +96,12 @@ export const {
   useDeleteBookMutation,
   useEditBookMutation,
   useGetBookListQuery,
+  useLazyGetBookListQuery,
   useGetBookQuery,
   useGetCategoryListQuery,
   useUploadBookMutation
+  useNotifyMeMutation,
+  useLendBookMutation,
+  useRequestBookMutation,
+  useLazySearchQuery
 } = bookApi;
