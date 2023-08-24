@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { BaseSyntheticEvent, useEffect, useState } from 'react';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import SubHeader from '../../components/sub-header/SubHeader';
 import Input from '../../components/input/Input';
@@ -16,7 +16,6 @@ import {
   useGetCategoryListQuery
 } from '../../api-client/book-api';
 import { useGetShelflistQuery } from '../../api-client/shelf-api';
-import Book from '../../types/create-book-payload';
 import DeleteEntityPopup from '../../components/delete-employee-popup/DeleteEmployeePopup';
 
 const CreateUpdateBook = () => {
@@ -26,77 +25,39 @@ const CreateUpdateBook = () => {
     author: '',
     category: '',
     shelves: [],
-    // totalCount: '',
-    // shelfCode: '',
     publisher: '',
     description: '',
     releaseDate: '',
     thumbnailUrl: ''
   });
 
-  const { data: response, isSuccess } = useGetShelflistQuery('');
-  const { data: categoryResponse, isSuccess: isCategorySuccess } = useGetCategoryListQuery('');
+  console.log(book);
+
+  const { data: shelvesReponse } = useGetShelflistQuery('');
+  const shelfOptions = shelvesReponse?.data.map((item) => ({
+    id: item.shelfCode,
+    name: item.shelfCode
+  }));
+
+  const { data: categoryResponse, isSuccess: categoriesReceived } = useGetCategoryListQuery('');
+  const categories = categoryResponse?.data.map((item) => ({ id: item, name: item }));
 
   const [popupIsVisible, setPopupIsVisible] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [newShelf, setNewShelf] = useState({ customDiv: [] });
-  const [newShelfDetails, setNewShelfDetails] = useState([]);
-  let shelfCount = 0;
-
-  const addNewShelf = () => {
-    let currentShelfs = newShelf.customDiv;
-    let currentShelfDetails = newShelfDetails;
-
-    shelfCount++;
-    currentShelfs.push(`shelf${shelfCount}`);
-    currentShelfDetails.push({ shelfCode: '', bookCount: 0 });
-
-    setNewShelf({ customDiv: currentShelfs });
-    setNewShelfDetails(currentShelfDetails);
-  };
-
-  const DeleteShelf = () => {
-    let currentShelfs = newShelf.customDiv;
-    let currentShelfDetails = newShelfDetails;
-
-    shelfCount--;
-    currentShelfs.pop();
-    currentShelfDetails.pop();
-
-    setNewShelf({ customDiv: currentShelfs });
-    setNewShelfDetails(currentShelfDetails);
-  };
-
-  const handleShelfCodeChange = (e, i) => {
-    let currentShelfDetails = [...newShelfDetails];
-
-    currentShelfDetails[i].shelfCode = e.target.value;
-
-    setNewShelfDetails(currentShelfDetails);
-  };
-
-  const handleBookCountChange = (e, i) => {
-    let currentShelfDetails = [...newShelfDetails];
-
-    currentShelfDetails[i].bookCount = Number(e.target.value);
-
-    setNewShelfDetails(currentShelfDetails);
-  };
-
   const [createBook] = useCreateBookMutation();
 
   const handleCreateBook = () => {
-    createBook(bookToSend);
+    createBook(book);
     navigate('/library/books');
   };
 
   const [editBook] = useEditBookMutation();
 
   const handleEditBook = () => {
-    editBook({ id: id, body: bookToSend });
+    editBook({ id: id, body: book });
     navigate('/library/books');
   };
 
@@ -106,59 +67,37 @@ const CreateUpdateBook = () => {
     deleteBook(id);
     navigate('/library/books');
   };
-  let [shelves, setShelves] = useState([]);
-  let [categories, setCategories] = useState([]);
+
+  const handleShelfChange = (e, idx, property) => {
+    const shelves = book.shelves;
+
+    shelves[idx] = {
+      ...shelves[idx],
+      [property]: property === 'bookCount' ? parseInt(e.target.value) : e.target.value
+    };
+
+    setBook((prevBook) => ({
+      ...prevBook,
+      shelves: shelves
+    }));
+  };
+
+  const { data: responseBook, isSuccess: responseBookReceived } = useGetBookQuery(id);
 
   useEffect(() => {
-    if (isSuccess) {
-      const results = response?.data.map((item) => ({ id: item.shelfCode, name: item.shelfCode }));
-
-      setShelves(results);
-    }
-  }, [response, isSuccess]);
-
-  useEffect(() => {
-    if (isCategorySuccess) {
-      const results = categoryResponse?.data.map((item) => ({ id: item, name: item }));
-
-      setCategories(results);
-    }
-  }, [categoryResponse, isCategorySuccess]);
-
-  const { data: responseBook, isSuccess: isGetBookSuccess } = useGetBookQuery(id);
-
-  useEffect(() => {
-    if (id)
-      if (isGetBookSuccess) {
-        setBook(responseBook?.data);
-        const results = responseBook?.data?.shelves.map((item) => ({
+    if (responseBookReceived)
+      setBook({
+        ...responseBook?.data,
+        shelves: responseBook?.data?.shelves.map((item) => ({
           shelfCode: item.shelfCode,
           bookCount: item.availableBookCount
-        }));
+        }))
+      });
+  }, [responseBook]);
 
-        results.map(() => {
-          let currentShelfs = newShelf.customDiv;
-
-          shelfCount++;
-          currentShelfs.push(`shelf${shelfCount}`);
-
-          setNewShelf({ customDiv: currentShelfs });
-        });
-        setNewShelfDetails(results);
-      }
-  }, [responseBook, isGetBookSuccess]);
-
-  const bookToSend: Book = {
-    isbn: book.isbn,
-    title: book.title,
-    author: book.author,
-    category: book.category,
-    description: book.description,
-    publisher: book.publisher,
-    releaseDate: book.releaseDate,
-    thumbnailUrl: book.thumbnailUrl,
-    shelves: newShelfDetails
-  };
+  useEffect(() => {
+    if (categoriesReceived) setBook((prevBook) => ({ ...prevBook, category: categories[0].name }));
+  }, [categoryResponse]);
 
   return (
     <HomeLayout>
@@ -173,18 +112,11 @@ const CreateUpdateBook = () => {
       ) : (
         <SubHeader title='Add Book' />
       )}
+
       <div className='create-book-form'>
         {id ? (
           <div className='form-input'>
-            <Input
-              type='text'
-              value={book.isbn}
-              // onChange={(e: any) => {
-              //   setBook((prevBook) => ({ ...prevBook, isbn: e.target.value }));
-              // }}
-              label='Book ISBN *'
-              placeholder='Book ISBN'
-            />
+            <Input type='text' value={book.isbn} label='Book ISBN *' placeholder='Book ISBN' />
           </div>
         ) : (
           <div className='form-input'>
@@ -222,14 +154,16 @@ const CreateUpdateBook = () => {
           />
         </div>
         <div className='form-input'>
-          <Select
-            value={book.category}
-            onChange={(e: any) => {
-              setBook((prevBook) => ({ ...prevBook, category: e.target.value }));
-            }}
-            label='Category'
-            options={categories}
-          />
+          {categories && (
+            <Select
+              value={book.category}
+              onChange={(e: any) => {
+                setBook((prevBook) => ({ ...prevBook, category: e.target.value }));
+              }}
+              label='Category'
+              options={categories}
+            />
+          )}
         </div>
         <div className='form-input'>
           <Input
@@ -278,40 +212,59 @@ const CreateUpdateBook = () => {
         <div className='shelf-input-container-div'>
           <div className='label-button-div'>
             <label className='shelves-text'>Shelves</label>
-            <div className='add-shelf-button' onClick={addNewShelf}>
+            <div
+              className='add-shelf-button'
+              onClick={() => {
+                setBook((prevBook) => ({
+                  ...prevBook,
+                  shelves: [...prevBook.shelves, { shelfCode: shelfOptions[0].name, bookCount: 1 }]
+                }));
+              }}
+            >
               Add Shelf
             </div>
-            <div className='delete-shelf-button' onClick={DeleteShelf}>
+            <div
+              className='delete-shelf-button'
+              onClick={() => {
+                setBook((prevBook) => {
+                  prevBook.shelves.pop();
+
+                  return { ...prevBook };
+                });
+              }}
+            >
               Delete Shelf
             </div>
           </div>
-          {newShelfDetails.length > 1 &&
-            newShelf.customDiv.map((shelf, i) => {
-              return (
-                <>
-                  <div className='shelf-input-div'>
-                    <div className='half-size'>
+          {shelfOptions &&
+            book.shelves.map((shelf, idx) => (
+              <>
+                <div className='shelf-input-div'>
+                  <div className='half-size'>
+                    {shelf?.shelfCode && (
                       <Select
-                        value={newShelfDetails[i].shelfCode}
-                        onChange={(e) => handleShelfCodeChange(e, i)}
-                        key={`${shelf}code`}
+                        value={shelf?.shelfCode}
+                        onChange={(e: BaseSyntheticEvent) => handleShelfChange(e, idx, 'shelfCode')}
+                        key={shelf?.shelfCode}
                         label='Shelf Code'
-                        options={shelves}
+                        options={shelfOptions}
                       />
-                    </div>
-                    <div className='half-size'>
+                    )}
+                  </div>
+                  <div className='half-size'>
+                    {shelf?.bookCount !== undefined && (
                       <ShelfInput
-                        value={newShelfDetails[i].bookCount}
-                        onChange={(e) => handleBookCountChange(e, i)}
-                        key={`${shelf}count`}
-                        type='text'
+                        value={shelf?.bookCount}
+                        onChange={(e: BaseSyntheticEvent) => handleShelfChange(e, idx, 'bookCount')}
+                        key={`${shelf?.shelfCode}_count`}
+                        type='number'
                         placeholder='Book Count'
                       />
-                    </div>
+                    )}
                   </div>
-                </>
-              );
-            })}
+                </div>
+              </>
+            ))}
         </div>
         <div className='form-button-book'>
           {id ? (
