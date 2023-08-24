@@ -1,0 +1,29 @@
+.notif-row-container {
+    display: flex;
+    gap: 10px;
+    padding: 5px;
+    width: 100%;
+    background-color: #03afee3a;
+}
+
+.notif-row-container:hover {
+    background-color: #03afee75;
+}
+
+.notif-row-icon {
+    height: 18px;
+    width: 18px;
+}
+
+.notif-row-content {
+    font-size: small;
+}
+
+.notif-row-created-at {
+    font-size: xx-small;
+}
+
+.notif-row-mark-read-container {
+    font-size: small;
+    cursor: pointer;
+}

@@ -95,7 +95,6 @@ const bookApi = baseApi.injectEndpoints({
         method: 'GET'
       }),
       providesTags: ['Books']
-
     })
   })
 });

@@ -23,6 +23,26 @@
     flex-direction: row;
 }
 
+.bell-icon-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.unread-notif-count-display {
+    margin-top: -45px;
+    margin-left: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: x-small;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: #03AEEE;
+    z-index: 2;
+}
+
 .profile-image{
     height: 40px;
     margin-top: 20px;
