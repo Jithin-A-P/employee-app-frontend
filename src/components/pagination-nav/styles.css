@@ -1,0 +1,18 @@
+.pagination-nav-container {
+    height: 40px;
+    width: 100px;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+}
+
+.pagination-button {
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+}
