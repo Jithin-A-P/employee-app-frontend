@@ -45,6 +45,14 @@ const bookApi = baseApi.injectEndpoints({
         method: 'GET'
       }),
       providesTags: ['Books']
+    }),
+    returnBook: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/books/${id}/return`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['Employee']
     })
   })
 });
@@ -56,5 +64,6 @@ export const {
   useEditBookMutation,
   useGetBookListQuery,
   useGetBookQuery,
-  useGetCategoryListQuery
+  useGetCategoryListQuery,
+  useReturnBookMutation
 } = bookApi;

@@ -9,7 +9,8 @@ const employeeApi = baseApi.injectEndpoints({
       providesTags: ['Employees']
     }),
     getAnEmployee: builder.query({
-      query: (id) => `/employees/${id}`
+      query: (id) => `/employees/${id}`,
+      providesTags: ['Employee']
     }),
     addAnEmployee: builder.mutation({
       query: (body: Employee) => ({

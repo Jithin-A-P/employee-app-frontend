@@ -4,14 +4,15 @@ import './styles.css';
 type SelectPropsType = {
   value: string;
   onChange: (e: any) => void;
-  label: string;
+  label?: string;
   options: any[];
   style?: 'library';
+  borrowed?: 'borrow';
 };
 
-const Select: FC<SelectPropsType> = ({ value, onChange, label, options, style }) => {
+const Select: FC<SelectPropsType> = ({ value, onChange, label, options, style, borrowed }) => {
   return (
-    <div className='select-div'>
+    <div className={`select-div ${borrowed}`}>
       {style == 'library' || label == 'Shelf Code' ? (
         <></>
       ) : (
@@ -31,6 +32,9 @@ const Select: FC<SelectPropsType> = ({ value, onChange, label, options, style })
             {style == 'library' ? `${label}` : `Choose ${label}`}
           </option>
         )} */}
+        <option value='' disabled selected hidden>
+          Choose Value
+        </option>
         {options.map((option) => (
           <option value={option.id} key={option.id}>
             {option.name}

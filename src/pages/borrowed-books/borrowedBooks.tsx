@@ -25,15 +25,33 @@ const BorrowedBooks = () => {
         else borrowedBooks.push(item);
       });
 
-  const tableHeadValuesBorrowed = ['Book Title', 'Book ISBN', 'Author', 'Taken On', 'Return'];
+  const tableHeadValuesBorrowed = [
+    'Book Title',
+    'Book ISBN',
+    'Author',
+    'Taken On',
+    'Choose Shelf',
+    'Return'
+  ];
   const tableHeadValuesReturned = ['Book Title', 'Book ISBN', 'Author', 'Taken On', 'Returned On'];
 
   return (
     <HomeLayout>
-      <SubHeader title='Borrowed Books' />
-      <Table tableHeadValues={tableHeadValuesBorrowed} booksBorrowed={borrowedBooks} />
-      <SubHeader title='Returned Books' />
-      <Table tableHeadValues={tableHeadValuesReturned} booksReturned={booksReturned} />
+      {borrowedBooks.length > 0 && (
+        <>
+          <SubHeader title='Borrowed Books' />
+          <Table tableHeadValues={tableHeadValuesBorrowed} booksBorrowed={borrowedBooks} />
+        </>
+      )}
+      {booksReturned.length > 0 && (
+        <>
+          <SubHeader title='Returned Books' />
+          <Table tableHeadValues={tableHeadValuesReturned} booksReturned={booksReturned} />
+        </>
+      )}
+      {borrowedBooks.length == 0 && booksReturned.length == 0 && (
+        <div>Please read some books!!!</div>
+      )}
     </HomeLayout>
   );
 };
