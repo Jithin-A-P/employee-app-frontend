@@ -111,6 +111,7 @@ const BookListing = () => {
               author={item.author}
               availableCount={item.availableCount}
               publisher={item.publisher}
+              description={item.description}
             />
           ))}
         </div>

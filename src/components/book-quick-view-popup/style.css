@@ -27,12 +27,13 @@
   justify-content: center;
   width: 50%;
   height: 100%;
-  font: normal normal 600 14px/19px 'Nunito Sans';
+  font: normal normal 600 17px/19px 'Nunito Sans';
+  color: #676767;
 }
 
 .book-details > div {
   padding: 10px;
-  padding-left: 20px;
+  padding-left: 8px;
 }
 
 .book-count {
@@ -51,4 +52,23 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+#title{
+    font: normal normal 700 21px/19px 'Nunito Sans'
+}
+
+#author{
+    padding-top: 3px;
+    font: normal normal 600 19px/19px 'Nunito Sans'
+}
+
+#description{
+    font: normal normal 300 20px/19px 'Nunito Sans';
+    padding-top: 3px;
+}
+
+#isbn{
+  font: normal normal 400 16px/19px 'Nunito Sans';
+  padding-top: 28px;
 }

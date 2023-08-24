@@ -15,6 +15,7 @@ type BookcardPropTypes = {
   availableCount: number;
   totalCount?: number;
   publisher: string;
+  description: string;
 };
 
 const BookCard: FC<BookcardPropTypes> = ({
@@ -24,7 +25,8 @@ const BookCard: FC<BookcardPropTypes> = ({
   title,
   imgsrc,
   publisher,
-  author
+  author,
+  description
 }) => {
   const navigate = useNavigate();
   const empId = getCurrentUser().id;
@@ -132,6 +134,7 @@ const BookCard: FC<BookcardPropTypes> = ({
           availableCount={availableCount}
           isbn={isbn}
           imgsrc={imgsrc}
+          description={description}
         />
       )}
     </>
