@@ -4,8 +4,8 @@ import baseApi from './base-api';
 const bookApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getBookList: builder.query({
-      query: () => ({
-        url: '/books',
+      query: ({ searchQuery }) => ({
+        url: searchQuery ? `/books?searchQuery=${searchQuery}` : '/books',
         method: 'GET'
       }),
       providesTags: ['Books']
@@ -69,6 +69,13 @@ const bookApi = baseApi.injectEndpoints({
         body
       }),
       invalidatesTags: ['Books']
+    }),
+    search: builder.query({
+      query: (searchQuery) => ({
+        url: `/books?searchQuery=${searchQuery}`,
+        method: 'GET'
+      }),
+      providesTags: ['Books']
     })
   })
 });
@@ -79,9 +86,11 @@ export const {
   useDeleteBookMutation,
   useEditBookMutation,
   useGetBookListQuery,
+  useLazyGetBookListQuery,
   useGetBookQuery,
   useGetCategoryListQuery,
   useNotifyMeMutation,
   useLendBookMutation,
-  useRequestBookMutation
+  useRequestBookMutation,
+  useLazySearchQuery
 } = bookApi;

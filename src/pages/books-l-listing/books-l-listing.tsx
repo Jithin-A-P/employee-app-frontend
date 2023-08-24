@@ -7,22 +7,47 @@ import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import './books-l-listing.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SearchBar from '../../components/search-bar/search-bar';
-import { useGetBookListQuery } from '../../api-client/book-api';
+import { useLazyGetBookListQuery } from '../../api-client/book-api';
 import getCurrentUser from '../../utils/get-current-user';
+import { useEffect, useState } from 'react';
 
 const BookListing = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { data: responseBookList } = useGetBookListQuery('');
+  console.log('location', location);
+  const pattern = /^\/library\/shelves\/[a-fA-F0-9-]+$/;
+  const isMatch = pattern.test(location.pathname);
+
+  const [fetchData, { data: responseBookList }] = useLazyGetBookListQuery();
   const currenUserRole = getCurrentUser().role;
   const adminPrivileges = currenUserRole === 'admin' || currenUserRole === 'hr';
+
+  const [searchQuery, setSearchQuery] = useState();
+  // const [bookData, setBookData] = useState({ data: null });
+
+  useEffect(() => {
+    fetchData({});
+  }, []);
+
+  // const [search, { data: searchResult }] = useLazySearchQuery(searchQuery);
+
+  const handler = (event) => {
+    if (event.key === 'Enter') fetchData({ searchQuery: searchQuery });
+  };
 
   return (
     <HomeLayout>
       <SubHeader title='Books Listing'>
-        {location.pathname === '/library/books' ? (
-          <SearchBar placeholder='Search here' />
+        {location.pathname === '/library/books' || isMatch ? (
+          <SearchBar
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+            }}
+            onKeyPress={(e) => handler(e)}
+            placeholder='Search here'
+          />
         ) : (
           <div></div>
         )}
@@ -44,20 +69,22 @@ const BookListing = () => {
         )}
       </SubHeader>
 
-      <div className='book-main'>
-        {responseBookList?.data.map((item) => (
-          <BookCard
-            key={item.id}
-            id={item.id}
-            isbn={item.isbn}
-            title={item.title}
-            imgsrc={item.thumbnailUrl}
-            author={item.author}
-            availableCount={item.availableCount}
-            publisher={item.publisher}
-          />
-        ))}
-      </div>
+      {responseBookList?.data && (
+        <div className='book-main'>
+          {responseBookList?.data.map((item) => (
+            <BookCard
+              key={item.id}
+              id={item.id}
+              isbn={item.isbn}
+              title={item.title}
+              imgsrc={item.thumbnailUrl}
+              author={item.author}
+              availableCount={item.availableCount}
+              publisher={item.publisher}
+            />
+          ))}
+        </div>
+      )}
     </HomeLayout>
   );
 };
