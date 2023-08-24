@@ -3,10 +3,27 @@ import SubHeader from '../../components/sub-header/SubHeader';
 import Table from '../../components/table/Table';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import { borrowedBooks, ReturnedBooks } from '../../utils/tmp-borrowed-books';
+//import { useGetAnEmployeeQuery } from '../../api-client/employee-api';
 
 const BorrowedBooks = () => {
   //to be used to fetch details from emp-book-junction
-  //const { empid } = useParams();
+  // const { empid } = useParams();
+
+  // const { data: employee, isSuccess } = useGetAnEmployeeQuery('');
+
+  // let borrowedBooks ;
+  // let booksReturned ;
+  /* if(employee.data.borrowedBooks? {
+    emloyee.data.borrowedBooks.map((item) => {
+      if(item.returnedAt){
+        booksRetured.append(item)
+      }
+      else{
+        booksBorrowed.append(item)
+      }
+    })
+  } )*/
+
   const booksBorrowed = borrowedBooks;
   const booksReturned = ReturnedBooks;
 
