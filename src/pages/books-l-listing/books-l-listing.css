@@ -10,7 +10,7 @@
     height: calc(100% - 100px);
 }
 
-.book-main >*{
+.book-card-main{
  margin: 20px;
 }
 
