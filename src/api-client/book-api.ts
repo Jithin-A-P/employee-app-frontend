@@ -99,7 +99,7 @@ export const {
   useLazyGetBookListQuery,
   useGetBookQuery,
   useGetCategoryListQuery,
-  useUploadBookMutation
+  useUploadBookMutation,
   useNotifyMeMutation,
   useLendBookMutation,
   useRequestBookMutation,
