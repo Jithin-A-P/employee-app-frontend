@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, useEffect, useState } from 'react';
+import { BaseSyntheticEvent, useEffect, ChangeEvent, useState } from 'react';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import SubHeader from '../../components/sub-header/SubHeader';
 import Input from '../../components/input/Input';
@@ -13,10 +13,12 @@ import {
   useDeleteBookMutation,
   useEditBookMutation,
   useGetBookQuery,
-  useGetCategoryListQuery
+  useGetCategoryListQuery,
+  useUploadBookMutation
 } from '../../api-client/book-api';
 import { useGetShelflistQuery } from '../../api-client/shelf-api';
 import DeleteEntityPopup from '../../components/delete-employee-popup/DeleteEmployeePopup';
+import Popup from '../../components/popup/Popup';
 
 const CreateUpdateBook = () => {
   const [book, setBook] = useState({
@@ -31,8 +33,6 @@ const CreateUpdateBook = () => {
     thumbnailUrl: ''
   });
 
-  console.log(book);
-
   const { data: shelvesReponse } = useGetShelflistQuery('');
   const shelfOptions = shelvesReponse?.data.map((item) => ({
     id: item.shelfCode,
@@ -43,6 +43,7 @@ const CreateUpdateBook = () => {
   const categories = categoryResponse?.data.map((item) => ({ id: item, name: item }));
 
   const [popupIsVisible, setPopupIsVisible] = useState(false);
+  const [uploadBoxVisible, setUploadBoxVisible] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -82,6 +83,22 @@ const CreateUpdateBook = () => {
     }));
   };
 
+  const [file, setFile] = useState(null);
+  const [uploadFile] = useUploadBookMutation();
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleUpload = () => {
+    if (!file) return;
+    const filedata = new FormData();
+
+    filedata.append('data', file, file.name);
+    uploadFile(filedata);
+    navigate('/library/books');
+  };
+
   const { data: responseBook, isSuccess: responseBookReceived } = useGetBookQuery(id);
 
   useEffect(() => {
@@ -110,7 +127,13 @@ const CreateUpdateBook = () => {
           />
         </SubHeader>
       ) : (
-        <SubHeader title='Add Book' />
+        <SubHeader title='Add Book'>
+          <MaterialIconButton
+            icon='assets/icons/excel.svg'
+            text='Upload Excel'
+            onClick={() => setUploadBoxVisible(true)}
+          />
+        </SubHeader>
       )}
 
       <div className='create-book-form'>
@@ -291,6 +314,28 @@ const CreateUpdateBook = () => {
           handleDelete(id);
         }}
       />
+      <Popup
+        isVisible={uploadBoxVisible}
+        setIsVisible={(isVisible) => {
+          setUploadBoxVisible(isVisible);
+        }}
+      >
+        <div className='upload-box-container'>
+          <div className='upload-popup-title'>Choose excel file</div>
+          <input className='upload-popup-choose-file' type='file' onChange={handleFileChange} />
+          <div>{file && `${file.name}`}</div>
+          <div className='upload-popup-buttons'>
+            <Button style='primary' onClick={handleUpload} text='Upload' />
+            <Button
+              style='secondary'
+              onClick={() => {
+                setUploadBoxVisible(false);
+              }}
+              text='Cancel'
+            />
+          </div>
+        </div>
+      </Popup>
     </HomeLayout>
   );
 };
