@@ -89,12 +89,15 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    align-items: center;
+    justify-content: center;
 }
 
 .upload-popup-title {
     font: normal normal 600 24px/32px "Nunito Sans";
     color: #121212;
     text-align: center;
+    margin-top: 30px;
 }
 
 .upload-popup-choose-file {
@@ -106,7 +109,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    margin: 0px;
+    margin-bottom: 0px;
     gap: 10px;
 }
 
