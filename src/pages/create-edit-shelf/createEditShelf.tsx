@@ -90,7 +90,7 @@ const CreateShelf = () => {
       {id ? (
         <SubHeader title='Edit Book'>
           <MaterialIconButton
-            icon='assets/icons/delete.svg'
+            icon='assets/icons/delete-white.svg'
             text='Delete Shelf'
             onClick={() => setPopupIsVisible(true)}
           />

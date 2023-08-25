@@ -147,7 +147,7 @@ const CreateUpdateBook = () => {
       {id ? (
         <SubHeader title='Edit Book'>
           <MaterialIconButton
-            icon='assets/icons/delete.svg'
+            icon='assets/icons/delete-white.svg'
             text='Delete Book'
             onClick={() => setPopupIsVisible(true)}
           />

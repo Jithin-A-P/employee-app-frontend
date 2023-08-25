@@ -1,10 +1,11 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Popup from '../popup/Popup';
 import './style.css';
 import SelectForLibrary from '../select-for-library/SelectLibrary';
 import Button from '../button/Button';
 import { useLendBookMutation, useRequestBookMutation } from '../../api-client/book-api';
 import getCurrentUser from '../../utils/get-current-user';
+import { toast } from 'react-toastify';
 
 type BookQuckViewPopupPropsType = {
   isVisible: boolean;
@@ -20,6 +21,7 @@ type BookQuckViewPopupPropsType = {
   publisher: string;
   availableCount: number;
   imgsrc?: string;
+  description: string;
 };
 
 const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
@@ -30,14 +32,15 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
   title,
   author,
   isbn,
-  publisher,
+  description,
   availableCount,
   imgsrc,
   shelves,
   borrowedBy
 }) => {
-  const [lendBook, { isSuccess: isLendSuccess }] = useLendBookMutation();
-  const [requestBook, { isSuccess: isRequestSuccess }] = useRequestBookMutation();
+  const [lendBook, { isSuccess: isLendSuccess, isError: lendBookError }] = useLendBookMutation();
+  const [requestBook, { isSuccess: isRequestSuccess, isError: requestBookError }] =
+    useRequestBookMutation();
   const empId = getCurrentUser().id;
 
   console.log(isLendSuccess);
@@ -68,6 +71,28 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
     });
   };
 
+  useEffect(() => {
+    if (isLendSuccess)
+      setTimeout(() => {
+        notifySuccess('Lend Book');
+      }, 100);
+    else if (lendBookError)
+      setTimeout(() => {
+        notifyError('Lend Book Failed :(');
+      }, 100);
+    else if (isRequestSuccess)
+      setTimeout(() => {
+        notifySuccess('Sucessfully sent request');
+      }, 100);
+    else if (requestBookError)
+      setTimeout(() => {
+        notifyError("Couldn't send request");
+      }, 100);
+  }, [isLendSuccess, lendBookError, isRequestSuccess, requestBookError]);
+
+  const notifySuccess = (action: string) => toast.success(`Successfully ${action} !`);
+  const notifyError = (error: string) => toast.error(error);
+
   return (
     <Popup
       isVisible={isVisible}
@@ -78,21 +103,13 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
     >
       <div className='bookData'>
         <div className='book-image'>
-          <div
-            style={{
-              width: '200px',
-              height: '300px',
-              backgroundPosition: 'center',
-              background: `url(${imgsrc ? imgsrc : 'assets/img/book1.png'}) no-repeat`,
-              backgroundSize: 'contain'
-            }}
-          ></div>
+          <img src={imgsrc ? imgsrc : 'assets/img/book1.png'} alt='Book image' />
         </div>
         <div className='book-details'>
-          <div>Title : {title}</div>
-          <div>Author : {author}</div>
-          <div>ISBN : {isbn}</div>
-          <div>Publisher : {publisher}</div>
+          <div id='title'>{title}</div>
+          <div id='author'>By {author}</div>
+          <div id='description'>{description}</div>
+          <div id='isbn'>ISBN : {isbn}</div>
         </div>
       </div>
       <div className='popup-buttons'>
@@ -109,15 +126,17 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
                 options={shelves.filter((item) => item.availableCount > 0)}
               />
             </div>
-            <div>
-              <Button
-                text='LEND'
-                style='notify'
-                onClick={() => {
-                  handleLend(empId, isbn);
-                }}
-              />
-            </div>
+            {shelf && (
+              <div>
+                <Button
+                  text='LEND'
+                  style='notify'
+                  onClick={() => {
+                    handleLend(empId, isbn);
+                  }}
+                />
+              </div>
+            )}
           </>
         ) : (
           <>

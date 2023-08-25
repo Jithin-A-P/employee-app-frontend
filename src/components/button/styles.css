@@ -49,15 +49,17 @@
 
 .notify-button {
   border-radius: 5px;
-  border: none;
-  margin-top: 0px;
-  width: 227px;
-  height: 51px;
-  background-color: #F6F3D7;
-  color: #E4BF3E;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    border: none;
+    margin-top: 0px;
+    width: 182px;
+    height: 44px;
+    background-color: white;
+    color: #337dd4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    border: 1px solid #337dd4;
 }
 
 .book-history-button{
