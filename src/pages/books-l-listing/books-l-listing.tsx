@@ -28,8 +28,6 @@ const BookListing = () => {
     available: null
   });
 
-  console.log('Query', queryParams);
-
   const { data: responseCategoriesList } = useGetCategoryListQuery('');
   const categories = responseCategoriesList?.data.map((item) => ({ id: item, name: item }));
 
