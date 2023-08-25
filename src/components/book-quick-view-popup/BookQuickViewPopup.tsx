@@ -110,12 +110,14 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
           <div id='author'>By {author}</div>
           <div id='description'>{description}</div>
           <div id='isbn'>ISBN : {isbn}</div>
+          <div id='avilability' style={availableCount ? { color: 'green' } : { color: 'red' }}>
+            {availableCount ? 'AVAILABLE' : 'NOT AVAILABLE'}
+          </div>
         </div>
       </div>
       <div className='popup-buttons'>
         {availableCount != 0 ? (
           <>
-            <div className='book-count'>{`AVAILABLE: ${availableCount}`}</div>
             <div>
               <SelectForLibrary
                 value={shelf}
@@ -152,13 +154,15 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
               />
             </div>
             <div>
-              <Button
-                text='REQUEST'
-                style='notify'
-                onClick={() => {
-                  handleRequest(id, empId, toEmployeeID, isbn);
-                }}
-              />
+              {toEmployeeID && (
+                <Button
+                  text='REQUEST'
+                  style='notify'
+                  onClick={() => {
+                    handleRequest(id, empId, toEmployeeID, isbn);
+                  }}
+                />
+              )}
             </div>
           </>
         )}
