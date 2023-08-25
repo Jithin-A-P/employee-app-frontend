@@ -54,14 +54,16 @@ const NotifPopup: FC<NotifPopupPropsType> = ({ isVisible, setIsVisible, unreadNo
         <div className='notification-content-container'>
           {unreadNotifications === undefined ? (
             <div>NO NEW NOTIFICATIONS</div>
-          ) : refreshButtonClicked !== 0 ? (
+          ) : refreshedNotifications?.data !== undefined ? (
             refreshedNotifications?.data?.map((notif) => {
               return (
                 <NotifRow
                   key={notif.id}
                   type={notif.type}
                   content={notif.content}
-                  createdAt={notif.createdAt}
+                  createdAt={dateFormatter(
+                    notif.createdAt.substring(0, notif.createdAt.indexOf('T'))
+                  )}
                   onClick={() => handleClick(notif.id)}
                 />
               );

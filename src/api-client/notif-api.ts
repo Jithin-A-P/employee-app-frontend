@@ -8,7 +8,7 @@ const notifApi = baseApi.injectEndpoints({
         params: { ...queryParams },
         method: 'GET'
       }),
-      providesTags: ['Books']
+      providesTags: ['Notifications']
     }),
     readNotification: builder.mutation({
       query: (id) => ({
@@ -18,7 +18,7 @@ const notifApi = baseApi.injectEndpoints({
           status: 'read'
         }
       }),
-      invalidatesTags: ['Books']
+      invalidatesTags: ['Notifications']
     })
   })
 });
