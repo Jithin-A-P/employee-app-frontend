@@ -42,4 +42,14 @@ const ReturnedBooks = [
   }
 ];
 
-export { borrowedBooks, ReturnedBooks };
+const HistoryBooks = [
+  {
+    employeeName: 'Sameem',
+    BookTaken: 'Kite Runner',
+    isbn: '129-09-ASD',
+    takenOn: '23/3/2023',
+    returnedAt: '23/4/2023'
+  }
+];
+
+export { borrowedBooks, ReturnedBooks, HistoryBooks };

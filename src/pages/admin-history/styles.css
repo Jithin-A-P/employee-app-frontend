@@ -1,13 +1,32 @@
-/* .admin-quikview-main{
-    display: flex;
-    flex-direction: row;
-    margin: 10px;
-    width: 700px
-} */
 
 .quick-count-main-div{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+.admin-history-table{
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    justify-self: center;
+}
+.table{
+    width:150%
+}
+.admin-circulation-history{
+    margin: 20px;
+    width: 98%;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    size: 60px;
+    font-size: 30px;
+    padding:  30px;
+    box-shadow: 0px 3px 6px #9D9D9D29;
+    color: rgb(3, 11, 22);
+    font: normal normal bold 24px/32px "Nunito Sans";
 }
