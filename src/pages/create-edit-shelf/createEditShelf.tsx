@@ -20,6 +20,8 @@ const CreateShelf = () => {
     shelfCode: '',
     location: ''
   });
+  const [shelfCodeError, setShelfCodeError] = useState(false);
+  const [locationError, setlocationError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -36,8 +38,15 @@ const CreateShelf = () => {
     createShelf(shelf);
   };
 
+  // Error messages -------------------------->
+
   const handleEditShelf = () => {
     console.log(shelf);
+    if (shelf.shelfCode === '') setShelfCodeError(true);
+    else setShelfCodeError(false);
+
+    if (shelf.location === '') setlocationError(true);
+    else setlocationError(false);
     editShelf({ id: id, body: shelf });
   };
 
@@ -52,7 +61,7 @@ const CreateShelf = () => {
       setTimeout(() => {
         notifyError('Create Shelf Failed!');
       }, 100);
-      navigate('/library/shelves');
+      // navigate('/library/shelves');
     } else if (editShelfSuccess) {
       console.log('edit shelf sucess');
       setTimeout(() => {
@@ -63,7 +72,7 @@ const CreateShelf = () => {
       setTimeout(() => {
         notifyError("Couldn't Edit Shelf!");
       }, 100);
-      navigate('/library/shelves');
+      // navigate('/library/shelves');
     }
   }, [createShelfError, createShelfSucess, editShelfSuccess, editShelfError]);
 
@@ -111,6 +120,9 @@ const CreateShelf = () => {
               label='Shelf Code'
               placeholder='Shelf-Code'
             />
+            {shelfCodeError && (
+              <div className='login-error-message'>Field should not be empty </div>
+            )}
           </div>
           <div className='form-input'>
             <Input
@@ -122,6 +134,7 @@ const CreateShelf = () => {
               label='Shelf Location'
               placeholder='Shelf-location'
             />
+            {locationError && <div className='login-error-message'>Field should not be empty </div>}
           </div>
         </div>
         <div>

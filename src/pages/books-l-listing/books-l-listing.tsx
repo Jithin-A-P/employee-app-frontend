@@ -61,7 +61,8 @@ const BookListing = () => {
             onChange={(e) => {
               setQueryParams((prevQueryParams) => ({
                 ...prevQueryParams,
-                category: e.target.value
+                category: e.target.value,
+                pageNumber: 1
               }));
             }}
             value={queryParams.category}
@@ -77,7 +78,8 @@ const BookListing = () => {
             onChange={(e) => {
               setQueryParams((prevQueryParams) => ({
                 ...prevQueryParams,
-                available: e.target.value
+                available: e.target.value,
+                pageNumber: 1
               }));
             }}
           >
