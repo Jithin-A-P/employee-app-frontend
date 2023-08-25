@@ -9,17 +9,19 @@ type NotifRowPropsType = {
 };
 
 const NotifRow: FC<NotifRowPropsType> = ({ type, content, createdAt, onClick }) => {
+  console.log('type', type);
+
   return (
     <div className='notif-row-container'>
       <div className='notif-row-icon-container'>
         {type === 'request' && (
-          <img className='notif-row-icon' src='assets/icons/refresh.svg' alt='request-icon' />
+          <img className='notif-row-icon' src='assets/img/request.png' alt='request-icon' />
         )}
-        {type === 'notifyme' && (
-          <img className='notif-row-icon' src='assets/icons/refresh.svg' alt='book-icon' />
+        {type === 'notify_me' && (
+          <img className='notif-row-icon' src='assets/img/notify.png' alt='book-icon' />
         )}
         {type === 'overdue' && (
-          <img className='notif-row-icon' src='assets/icons/refresh.svg' alt='alert-icon' />
+          <img className='notif-row-icon' src='assets/img/overdue.png' alt='alert-icon' />
         )}
       </div>
       <div className='notif-row-content'>{content}</div>

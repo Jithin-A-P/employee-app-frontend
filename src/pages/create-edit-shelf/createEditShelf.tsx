@@ -88,7 +88,7 @@ const CreateShelf = () => {
   return (
     <HomeLayout>
       {id ? (
-        <SubHeader title='Edit Book'>
+        <SubHeader title='Edit Shelf'>
           <MaterialIconButton
             icon='assets/icons/delete-white.svg'
             text='Delete Shelf'
