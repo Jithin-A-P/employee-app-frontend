@@ -16,15 +16,26 @@ const ShelfCard: FC<ShelfCardPropTypes> = ({ location, onClick, onViewBooks, id,
   const adminPrivileges = currenUserRole === 'admin' || currenUserRole === 'hr';
 
   return (
-    <div className='shelf-card' onClick={adminPrivileges ? () => onClick(id) : () => {}}>
-      <div className='shelf-icon'>
-        <img src='../../../assets/img/bookshelf.png' alt='shelf icon' />
+    <div className='shelf-card'>
+      <div
+        className='book-edit-icon-container'
+        onClick={adminPrivileges ? () => onClick(id) : () => {}}
+      >
+        {adminPrivileges && (
+          <img className='book-edit-icon' src='../../../assets/icons/edit.svg' alt='Edit book' />
+        )}
       </div>
-      <div className='location-button'>
-        <div className='code'>{shelfCode}</div>
-        <div className='location'>{location}</div>
-        <div className='button-lib'>
-          <Button style='library' text='View Books' onClick={(e) => onViewBooks(id, e)} />
+      <div className='shelf-card-sub'>
+        <div className='shelf-icon'>
+          <img src='../../../assets/img/bookshelf.png' alt='shelf icon' />
+        </div>
+
+        <div className='location-button'>
+          <div className='code'>{shelfCode}</div>
+          <div className='location'>{location}</div>
+          <div className='button-lib'>
+            <Button style='library' text='View Books' onClick={(e) => onViewBooks(id, e)} />
+          </div>
         </div>
       </div>
     </div>
