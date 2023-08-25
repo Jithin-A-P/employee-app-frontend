@@ -13,6 +13,7 @@ import {
 } from '../../api-client/shelf-api';
 import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
 import DeleteEntityPopup from '../../components/delete-employee-popup/DeleteEmployeePopup';
+import { toast } from 'react-toastify';
 
 const CreateShelf = () => {
   const [shelf, setShelf] = useState({
@@ -23,22 +24,50 @@ const CreateShelf = () => {
   const navigate = useNavigate();
 
   const [popupIsVisible, setPopupIsVisible] = useState(false);
+  const [
+    createShelf,
+    { isSuccess: createShelfSucess, isError: createShelfError, error: createShelfErrorData }
+  ] = useCreateShelfMutation();
+
+  const [editShelf, { isError: editShelfError, isSuccess: editShelfSuccess }] =
+    useEditShelfMutation();
 
   const handleCreateShelf = () => {
-    console.log(shelf);
     createShelf(shelf);
-    navigate('/library/shelves');
   };
 
   const handleEditShelf = () => {
     console.log(shelf);
     editShelf({ id: id, body: shelf });
-    navigate('/library/shelves');
   };
 
-  const [createShelf] = useCreateShelfMutation();
+  useEffect(() => {
+    if (createShelfSucess) {
+      setTimeout(() => {
+        notifySuccess('created');
+      }, 100);
+      navigate('/library/shelves');
+    } else if (createShelfError) {
+      console.log(createShelfErrorData);
+      setTimeout(() => {
+        notifyError('Create Shelf Failed!');
+      }, 100);
+      navigate('/library/shelves');
+    } else if (editShelfSuccess) {
+      console.log('edit shelf sucess');
+      setTimeout(() => {
+        notifySuccess('edited');
+      }, 100);
+      navigate('/library/shelves');
+    } else if (editShelfError) {
+      setTimeout(() => {
+        notifyError("Couldn't Edit Shelf!");
+      }, 100);
+      navigate('/library/shelves');
+    }
+  }, [createShelfError, createShelfSucess, editShelfSuccess, editShelfError]);
+
   const { id } = useParams();
-  const [editShelf] = useEditShelfMutation();
 
   const { data: response, isSuccess } = useGetShelfQuery(id);
 
@@ -52,6 +81,9 @@ const CreateShelf = () => {
   useEffect(() => {
     if (isSuccess) setShelf(response?.data);
   }, [response, isSuccess]);
+
+  const notifySuccess = (action: string) => toast.success(`Successfully ${action} Shelf!`);
+  const notifyError = (error: string) => toast.error(error);
 
   return (
     <HomeLayout>

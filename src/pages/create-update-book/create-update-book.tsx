@@ -19,6 +19,7 @@ import {
 import { useGetShelflistQuery } from '../../api-client/shelf-api';
 import DeleteEntityPopup from '../../components/delete-employee-popup/DeleteEmployeePopup';
 import Popup from '../../components/popup/Popup';
+import { toast } from 'react-toastify';
 
 const CreateUpdateBook = () => {
   const [book, setBook] = useState({
@@ -48,18 +49,17 @@ const CreateUpdateBook = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [createBook] = useCreateBookMutation();
+  const [createBook, { isError: createBookError, isSuccess: createBookSuccess }] =
+    useCreateBookMutation();
 
   const handleCreateBook = () => {
     createBook(book);
-    navigate('/library/books');
   };
 
-  const [editBook] = useEditBookMutation();
+  const [editBook, { isError: editBookError, isSuccess: editBookSuccess }] = useEditBookMutation();
 
   const handleEditBook = () => {
     editBook({ id: id, body: book });
-    navigate('/library/books');
   };
 
   const [deleteBook] = useDeleteBookMutation();
@@ -83,6 +83,8 @@ const CreateUpdateBook = () => {
     }));
   };
 
+  const notifySuccess = (action: string) => toast.success(`Successfully ${action} Book!`);
+  const notifyError = (error: string) => toast.error(error);
   const [file, setFile] = useState(null);
   const [uploadFile] = useUploadBookMutation();
 
@@ -115,6 +117,30 @@ const CreateUpdateBook = () => {
   useEffect(() => {
     if (categoriesReceived) setBook((prevBook) => ({ ...prevBook, category: categories[0].name }));
   }, [categoryResponse]);
+
+  useEffect(() => {
+    if (createBookSuccess) {
+      setTimeout(() => {
+        notifySuccess('created');
+      }, 100);
+      navigate('/library/books');
+    } else if (createBookError) {
+      setTimeout(() => {
+        notifyError("New Book couldn't be created");
+      }, 100);
+      navigate('/library/books');
+    } else if (editBookSuccess) {
+      setTimeout(() => {
+        notifySuccess('edited');
+      }, 100);
+      navigate('/library/books');
+    } else if (editBookError) {
+      setTimeout(() => {
+        notifyError("Book couldn't be edited");
+      }, 100);
+      navigate('/library/books');
+    }
+  }, [editBookError, editBookSuccess, createBookError, createBookSuccess]);
 
   return (
     <HomeLayout>
