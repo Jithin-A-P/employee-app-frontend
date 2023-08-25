@@ -372,9 +372,7 @@ const CreateUpdateBook = () => {
           <div className='upload-popup-title'>Choose excel file</div>
           <input className='upload-popup-choose-file' type='file' onChange={handleFileChange} />
           <div>{file && `${file.name}`}</div>
-          <a className='download-button' onClick={handleDownload}>
-            Download Template
-          </a>
+          <a href='http://127.0.0.1:5000/api/books/download-template'>Download Template</a>
           <div className='upload-popup-buttons'>
             <Button style='primary' onClick={handleUpload} text='Upload' />
             <Button
