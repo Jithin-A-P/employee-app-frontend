@@ -25,6 +25,7 @@ const DeleteEntityPopup: FC<DeleteEntityPopupPropsType> = ({
     >
       <div className='delete-poup-title'>Are you sure?</div>
       <div className='delete-employee-message'>Do you really want to delete {entity}?</div>
+      <div className='delete-spacing'></div>
       <div className='delete-employee-buttons'>
         <Button style='primary' onClick={handleDelete} text='Confirm' />
         <Button

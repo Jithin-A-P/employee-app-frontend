@@ -1,10 +1,11 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Popup from '../popup/Popup';
 import './style.css';
 import SelectForLibrary from '../select-for-library/SelectLibrary';
 import Button from '../button/Button';
 import { useLendBookMutation, useRequestBookMutation } from '../../api-client/book-api';
 import getCurrentUser from '../../utils/get-current-user';
+import { toast } from 'react-toastify';
 
 type BookQuckViewPopupPropsType = {
   isVisible: boolean;
@@ -37,8 +38,9 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
   shelves,
   borrowedBy
 }) => {
-  const [lendBook, { isSuccess: isLendSuccess }] = useLendBookMutation();
-  const [requestBook, { isSuccess: isRequestSuccess }] = useRequestBookMutation();
+  const [lendBook, { isSuccess: isLendSuccess, isError: lendBookError }] = useLendBookMutation();
+  const [requestBook, { isSuccess: isRequestSuccess, isError: requestBookError }] =
+    useRequestBookMutation();
   const empId = getCurrentUser().id;
 
   console.log(isLendSuccess);
@@ -69,6 +71,28 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
     });
   };
 
+  useEffect(() => {
+    if (isLendSuccess)
+      setTimeout(() => {
+        notifySuccess('Lend Book');
+      }, 100);
+    else if (lendBookError)
+      setTimeout(() => {
+        notifyError('Lend Book Failed :(');
+      }, 100);
+    else if (isRequestSuccess)
+      setTimeout(() => {
+        notifySuccess('Sucessfully sent request');
+      }, 100);
+    else if (requestBookError)
+      setTimeout(() => {
+        notifyError("Couldn't send request");
+      }, 100);
+  }, [isLendSuccess, lendBookError, isRequestSuccess, requestBookError]);
+
+  const notifySuccess = (action: string) => toast.success(`Successfully ${action} !`);
+  const notifyError = (error: string) => toast.error(error);
+
   return (
     <Popup
       isVisible={isVisible}
@@ -86,12 +110,14 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
           <div id='author'>By {author}</div>
           <div id='description'>{description}</div>
           <div id='isbn'>ISBN : {isbn}</div>
+          <div id='avilability' style={availableCount ? { color: 'green' } : { color: 'red' }}>
+            {availableCount ? 'AVAILABLE' : 'NOT AVAILABLE'}
+          </div>
         </div>
       </div>
       <div className='popup-buttons'>
         {availableCount != 0 ? (
           <>
-            <div className='book-count'>{`AVAILABLE: ${availableCount}`}</div>
             <div>
               <SelectForLibrary
                 value={shelf}
@@ -128,13 +154,15 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
               />
             </div>
             <div>
-              <Button
-                text='REQUEST'
-                style='notify'
-                onClick={() => {
-                  handleRequest(id, empId, toEmployeeID, isbn);
-                }}
-              />
+              {toEmployeeID && (
+                <Button
+                  text='REQUEST'
+                  style='notify'
+                  onClick={() => {
+                    handleRequest(id, empId, toEmployeeID, isbn);
+                  }}
+                />
+              )}
             </div>
           </>
         )}

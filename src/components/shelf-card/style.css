@@ -10,6 +10,12 @@
     rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
   transition: 0.3s;
+  flex-direction: column;
+  padding-top: 0px;
+}
+
+.shelf-card-sub{
+  display: flex;
 }
 
 .shelf-card:hover {
@@ -30,16 +36,39 @@
   width: 100%;
 }
 
-.location-button .location {
+
+.location-button > .button-lib {
+  padding-bottom: 24px;
+  padding-top: 49px;
+  margin-bottom: 10px;
+}
+
+.location {
   font-size: medium;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   padding-bottom: 20px;
+  padding: 14px 21px;
+  font: 300 21px 'Open Sans', sans-serif;
+  color: #676767;
 }
 
-.location-button > .button-lib {
-  padding-bottom: 24px;
+.code {
+  font-size: medium;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-bottom: 20px;
+  padding: 14px 21px;
+  font: 300 19px 'Open Sans', sans-serif;
+  color: #676767;
+}
+
+.book-edit-icon-container{
+  display: flex;
+  align-self: flex-end;
+  margin-top: 12px;
 }

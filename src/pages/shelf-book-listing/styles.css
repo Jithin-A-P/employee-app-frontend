@@ -14,26 +14,10 @@
  margin: 20px;
 }
 
-.filter{
-    background-color: #03AEEE;
-    border: none;
-    border-radius: 50px;
-    width: 120px;
-    height: 40px;
-    align-items: center;
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-left: 10px;
-    color: black;
-    font-size: 15px;
-}
+
 
 .sub-option{
     background-color: blue;
     offset-position: right 100px;
 }
 
-.filter>option{
-    color: black;
-    background-color: #7c1e1e;
-}

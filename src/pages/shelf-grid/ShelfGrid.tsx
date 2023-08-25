@@ -35,6 +35,7 @@ const ShelfGrid = () => {
               key={item.id}
               id={item.id}
               location={item.location}
+              shelfCode={item.shelfCode}
               onClick={(id: string) => {
                 navigate(`/library/shelves/${id}/edit`);
               }}

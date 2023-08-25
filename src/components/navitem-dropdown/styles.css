@@ -35,7 +35,7 @@
 }
 
 .dropdown-content{
-    height: 120px;
+    height: 165px;
     width: 280px;
     margin-top: -20px;
     margin-left: 20px;
@@ -51,7 +51,7 @@
 }
 
 .divider-line{
-    height: 2px;
+    height: 1px;
     background-color: #03AEEE;
     margin-left: 30px;
     margin-right: 30px;

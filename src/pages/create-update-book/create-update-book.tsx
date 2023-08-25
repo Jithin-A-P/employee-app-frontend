@@ -231,7 +231,7 @@ const CreateUpdateBook = () => {
               onChange={(e: any) => {
                 setBook((prevBook) => ({ ...prevBook, category: e.target.value }));
               }}
-              label='Category'
+              label='Category *'
               options={categories}
             />
           )}
