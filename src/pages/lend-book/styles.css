@@ -1,0 +1,10 @@
+.scanner-button {
+    height: 50px;
+    width: 100px;
+    margin-top: 70px;
+    background-color: #03aeee;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    color: white;
+}
