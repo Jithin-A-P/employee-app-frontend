@@ -20,6 +20,7 @@ type BookQuckViewPopupPropsType = {
   publisher: string;
   availableCount: number;
   imgsrc?: string;
+  description: string;
 };
 
 const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
@@ -30,7 +31,7 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
   title,
   author,
   isbn,
-  publisher,
+  description,
   availableCount,
   imgsrc,
   shelves,
@@ -78,21 +79,13 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
     >
       <div className='bookData'>
         <div className='book-image'>
-          <div
-            style={{
-              width: '200px',
-              height: '300px',
-              backgroundPosition: 'center',
-              background: `url(${imgsrc ? imgsrc : 'assets/img/book1.png'}) no-repeat`,
-              backgroundSize: 'contain'
-            }}
-          ></div>
+          <img src={imgsrc ? imgsrc : 'assets/img/book1.png'} alt='Book image' />
         </div>
         <div className='book-details'>
-          <div>Title : {title}</div>
-          <div>Author : {author}</div>
-          <div>ISBN : {isbn}</div>
-          <div>Publisher : {publisher}</div>
+          <div id='title'>{title}</div>
+          <div id='author'>By {author}</div>
+          <div id='description'>{description}</div>
+          <div id='isbn'>ISBN : {isbn}</div>
         </div>
       </div>
       <div className='popup-buttons'>
@@ -109,15 +102,17 @@ const BookQuckViewPopup: FC<BookQuckViewPopupPropsType> = ({
                 options={shelves.filter((item) => item.availableCount > 0)}
               />
             </div>
-            <div>
-              <Button
-                text='LEND'
-                style='notify'
-                onClick={() => {
-                  handleLend(empId, isbn);
-                }}
-              />
-            </div>
+            {shelf && (
+              <div>
+                <Button
+                  text='LEND'
+                  style='notify'
+                  onClick={() => {
+                    handleLend(empId, isbn);
+                  }}
+                />
+              </div>
+            )}
           </>
         ) : (
           <>

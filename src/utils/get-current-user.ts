@@ -4,8 +4,6 @@ const getCurrentUser = () => {
 
   const { name, email, role, id } = authPayload;
 
-  console.log(authPayload);
-
   return {
     id: id,
     name: name,
