@@ -61,7 +61,7 @@ const CreateShelf = () => {
       setTimeout(() => {
         notifyError('Create Shelf Failed!');
       }, 100);
-      navigate('/library/shelves');
+      // navigate('/library/shelves');
     } else if (editShelfSuccess) {
       console.log('edit shelf sucess');
       setTimeout(() => {
@@ -72,7 +72,7 @@ const CreateShelf = () => {
       setTimeout(() => {
         notifyError("Couldn't Edit Shelf!");
       }, 100);
-      navigate('/library/shelves');
+      // navigate('/library/shelves');
     }
   }, [createShelfError, createShelfSucess, editShelfSuccess, editShelfError]);
 
