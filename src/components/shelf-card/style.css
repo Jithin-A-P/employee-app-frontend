@@ -28,18 +28,36 @@
   justify-content: flex-end;
   height: 100%;
   width: 100%;
+  margin-top: 20px;
 }
 
-.location-button .location {
+
+.location-button > .button-lib {
+  padding-bottom: 24px;
+  padding-top: 49px;
+  margin-bottom: 10px;
+}
+
+.location {
   font-size: medium;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   padding-bottom: 20px;
+  padding: 14px 21px;
+  font: 300 21px 'Open Sans', sans-serif;
+  color: #676767;
 }
 
-.location-button > .button-lib {
-  padding-bottom: 24px;
+.code {
+  font-size: medium;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-bottom: 20px;
+  padding: 14px 21px;
+  font: 300 19px 'Open Sans', sans-serif;
+  color: #676767;
 }
