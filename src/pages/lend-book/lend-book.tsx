@@ -1,6 +1,7 @@
 import Input from '../../components/input/Input';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import Button from '../../components/button/Button';
+import BarcodeScannerComponent from 'react-qr-barcode-scanner';
 
 import { useNavigate } from 'react-router';
 import Select from '../../components/select/Select';
@@ -10,10 +11,12 @@ import './styles.css';
 import { useLendBookMutation } from '../../api-client/book-api';
 import getCurrentUser from '../../utils/get-current-user';
 import { toast } from 'react-toastify';
+import parseIsbn from '../../utils/parse-isbn';
 
 const LendBook = () => {
   const [shelfCode, setShelfCode] = useState('');
   const [bookIsbn, setBookIsbn] = useState('');
+  const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
 
   const navigate = useNavigate();
 
@@ -57,6 +60,28 @@ const LendBook = () => {
               />
             )}
           </div>
+          {!showBarcodeScanner && (
+            <button
+              className='scanner-button'
+              onClick={() => {
+                setShowBarcodeScanner(true);
+              }}
+            >
+              Scan ISBN
+            </button>
+          )}
+          {showBarcodeScanner && (
+            <BarcodeScannerComponent
+              width={500}
+              height={500}
+              onUpdate={(err, result) => {
+                if (!err) {
+                  setShowBarcodeScanner(false);
+                  setBookIsbn(parseIsbn(result?.getText()));
+                }
+              }}
+            />
+          )}
         </div>
         <div>
           <div className='form-button'>
