@@ -48,5 +48,6 @@ export const {
   useEditShelfMutation,
   useDeleteShelfMutation,
   useGetShelfQuery,
+  useLazyGetShelfQuery,
   useGetShelflistQuery
 } = shelfApi;
