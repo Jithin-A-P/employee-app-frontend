@@ -23,6 +23,8 @@ const ProfilePopup: FC<ProfilePopupPropsType> = ({ isVisible, setIsVisible }) =>
     navigate('/login');
   };
 
+  const empid = getCurrentUser().id;
+
   return isVisible ? (
     <div onClick={close} className='popup-profile'>
       <div
@@ -38,7 +40,7 @@ const ProfilePopup: FC<ProfilePopupPropsType> = ({ isVisible, setIsVisible }) =>
         <Button
           style='book-history'
           onClick={() => {
-            navigate('/employees/:id/books');
+            navigate(`/employees/${empid}/books`);
           }}
           text='My Book History'
         />

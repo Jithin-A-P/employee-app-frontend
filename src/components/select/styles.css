@@ -4,6 +4,12 @@
     margin-top: 40px;
 }
 
+.borrow {
+    display: flex;
+    flex-direction: column;
+    margin-top: -10px;
+}
+
 .select-field {
     outline: none;
     border: 1px solid #B4B7BD;

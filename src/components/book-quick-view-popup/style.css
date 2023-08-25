@@ -1,45 +1,74 @@
-.bookData{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 80%;
+.bookData {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 80%;
 }
 
-.book-image{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 50%
+.book-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 292px;
+  width: 203px;
+  margin-top: 9px;
 }
 
-.book-details{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    width:50%;
-    height: 100%;
-    font: normal normal 600 14px/19px "Nunito Sans";
+.book-image > img {
+  height: 282px;
+  width: 211px;
 }
 
-.book-details>div{
-    padding:10px;
-    padding-left: 20px;
+.book-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
+  font: normal normal 600 17px/19px 'Nunito Sans';
+  color: #676767;
 }
 
-.book-count{
-    width: 227px;
-    height: 51px;
-    background-color: #DAF6D7;
-    color: #59C064;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
+.book-details > div {
+  padding: 10px;
+  padding-left: 8px;
 }
 
-.popup-buttons{
-    margin-bottom: 50px;
+.book-count {
+  width: 182px;
+  height: 44px;
+  background-color: #daf6d7;
+  color: #59c064;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.popup-buttons {
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#title{
+    font: normal normal 700 21px/19px 'Nunito Sans'
+}
+
+#author{
+    padding-top: 3px;
+    font: normal normal 600 19px/19px 'Nunito Sans'
+}
+
+#description{
+    font: normal normal 300 20px/19px 'Nunito Sans';
+    padding-top: 3px;
+}
+
+#isbn{
+  font: normal normal 400 16px/19px 'Nunito Sans';
+  padding-top: 28px;
 }
