@@ -14,7 +14,7 @@ type BookcardPropTypes = {
   availableCount: number;
   totalCount?: number;
   publisher: string;
-  description: string;
+  description?: string;
 };
 
 const BookCard: FC<BookcardPropTypes> = ({

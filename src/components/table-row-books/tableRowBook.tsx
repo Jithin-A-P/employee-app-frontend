@@ -6,6 +6,7 @@ import { useGetShelflistQuery } from '../../api-client/shelf-api';
 import Select from '../select/Select';
 import { useReturnBookMutation } from '../../api-client/book-api';
 import getCurrentUser from '../../utils/get-current-user';
+import { toast } from 'react-toastify';
 
 type TableRowBookType = {
   bookReturn?: any;
@@ -41,17 +42,26 @@ const TableBookRow: FC<TableRowBookType> = ({ bookReturn, bookBorrow }) => {
   let results;
   let [shelves, setShelves] = useState([]);
 
+  const [returnBook, { isError: returnError, isSuccess: ReturnSuccess }] = useReturnBookMutation();
+
   useEffect(() => {
     if (isSuccess) {
       results = response?.data.map((item) => ({ id: item.shelfCode, name: item.shelfCode }));
       setShelves(results);
     }
-  }, [isSuccess]);
+    if (returnError)
+      setTimeout(() => {
+        notifyError("Couldn't Return :(");
+      }, 100);
+    else if (ReturnSuccess)
+      setTimeout(() => {
+        notifySuccess('Returned Book');
+      }, 100);
+  }, [isSuccess, returnError, ReturnSuccess]);
 
   const handleShelfSelect = (e) => {
     setChoosenShelf(e.target.value);
   };
-  const [returnBook] = useReturnBookMutation();
 
   const handleReturn = (e, isbn) => {
     returnBook({
@@ -61,6 +71,9 @@ const TableBookRow: FC<TableRowBookType> = ({ bookReturn, bookBorrow }) => {
   };
 
   const [choosenShelf, setChoosenShelf] = useState();
+
+  const notifySuccess = (action: string) => toast.success(`Successfully ${action} !`);
+  const notifyError = (error: string) => toast.error(error);
 
   return (
     <tr className='table-book-row'>

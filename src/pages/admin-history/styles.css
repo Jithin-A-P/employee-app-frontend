@@ -1,0 +1,13 @@
+/* .admin-quikview-main{
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    width: 700px
+} */
+
+.quick-count-main-div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
