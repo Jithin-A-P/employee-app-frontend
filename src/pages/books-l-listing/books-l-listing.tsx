@@ -57,37 +57,35 @@ const BookListing = () => {
             placeholder='Search here'
           />
         )}
-        <div>
-          <label>Filter by</label>
-          <div>
-            <select
-              onChange={(e) => {
-                setQueryParams((prevQueryParams) => ({
-                  ...prevQueryParams,
-                  category: e.target.value
-                }));
-              }}
-              value={queryParams.category}
-              className='filter'
-            >
-              <option selected hidden>
-                Category
-              </option>
-              {categories?.map((item) => <option key={item.id}>{item.name}</option>)}
-            </select>
-            <select
-              className='filter'
-              onChange={(e) => {
-                setQueryParams((prevQueryParams) => ({
-                  ...prevQueryParams,
-                  available: e.target.value
-                }));
-              }}
-            >
-              <option value={'false'}>All</option>
-              <option value={'true'}>Available</option>
-            </select>
-          </div>
+        <div className='filter-div'>
+          <img className='filter-img' src='assets/img/filter.png' />
+          <select
+            onChange={(e) => {
+              setQueryParams((prevQueryParams) => ({
+                ...prevQueryParams,
+                category: e.target.value
+              }));
+            }}
+            value={queryParams.category}
+            className='filter'
+          >
+            <option selected hidden>
+              Category
+            </option>
+            {categories?.map((item) => <option key={item.id}>{item.name}</option>)}
+          </select>
+          <select
+            className='filter'
+            onChange={(e) => {
+              setQueryParams((prevQueryParams) => ({
+                ...prevQueryParams,
+                available: e.target.value
+              }));
+            }}
+          >
+            <option value={'false'}>All</option>
+            <option value={'true'}>Available</option>
+          </select>
         </div>
         {adminPrivileges && (
           <MaterialIconButton
