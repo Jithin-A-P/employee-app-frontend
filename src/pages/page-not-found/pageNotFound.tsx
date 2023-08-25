@@ -7,8 +7,8 @@ const PageNotFound = () => {
   const handleClick = () => {
     const auth = localStorage.getItem('auth-token');
 
-    if (auth) navigate(-1);
-    else navigate('/login');
+    if (auth === null) navigate('/login');
+    else navigate(-1);
   };
 
   return (
