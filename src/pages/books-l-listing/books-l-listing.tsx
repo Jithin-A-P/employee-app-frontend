@@ -25,7 +25,7 @@ const BookListing = () => {
     rowsPerPage: 12,
     searchQuery: null,
     category: null,
-    availability: null
+    available: null
   });
 
   console.log('Query', queryParams);
@@ -80,7 +80,7 @@ const BookListing = () => {
               onChange={(e) => {
                 setQueryParams((prevQueryParams) => ({
                   ...prevQueryParams,
-                  availability: e.target.value
+                  available: e.target.value
                 }));
               }}
             >
