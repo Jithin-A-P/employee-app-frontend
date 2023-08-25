@@ -10,6 +10,7 @@ import { useEditAnEmployeeMutation, useGetAnEmployeeQuery } from '../../api-clie
 import createEmployeePayload from '../../utils/tmp-employee-creator';
 import { useGetDepartmentsQuery } from '../../api-client/department-api';
 import { useGetRolesQuery } from '../../api-client/role-api';
+import { toast } from 'react-toastify';
 
 const EditEmployee = () => {
   const [employee, setEmployee] = useState(undefined);
@@ -40,13 +41,26 @@ const EditEmployee = () => {
     editEmployee({ id: id, body: createEmployeePayload(employee) });
   };
 
+  const notifySuccess = (action: string) => toast.success(`Successfully ${action} Employee`);
+  const notifyError = (error: string) => toast.error(error);
+
   useEffect(() => {
     setEmployee(response?.data);
   }, [response]);
 
   useEffect(() => {
-    if (isError) console.log(error);
-    if (isSuccess) navigate(-1);
+    if (isError) {
+      setTimeout(() => {
+        notifyError('Edit Employee Failed!');
+      }, 100);
+      console.log(error);
+    }
+    if (isSuccess) {
+      setTimeout(() => {
+        notifySuccess('edited');
+      }, 100);
+      navigate(-1);
+    }
   }, [isSuccess, isError]);
 
   return (

@@ -1,0 +1,30 @@
+.not-found{
+    background-color: #03AEEE;
+    color: white;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.msg1{
+    font-size: 250px;
+    font-weight:bolder;
+}
+
+.msg2{
+    font-size: 75px;
+}
+
+.back-button{
+    margin-top: 30px;
+    border: 0px;
+    height: 80px;
+    width: 300px;
+    font-size: 30px;
+    border-radius: 10px;
+    background-color: white;
+    color:#03AEEE;
+}

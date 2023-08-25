@@ -10,6 +10,7 @@ import { useAddAnEmployeeMutation } from '../../api-client/employee-api';
 import createEmployeePayload from '../../utils/tmp-employee-creator';
 import { useGetDepartmentsQuery } from '../../api-client/department-api';
 import { useGetRolesQuery } from '../../api-client/role-api';
+import { toast } from 'react-toastify';
 
 const CreateEmployee = () => {
   const [employee, setEmployee] = useState({
@@ -54,9 +55,22 @@ const CreateEmployee = () => {
     createEmployee(createEmployeePayload(employee));
   };
 
+  const notifySuccess = (action: string) => toast.success(`Successfully ${action} Employee`);
+  const notifyError = (error: string) => toast.error(error);
+
   useEffect(() => {
-    if (isSuccess) navigate(-1);
-    if (isError) console.log(error);
+    if (isSuccess) {
+      setTimeout(() => {
+        notifySuccess('added');
+      }, 100);
+      navigate(-1);
+    }
+    if (isError) {
+      setTimeout(() => {
+        notifyError('Create Employee Failed!');
+      }, 100);
+      console.log(error);
+    }
   }, [isSuccess, isError]);
 
   return (

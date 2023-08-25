@@ -52,7 +52,7 @@
 }
 
 .add-shelf-button{
-    background-color: #65c4ec;
+    background-color: #03aeee;
     height: 30px;
     width: 120px;
     display: flex;
@@ -64,7 +64,6 @@
 }
 
 .delete-shelf-button{
-    background-color: #f7931e;
     height: 30px;
     width: 120px;
     display: flex;
@@ -73,6 +72,11 @@
     cursor: pointer;
     border-radius: 50px;
     color: white;
+    background-color: transparent;
+    box-shadow: 0px 3px 6px #c9c9c929;
+    border: 1px solid #8a8c8f;
+    color: #8a8c8f;
+ 
 }
 
 .shelves-text{

@@ -24,7 +24,7 @@
     padding-left: 20px;
     padding-right: 20px;
     margin-left: 10px;
-    color: white;
+    color: black;
     font-size: 15px;
 }
 
@@ -36,17 +36,4 @@
 .filter>option{
     color: black;
     background-color: #7c1e1e;
-}
-
-.filter-div{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.filter-img{
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
 }
