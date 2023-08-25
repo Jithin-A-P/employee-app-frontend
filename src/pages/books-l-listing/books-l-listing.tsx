@@ -1,66 +1,127 @@
-import { useState } from 'react';
 import BookCard from '../../components/book-card/book-card';
-import BookQuckViewPopup from '../../components/book-quick-view-popup/BookQuickViewPopup';
 import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
 import SubHeader from '../../components/sub-header/SubHeader';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import './books-l-listing.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SearchBar from '../../components/search-bar/search-bar';
-import { Books } from '../../constants/books';
+import { useGetCategoryListQuery, useLazyGetBookListQuery } from '../../api-client/book-api';
+import getCurrentUser from '../../utils/get-current-user';
+import { useEffect, useState } from 'react';
+import PaginationNav from '../../components/pagination-nav/pagination-nav';
 
 const BookListing = () => {
-  const [popupIsVisible, setPopupIsVisible] = useState(false);
-  const handleDelete = () => {};
   const navigate = useNavigate();
   const location = useLocation();
+
+  const pattern = /^\/library\/shelves\/[a-fA-F0-9-]+$/;
+  const isMatch = pattern.test(location.pathname);
+
+  const currenUserRole = getCurrentUser().role;
+  const adminPrivileges = currenUserRole === 'admin' || currenUserRole === 'hr';
+
+  const [queryParams, setQueryParams] = useState({
+    pageNumber: 1,
+    rowsPerPage: 12,
+    searchQuery: null,
+    category: null,
+    available: null
+  });
+
+  const { data: responseCategoriesList } = useGetCategoryListQuery('');
+  const categories = responseCategoriesList?.data.map((item) => ({ id: item, name: item }));
+
+  const [fetchData, { data: responseBookList }] = useLazyGetBookListQuery();
+  const books = responseBookList?.data;
+  const totalBookCount = responseBookList?.meta?.total;
+
+  useEffect(() => {
+    fetchData(queryParams);
+  }, [queryParams]);
 
   return (
     <HomeLayout>
       <SubHeader title='Books Listing'>
-        {location.pathname === '/library/books' ? (
-          <SearchBar placeholder='Search here' />
-        ) : (
-          <div></div>
+        {(location.pathname === '/library/books' || isMatch) && (
+          <SearchBar
+            value={queryParams.searchQuery}
+            onChange={(e) => {
+              setQueryParams((prevQueryParams) => ({
+                ...prevQueryParams,
+                searchQuery: e.target.value
+              }));
+            }}
+            // onKeyPress={(e) => handler(e)}
+            placeholder='Search here'
+          />
         )}
-        <MaterialIconButton
-          icon='assets/icons/plus.svg'
-          text='Add Book'
-          onClick={() => {
-            navigate('/library/books/create');
-          }}
-        />
-      </SubHeader>
-
-      <div className='book-main'>
-        {Books.map((item) => (
-          <BookCard
-            key={item.isbn}
-            isbn={item.isbn}
-            title={item.title}
-            imgsrc={item.imgsrc}
-            author={item.imgsrc}
-            count={item.count}
-            setQuickViewPopup={(isVisible) => {
-              setPopupIsVisible(isVisible);
+        <div className='filter-div'>
+          <img className='filter-img' src='assets/img/filter.png' />
+          <select
+            onChange={(e) => {
+              setQueryParams((prevQueryParams) => ({
+                ...prevQueryParams,
+                category: e.target.value
+              }));
+            }}
+            value={queryParams.category}
+            className='filter'
+          >
+            <option selected hidden>
+              Category
+            </option>
+            {categories?.map((item) => <option key={item.id}>{item.name}</option>)}
+          </select>
+          <select
+            className='filter'
+            onChange={(e) => {
+              setQueryParams((prevQueryParams) => ({
+                ...prevQueryParams,
+                available: e.target.value
+              }));
+            }}
+          >
+            <option value={'false'}>All</option>
+            <option value={'true'}>Available</option>
+          </select>
+        </div>
+        {adminPrivileges && (
+          <MaterialIconButton
+            icon='assets/icons/plus.svg'
+            text='Add Book'
+            onClick={() => {
+              navigate('/library/books/create');
             }}
           />
-        ))}
-      </div>
-      <BookQuckViewPopup
-        isVisible={popupIsVisible}
-        setIsVisible={(isVisible) => {
-          setPopupIsVisible(isVisible);
+        )}
+      </SubHeader>
+      {books && (
+        <div className='book-main'>
+          {books.map((item) => (
+            <BookCard
+              key={item.id}
+              id={item.id}
+              isbn={item.isbn}
+              title={item.title}
+              imgsrc={item.thumbnailUrl}
+              author={item.author}
+              availableCount={item.availableCount}
+              publisher={item.publisher}
+              description={item.description}
+            />
+          ))}
+        </div>
+      )}
+      <PaginationNav
+        pageNumber={queryParams.pageNumber}
+        total={totalBookCount}
+        rowsPerPage={queryParams.rowsPerPage}
+        setPageNumber={(pageNumber) => {
+          setQueryParams((prevQueryParams) => ({
+            ...prevQueryParams,
+            pageNumber: pageNumber
+          }));
         }}
-        handleNotify={() => {
-          handleDelete();
-        }}
-        isAvailable={false}
-        title='Harry Potter'
-        author='J K Rowling'
-        publisher='Bookphiles'
-        bookCount={5}
-        isbn='123456'
       />
     </HomeLayout>
   );

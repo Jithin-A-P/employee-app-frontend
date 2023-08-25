@@ -1,0 +1,48 @@
+.not-found{
+    background-color: white;
+    position: relative;
+  width: 50%;
+}
+
+.not-found img{
+    width: 100%;
+    height: auto;
+}
+
+.not-found .back-button{
+    position: absolute;
+  top: 85%;
+  left: 52%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  opacity: 0%;
+}
+
+.msg1{
+    font-size: 250px;
+    font-weight:bolder;
+}
+
+.msg2{
+    font-size: 75px;
+}
+
+.back-button{
+    margin-top: 30px;
+    border: 0px;
+    height: 80px;
+    width: 300px;
+    font-size: 30px;
+    border-radius: 10px;
+    background-color: white;
+    color:#03AEEE;
+}
+
+.error-image{
+ height: 1000px;
+}

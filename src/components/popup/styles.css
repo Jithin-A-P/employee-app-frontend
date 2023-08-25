@@ -13,18 +13,7 @@
 
 .popup-container {
     width: 400px;
-    height: 200px;
-    border-radius: 10px;
-    background-color: #ffffff;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.popup-container-library {
-    width: 400px;
-    height: 400px;
+    height: 300px;
     border-radius: 10px;
     background-color: #ffffff;
     position: relative;
@@ -35,8 +24,8 @@
 }
 
 .popup-container-library{
-    width: 465px;
-    height: 483px;
+    width: 529px;
+    height: 501px;
     border-radius: 10px;
     background-color: white;
     position: relative;

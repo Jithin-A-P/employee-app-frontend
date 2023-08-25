@@ -1,11 +1,18 @@
+interface Shelf {
+  shelfCode: string;
+  bookCount: number;
+}
+
 type Book = {
-  ISBN?: string;
+  isbn?: string;
   title: string;
   author: string;
   category: string;
-  totalCount: number;
-  availableCount: number;
-  shelfCode: string;
+  description: string;
+  publisher: string;
+  releaseDate: string;
+  thumbnailUrl: string;
+  shelves: Shelf[];
 };
 
 export default Book;

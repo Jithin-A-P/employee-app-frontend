@@ -1,5 +1,5 @@
 type Shelf = {
-  id?: number;
+  id?: string;
   shelfCode: string;
   location: string;
 };

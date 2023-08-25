@@ -7,8 +7,8 @@ import getCurrentUser from '../../utils/get-current-user';
 
 type TableRowPropsType = {
   employee: any;
-  onRowClick: (id: number) => void;
-  setDeletePopup?: (isVisible: boolean, id: number) => void;
+  onRowClick: (id: string) => void;
+  setDeletePopup?: (isVisible: boolean, id: string) => void;
 };
 
 const TableRow: FC<TableRowPropsType> = ({ employee, onRowClick, setDeletePopup }) => {

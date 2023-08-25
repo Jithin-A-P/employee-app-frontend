@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { BaseSyntheticEvent, useEffect, ChangeEvent, useState } from 'react';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import SubHeader from '../../components/sub-header/SubHeader';
 import Input from '../../components/input/Input';
@@ -7,100 +7,175 @@ import Button from '../../components/button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
 import ShelfInput from '../../components/input-shelves/input-shelves';
 import Select from '../../components/select/Select';
+import MaterialIconButton from '../../components/material-icon-button/MaterialIconButton';
+import {
+  useCreateBookMutation,
+  useDeleteBookMutation,
+  useEditBookMutation,
+  useGetBookQuery,
+  useGetCategoryListQuery,
+  useUploadBookMutation
+} from '../../api-client/book-api';
+import { useGetShelflistQuery } from '../../api-client/shelf-api';
+import DeleteEntityPopup from '../../components/delete-employee-popup/DeleteEmployeePopup';
+import Popup from '../../components/popup/Popup';
+import { toast } from 'react-toastify';
 
 const CreateUpdateBook = () => {
   const [book, setBook] = useState({
-    ISBN: '',
+    isbn: '',
     title: '',
     author: '',
     category: '',
     shelves: [],
-    // totalCount: '',
-    // shelfCode: '',
     publisher: '',
     description: '',
     releaseDate: '',
     thumbnailUrl: ''
   });
 
-  const statusOptions = [
-    { id: 'active', name: 'Active' },
-    { id: 'inactive', name: 'Inactive' },
-    { id: 'probation', name: 'Probation' }
-  ];
+  const { data: shelvesReponse } = useGetShelflistQuery('');
+  const shelfOptions = shelvesReponse?.data.map((item) => ({
+    id: item.shelfCode,
+    name: item.shelfCode
+  }));
+
+  const { data: categoryResponse, isSuccess: categoriesReceived } = useGetCategoryListQuery('');
+  const categories = categoryResponse?.data.map((item) => ({ id: item, name: item }));
+
+  const [popupIsVisible, setPopupIsVisible] = useState(false);
+  const [uploadBoxVisible, setUploadBoxVisible] = useState(false);
 
   const navigate = useNavigate();
-  const { isbn } = useParams();
+  const { id } = useParams();
 
-  const [newShelf, setNewShelf] = useState({ customDiv: ['shelf1'] });
-  const [newShelfDetails, setNewShelfDetails] = useState([{ shelfCode: ' ', bookCount: 0 }]);
-  let shelfCount = 1;
+  const [createBook, { isError: createBookError, isSuccess: createBookSuccess }] =
+    useCreateBookMutation();
 
-  const addNewShelf = () => {
-    let currentShelfs = newShelf.customDiv;
-    let currentShelfDetails = newShelfDetails;
-
-    shelfCount++;
-    currentShelfs.push(`shelf${shelfCount}`);
-    currentShelfDetails.push({ shelfCode: '', bookCount: 0 });
-
-    setNewShelf({ customDiv: currentShelfs });
-    setNewShelfDetails(currentShelfDetails);
+  const handleCreateBook = () => {
+    createBook(book);
   };
 
-  const DeleteShelf = () => {
-    let currentShelfs = newShelf.customDiv;
-    let currentShelfDetails = newShelfDetails;
+  const [editBook, { isError: editBookError, isSuccess: editBookSuccess }] = useEditBookMutation();
 
-    shelfCount--;
-    currentShelfs.pop();
-    currentShelfDetails.pop();
-
-    setNewShelf({ customDiv: currentShelfs });
-    setNewShelfDetails(currentShelfDetails);
+  const handleEditBook = () => {
+    editBook({ id: id, body: book });
   };
 
-  const handleShelfCodeChange = (e, i) => {
-    let currentShelfDetails = [...newShelfDetails];
+  const [deleteBook] = useDeleteBookMutation();
 
-    currentShelfDetails[i].shelfCode = e.target.value;
-
-    setNewShelfDetails(currentShelfDetails);
+  const handleDelete = (id) => {
+    deleteBook(id);
+    navigate('/library/books');
   };
 
-  const handleBookCountChange = (e, i) => {
-    let currentShelfDetails = [...newShelfDetails];
+  const handleShelfChange = (e, idx, property) => {
+    const shelves = book.shelves;
 
-    currentShelfDetails[i].bookCount = e.target.value;
+    shelves[idx] = {
+      ...shelves[idx],
+      [property]: property === 'bookCount' ? parseInt(e.target.value) : e.target.value
+    };
 
-    setNewShelfDetails(currentShelfDetails);
+    setBook((prevBook) => ({
+      ...prevBook,
+      shelves: shelves
+    }));
   };
+
+  const notifySuccess = (action: string) => toast.success(`Successfully ${action} Book!`);
+  const notifyError = (error: string) => toast.error(error);
+  const [file, setFile] = useState(null);
+  const [uploadFile] = useUploadBookMutation();
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleUpload = () => {
+    if (!file) return;
+    const filedata = new FormData();
+
+    filedata.append('data', file, file.name);
+    uploadFile(filedata);
+    navigate('/library/books');
+  };
+
+  const { data: responseBook, isSuccess: responseBookReceived } = useGetBookQuery(id);
+
+  useEffect(() => {
+    if (responseBookReceived)
+      setBook({
+        ...responseBook?.data,
+        shelves: responseBook?.data?.shelves.map((item) => ({
+          shelfCode: item.shelfCode,
+          bookCount: item.availableBookCount
+        }))
+      });
+  }, [responseBook]);
+
+  useEffect(() => {
+    if (categoriesReceived) setBook((prevBook) => ({ ...prevBook, category: categories[0].name }));
+  }, [categoryResponse]);
+
+  useEffect(() => {
+    if (createBookSuccess) {
+      setTimeout(() => {
+        notifySuccess('created');
+      }, 100);
+      navigate('/library/books');
+    } else if (createBookError) {
+      setTimeout(() => {
+        notifyError("New Book couldn't be created");
+      }, 100);
+      navigate('/library/books');
+    } else if (editBookSuccess) {
+      setTimeout(() => {
+        notifySuccess('edited');
+      }, 100);
+      navigate('/library/books');
+    } else if (editBookError) {
+      setTimeout(() => {
+        notifyError("Book couldn't be edited");
+      }, 100);
+      navigate('/library/books');
+    }
+  }, [editBookError, editBookSuccess, createBookError, createBookSuccess]);
 
   return (
     <HomeLayout>
-      {isbn ? <SubHeader title='Edit Book' /> : <SubHeader title='Add Book' />}
+      {id ? (
+        <SubHeader title='Edit Book'>
+          <MaterialIconButton
+            icon='assets/icons/delete-white.svg'
+            text='Delete Book'
+            onClick={() => setPopupIsVisible(true)}
+          />
+        </SubHeader>
+      ) : (
+        <SubHeader title='Add Book'>
+          <MaterialIconButton
+            icon='assets/icons/excel.svg'
+            text='Upload Excel'
+            onClick={() => setUploadBoxVisible(true)}
+          />
+        </SubHeader>
+      )}
+
       <div className='create-book-form'>
-        {isbn ? (
+        {id ? (
           <div className='form-input'>
-            <Input
-              type='text'
-              value={isbn}
-              // onChange={(e: any) => {
-              //   setBook((prevBook) => ({ ...prevBook, ISBN: e.target.value }));
-              // }}
-              label='Book ISBN'
-              placeholder='Book ISBN'
-            />
+            <Input type='text' value={book.isbn} label='Book ISBN *' placeholder='Book ISBN' />
           </div>
         ) : (
           <div className='form-input'>
             <Input
               type='text'
-              value={book.ISBN}
+              value={book.isbn}
               onChange={(e: any) => {
-                setBook((prevBook) => ({ ...prevBook, ISBN: e.target.value }));
+                setBook((prevBook) => ({ ...prevBook, isbn: e.target.value }));
               }}
-              label='Book ISBN'
+              label='Book ISBN *'
               placeholder='Book ISBN'
             />
           </div>
@@ -112,7 +187,7 @@ const CreateUpdateBook = () => {
             onChange={(e: any) => {
               setBook((prevBook) => ({ ...prevBook, title: e.target.value }));
             }}
-            label='Title'
+            label='Title *'
             placeholder='Title'
           />
         </div>
@@ -123,19 +198,31 @@ const CreateUpdateBook = () => {
             onChange={(e: any) => {
               setBook((prevBook) => ({ ...prevBook, author: e.target.value }));
             }}
-            label='Author'
+            label='Author *'
             placeholder='Author'
           />
         </div>
         <div className='form-input'>
+          {categories && (
+            <Select
+              value={book.category}
+              onChange={(e: any) => {
+                setBook((prevBook) => ({ ...prevBook, category: e.target.value }));
+              }}
+              label='Category *'
+              options={categories}
+            />
+          )}
+        </div>
+        <div className='form-input'>
           <Input
             type='text'
-            value={book.category}
+            value={book.description}
             onChange={(e: any) => {
-              setBook((prevBook) => ({ ...prevBook, category: e.target.value }));
+              setBook((prevBook) => ({ ...prevBook, description: e.target.value }));
             }}
-            label='Category'
-            placeholder='Category'
+            label='Description *'
+            placeholder='Description'
           />
         </div>
         <div className='form-input'>
@@ -174,44 +261,66 @@ const CreateUpdateBook = () => {
         <div className='shelf-input-container-div'>
           <div className='label-button-div'>
             <label className='shelves-text'>Shelves</label>
-            <div className='add-shelf-button' onClick={addNewShelf}>
+            <div
+              className='add-shelf-button'
+              onClick={() => {
+                setBook((prevBook) => ({
+                  ...prevBook,
+                  shelves: [...prevBook.shelves, { shelfCode: shelfOptions[0].name, bookCount: 1 }]
+                }));
+              }}
+            >
               Add Shelf
             </div>
-            <div className='delete-shelf-button' onClick={DeleteShelf}>
+            <div
+              className='delete-shelf-button'
+              onClick={() => {
+                setBook((prevBook) => {
+                  prevBook.shelves.pop();
+
+                  return { ...prevBook };
+                });
+              }}
+            >
               Delete Shelf
             </div>
           </div>
-          {newShelf.customDiv.map((shelf, i) => {
-            console.log(newShelfDetails[0]);
-
-            return (
+          {shelfOptions &&
+            book.shelves.map((shelf, idx) => (
               <>
                 <div className='shelf-input-div'>
                   <div className='half-size'>
-                    <Select
-                      value={newShelfDetails[i].shelfCode}
-                      onChange={(e) => handleShelfCodeChange(e, i)}
-                      key={`${shelf}code`}
-                      label='Shelf Code'
-                      options={statusOptions}
-                    />
+                    {shelf?.shelfCode && (
+                      <Select
+                        value={shelf?.shelfCode}
+                        onChange={(e: BaseSyntheticEvent) => handleShelfChange(e, idx, 'shelfCode')}
+                        key={shelf?.shelfCode}
+                        label='Shelf Code'
+                        options={shelfOptions}
+                      />
+                    )}
                   </div>
                   <div className='half-size'>
-                    <ShelfInput
-                      value={newShelfDetails[i].bookCount}
-                      onChange={(e) => handleBookCountChange(e, i)}
-                      key={`${shelf}count`}
-                      type='text'
-                      placeholder='Book Count'
-                    />
+                    {shelf?.bookCount !== undefined && (
+                      <ShelfInput
+                        value={shelf?.bookCount}
+                        onChange={(e: BaseSyntheticEvent) => handleShelfChange(e, idx, 'bookCount')}
+                        key={`${shelf?.shelfCode}_count`}
+                        type='number'
+                        placeholder='Book Count'
+                      />
+                    )}
                   </div>
                 </div>
               </>
-            );
-          })}
+            ))}
         </div>
         <div className='form-button-book'>
-          {isbn ? <Button style='primary' text='Save' /> : <Button style='primary' text='Create' />}
+          {id ? (
+            <Button style='primary' text='Save' onClick={handleEditBook} />
+          ) : (
+            <Button style='primary' text='Create' onClick={handleCreateBook} />
+          )}
           <Button
             style='secondary'
             onClick={() => {
@@ -221,6 +330,38 @@ const CreateUpdateBook = () => {
           />
         </div>
       </div>
+      <DeleteEntityPopup
+        isVisible={popupIsVisible}
+        entity='book'
+        setIsVisible={(isVisible) => {
+          setPopupIsVisible(isVisible);
+        }}
+        handleDelete={() => {
+          handleDelete(id);
+        }}
+      />
+      <Popup
+        isVisible={uploadBoxVisible}
+        setIsVisible={(isVisible) => {
+          setUploadBoxVisible(isVisible);
+        }}
+      >
+        <div className='upload-box-container'>
+          <div className='upload-popup-title'>Choose excel file</div>
+          <input className='upload-popup-choose-file' type='file' onChange={handleFileChange} />
+          <div>{file && `${file.name}`}</div>
+          <div className='upload-popup-buttons'>
+            <Button style='primary' onClick={handleUpload} text='Upload' />
+            <Button
+              style='secondary'
+              onClick={() => {
+                setUploadBoxVisible(false);
+              }}
+              text='Cancel'
+            />
+          </div>
+        </div>
+      </Popup>
     </HomeLayout>
   );
 };

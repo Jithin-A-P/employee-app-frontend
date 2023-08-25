@@ -20,25 +20,50 @@
     background-color: #ffffff;
     position: relative;
     display: flex;
+    padding: 10px;
     flex-direction: column;
-    padding: 30px;
+    gap: 15px;
     z-index: 999;
     /* align-items: center; */
     /* justify-content: center; */
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.popup-container-notif .close-button {
+.notif-container-action-buttons .close-button {
     background-color: transparent;
     border: none;
     outline: none;
-    position: absolute;
-    right: 10px;
-    top: 10px;
+    position: relative;
     /* display: flex; */
     /* align-content: flex-end; */
     width: 16px;
     height: 16px;
     /* margin-left: 300px; */
     cursor: pointer;
+}
+
+.refresh-button {
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+    background: transparent;
+    outline: none;
+    border: none;
+}
+
+.refresh-icon {
+    height: 18px;
+    width: 18px;
+}
+
+.notif-container-action-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.notification-content-container {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

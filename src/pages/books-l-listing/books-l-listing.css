@@ -10,6 +10,43 @@
     height: calc(100% - 100px);
 }
 
-.book-main >*{
+.book-card-main{
  margin: 20px;
+}
+
+.filter{
+    background-color: #03AEEE;
+    border: none;
+    border-radius: 50px;
+    width: 120px;
+    height: 40px;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 10px;
+    color: white;
+    font-size: 15px;
+}
+
+.sub-option{
+    background-color: blue;
+    offset-position: right 100px;
+}
+
+.filter>option{
+    color: black;
+    background-color: #7c1e1e;
+}
+
+.filter-div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-img{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
 }

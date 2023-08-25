@@ -3,14 +3,16 @@ import Popup from '../popup/Popup';
 import Button from '../button/Button';
 import './styles.css';
 
-type DeleteEmployeePopupPropsType = {
+type DeleteEntityPopupPropsType = {
   isVisible: boolean;
+  entity: string;
   setIsVisible: (isVisible: boolean) => void;
   handleDelete: () => void;
 };
 
-const DeleteEmployeePopup: FC<DeleteEmployeePopupPropsType> = ({
+const DeleteEntityPopup: FC<DeleteEntityPopupPropsType> = ({
   isVisible,
+  entity,
   setIsVisible,
   handleDelete
 }) => {
@@ -22,7 +24,8 @@ const DeleteEmployeePopup: FC<DeleteEmployeePopupPropsType> = ({
       }}
     >
       <div className='delete-poup-title'>Are you sure?</div>
-      <div className='delete-employee-message'>Do you really want to delete employee ?</div>
+      <div className='delete-employee-message'>Do you really want to delete {entity}?</div>
+      <div className='delete-spacing'></div>
       <div className='delete-employee-buttons'>
         <Button style='primary' onClick={handleDelete} text='Confirm' />
         <Button
@@ -37,4 +40,4 @@ const DeleteEmployeePopup: FC<DeleteEmployeePopupPropsType> = ({
   );
 };
 
-export default DeleteEmployeePopup;
+export default DeleteEntityPopup;

@@ -11,6 +11,10 @@ import BookListing from './pages/books-l-listing/books-l-listing';
 import ShelfGrid from './pages/shelf-grid/ShelfGrid';
 import CreateShelf from './pages/create-edit-shelf/createEditShelf';
 import BorrowedBooks from './pages/borrowed-books/borrowedBooks';
+import AdminHistory from './pages/admin-history/adminHistory';
+import PageNotFound from './pages/page-not-found/pageNotFound';
+import LendBook from './pages/lend-book/lend-book';
+// import ShelfBookListing from './pages/shelf-book-listing/shelf-book-listing';
 
 const App: FC = () => {
   return (
@@ -20,16 +24,19 @@ const App: FC = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/employees' element={<Employee />} />
           <Route path='/library/books/create' element={<CreateUpdateBook />} />
-          <Route path='/library/books/:isbn/edit' element={<CreateUpdateBook />} />
+          <Route path='/library/books/:id/edit' element={<CreateUpdateBook />} />
           <Route path='/employees/:id' element={<EmployeeDetails />} />
           <Route path='/employees/create' element={<CreateEmployee />} />
           <Route path='/employees/edit/:id' element={<EditEmployee />} />
+          <Route path='/library/books/lend' element={<LendBook />} />
           <Route path='/library/books' element={<BookListing />} />
           <Route path='/library/shelves' element={<ShelfGrid />} />
-          <Route path='/library/shelves/:id' element={<BookListing />} />
+          {/* <Route path='/library/shelves/:id' element={<ShelfBookListing />} /> */}
           <Route path='/library/shelves/create' element={<CreateShelf />} />
           <Route path='/employees/:id/books' element={<BorrowedBooks />} />
           <Route path='/library/shelves/:id/edit' element={<CreateShelf />} />
+          <Route path='/library/admin/dashboard' element={<AdminHistory />} />
+          <Route path='*' element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
     </div>

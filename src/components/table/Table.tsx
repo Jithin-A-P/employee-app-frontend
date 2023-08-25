@@ -9,8 +9,8 @@ type TablePropsType = {
   employees?: any;
   booksReturned?: any;
   booksBorrowed?: any;
-  onRowClick?: (id: number) => void;
-  setDeletePopup?: (isVisible: boolean, id: number) => void;
+  onRowClick?: (id: string) => void;
+  setDeletePopup?: (isVisible: boolean, id: string) => void;
 };
 
 const Table: FC<TablePropsType> = ({

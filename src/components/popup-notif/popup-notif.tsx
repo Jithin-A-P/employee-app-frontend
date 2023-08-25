@@ -1,19 +1,39 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FC } from 'react';
 import './styles.css';
-import getCurrentUser from '../../utils/get-current-user';
+import {
+  useLazyGetNotificationsQuery,
+  useReadNotificationMutation
+} from '../../api-client/notif-api';
+import NotifRow from '../notif-row/notif-row';
+import dateFormatter from '../../utils/date-formatter';
 
 type NotifPopupPropsType = {
   isVisible: boolean;
   setIsVisible: (isVisible: boolean) => void;
+  unreadNotifications?: any;
   children?: any;
 };
 
-const NotifPopup: FC<NotifPopupPropsType> = ({ isVisible, setIsVisible }) => {
+const NotifPopup: FC<NotifPopupPropsType> = ({ isVisible, setIsVisible, unreadNotifications }) => {
   const close = () => {
     setIsVisible(false);
   };
+  const [refreshNotifications, { data: refreshedNotifications }] = useLazyGetNotificationsQuery();
+  let refreshButtonClicked = 0;
 
-  const currenUserName = getCurrentUser().name;
+  const handleRefresh = () => {
+    refreshNotifications({});
+    console.log('refresh', refreshedNotifications?.data);
+    refreshButtonClicked += 1;
+  };
+
+  const [readNotification] = useReadNotificationMutation();
+
+  const handleClick = (id) => {
+    readNotification(id);
+  };
 
   return isVisible ? (
     <div onClick={close} className='popup-notif'>
@@ -23,10 +43,47 @@ const NotifPopup: FC<NotifPopupPropsType> = ({ isVisible, setIsVisible }) => {
         }}
         className='popup-container-notif'
       >
-        <button className='close-button' onClick={close}>
-          X
-        </button>
-        <div className='delete-poup-title'>Hi, {currenUserName}</div>
+        <div className='notif-container-action-buttons'>
+          <div onClick={handleRefresh} className='refresh-button'>
+            <img className='refresh-icon' src='assets/icons/refresh.svg' alt='refresh-icon' />
+          </div>
+          <button className='close-button' onClick={close}>
+            X
+          </button>
+        </div>
+        <div className='notification-content-container'>
+          {unreadNotifications === undefined ? (
+            <div>NO NEW NOTIFICATIONS</div>
+          ) : refreshedNotifications?.data !== undefined ? (
+            refreshedNotifications?.data?.map((notif) => {
+              return (
+                <NotifRow
+                  key={notif.id}
+                  type={notif.type}
+                  content={notif.content}
+                  createdAt={dateFormatter(
+                    notif.createdAt.substring(0, notif.createdAt.indexOf('T'))
+                  )}
+                  onClick={() => handleClick(notif.id)}
+                />
+              );
+            })
+          ) : (
+            unreadNotifications?.map((notif) => {
+              return (
+                <NotifRow
+                  key={notif.id}
+                  type={notif.type}
+                  content={notif.content}
+                  createdAt={dateFormatter(
+                    notif.createdAt.substring(0, notif.createdAt.indexOf('T'))
+                  )}
+                  onClick={() => handleClick(notif.id)}
+                />
+              );
+            })
+          )}
+        </div>
       </div>
     </div>
   ) : (

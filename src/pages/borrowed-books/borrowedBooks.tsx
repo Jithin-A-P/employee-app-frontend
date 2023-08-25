@@ -1,45 +1,61 @@
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useGetAnEmployeeQuery } from '../../api-client/employee-api';
 import SubHeader from '../../components/sub-header/SubHeader';
 import Table from '../../components/table/Table';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
-import { borrowedBooks, ReturnedBooks } from '../../utils/tmp-borrowed-books';
-//import { useGetAnEmployeeQuery } from '../../api-client/employee-api';
+
+import './styles.css';
 
 const BorrowedBooks = () => {
-  //to be used to fetch details from emp-book-junction
-  // const { empid } = useParams();
+  const { id } = useParams();
 
-  // const { data: employee, isSuccess } = useGetAnEmployeeQuery('');
+  console.log('emp id', id);
 
-  // let borrowedBooks ;
-  // let booksReturned ;
-  /* if(employee.data.borrowedBooks? {
-    emloyee.data.borrowedBooks.map((item) => {
-      if(item.returnedAt){
-        booksRetured.append(item)
-      }
-      else{
-        booksBorrowed.append(item)
-      }
-    })
-  } )*/
+  const { data: response } = useGetAnEmployeeQuery(id);
+  const employee = response?.data;
 
-  const booksBorrowed = borrowedBooks;
-  const booksReturned = ReturnedBooks;
+  console.log('history page ', employee?.borrowedBooks);
 
-  const tableHeadValuesBorrowed = ['Book Title', 'Book ISBN', 'Author', 'Taken On', 'Return'];
+  let borrowedBooks = [];
+  let booksReturned = [];
+
+  if (employee)
+    if (employee?.borrowedBooks)
+      employee?.borrowedBooks.map((item) => {
+        console.log(item);
+        if (item.returnedAt) booksReturned.push(item);
+        else borrowedBooks.push(item);
+      });
+
+  const tableHeadValuesBorrowed = [
+    'Book Title',
+    'Book ISBN',
+    'Author',
+    'Taken On',
+    'Choose Shelf',
+    'Return'
+  ];
   const tableHeadValuesReturned = ['Book Title', 'Book ISBN', 'Author', 'Taken On', 'Returned On'];
 
   return (
     <HomeLayout>
-      <SubHeader title='Borrowed Books' />
-      <Table tableHeadValues={tableHeadValuesBorrowed} booksBorrowed={booksBorrowed} />
-      <SubHeader title='Returned Books' />
-      <Table tableHeadValues={tableHeadValuesReturned} booksReturned={booksReturned} />
+      {borrowedBooks.length > 0 && (
+        <>
+          <SubHeader title='Borrowed Books' />
+          <Table tableHeadValues={tableHeadValuesBorrowed} booksBorrowed={borrowedBooks} />
+        </>
+      )}
+      {booksReturned.length > 0 && (
+        <>
+          <SubHeader title='Returned Books' />
+          <Table tableHeadValues={tableHeadValuesReturned} booksReturned={booksReturned} />
+        </>
+      )}
+      {borrowedBooks.length == 0 && booksReturned.length == 0 && (
+        <div className='history'>Ooops ! You have no book history</div>
+      )}
     </HomeLayout>
   );
 };
-
-// this page should use table , input data to be taken from employee junction table.
 
 export default BorrowedBooks;

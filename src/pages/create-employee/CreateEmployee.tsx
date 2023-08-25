@@ -10,10 +10,13 @@ import { useAddAnEmployeeMutation } from '../../api-client/employee-api';
 import createEmployeePayload from '../../utils/tmp-employee-creator';
 import { useGetDepartmentsQuery } from '../../api-client/department-api';
 import { useGetRolesQuery } from '../../api-client/role-api';
+import { toast } from 'react-toastify';
 
 const CreateEmployee = () => {
   const [employee, setEmployee] = useState({
     name: '',
+    email: '',
+    password: '',
     joiningDate: '',
     role: '',
     status: '',
@@ -22,7 +25,10 @@ const CreateEmployee = () => {
     address: {
       line1: '',
       line2: '',
-      city: ''
+      city: '',
+      state: '',
+      country: '',
+      pincode: ''
     }
   });
 
@@ -49,9 +55,22 @@ const CreateEmployee = () => {
     createEmployee(createEmployeePayload(employee));
   };
 
+  const notifySuccess = (action: string) => toast.success(`Successfully ${action} Employee`);
+  const notifyError = (error: string) => toast.error(error);
+
   useEffect(() => {
-    if (isSuccess) navigate(-1);
-    if (isError) console.log(error);
+    if (isSuccess) {
+      setTimeout(() => {
+        notifySuccess('added');
+      }, 100);
+      navigate(-1);
+    }
+    if (isError) {
+      setTimeout(() => {
+        notifyError('Create Employee Failed!');
+      }, 100);
+      console.log(error);
+    }
   }, [isSuccess, isError]);
 
   return (
@@ -67,6 +86,28 @@ const CreateEmployee = () => {
             }}
             label='Employee Name'
             placeholder='Employee Name'
+          />
+        </div>
+        <div className='form-input'>
+          <Input
+            type='text'
+            value={employee.email}
+            onChange={(e: any) => {
+              setEmployee((prevEmployee) => ({ ...prevEmployee, email: e.target.value }));
+            }}
+            label='Email'
+            placeholder='Email'
+          />
+        </div>
+        <div className='form-input'>
+          <Input
+            type='text'
+            value={employee.password}
+            onChange={(e: any) => {
+              setEmployee((prevEmployee) => ({ ...prevEmployee, password: e.target.value }));
+            }}
+            label='Password'
+            placeholder='Password'
           />
         </div>
         <div className='form-input'>
@@ -102,28 +143,6 @@ const CreateEmployee = () => {
               options={departmentOptions}
             />
           )}
-        </div>
-        <div className='form-input'>
-          {roleOptions && (
-            <Select
-              value={employee.role}
-              onChange={(e: any) => {
-                setEmployee((prevEmployee) => ({ ...prevEmployee, role: e.target.value }));
-              }}
-              label='Role'
-              options={roleOptions}
-            />
-          )}
-        </div>
-        <div className='form-input'>
-          <Select
-            value={employee.status}
-            onChange={(e: any) => {
-              setEmployee((prevEmployee) => ({ ...prevEmployee, status: e.target.value }));
-            }}
-            label='Status'
-            options={statusOptions}
-          />
         </div>
         <div className='form-address-inputs'>
           <div className='form-input'>
@@ -168,6 +187,48 @@ const CreateEmployee = () => {
               placeholder='City'
             />
           </div>
+          <div className='form-input'>
+            <Input
+              type='text'
+              value={employee.address.state}
+              onChange={(e: any) => {
+                setEmployee((prevEmployee) => ({
+                  ...prevEmployee,
+                  address: { ...employee.address, state: e.target.value }
+                }));
+              }}
+              label=''
+              placeholder='State'
+            />
+          </div>
+          <div className='form-input'>
+            <Input
+              type='text'
+              value={employee.address.country}
+              onChange={(e: any) => {
+                setEmployee((prevEmployee) => ({
+                  ...prevEmployee,
+                  address: { ...employee.address, country: e.target.value }
+                }));
+              }}
+              label=''
+              placeholder='Country'
+            />
+          </div>
+          <div className='form-input'>
+            <Input
+              type='text'
+              value={employee.address.pincode}
+              onChange={(e: any) => {
+                setEmployee((prevEmployee) => ({
+                  ...prevEmployee,
+                  address: { ...employee.address, pincode: e.target.value }
+                }));
+              }}
+              label=''
+              placeholder='Pincode'
+            />
+          </div>
           <div className='form-button'>
             <Button style='primary' onClick={handleCreateEmployee} text='Create' />
             <Button
@@ -178,6 +239,28 @@ const CreateEmployee = () => {
               text='Cancel'
             />
           </div>
+        </div>
+        <div className='form-input'>
+          {roleOptions && (
+            <Select
+              value={employee.role}
+              onChange={(e: any) => {
+                setEmployee((prevEmployee) => ({ ...prevEmployee, role: e.target.value }));
+              }}
+              label='Role'
+              options={roleOptions}
+            />
+          )}
+        </div>
+        <div className='form-input'>
+          <Select
+            value={employee.status}
+            onChange={(e: any) => {
+              setEmployee((prevEmployee) => ({ ...prevEmployee, status: e.target.value }));
+            }}
+            label='Status'
+            options={statusOptions}
+          />
         </div>
       </div>
     </HomeLayout>
