@@ -22,7 +22,7 @@ const AdminHistory = () => {
         </div>
         <div className='admin-circulation-history'>Circulation History</div>
         <div className='admin-history-table'>
-          <table className='table'>
+          <table className='table-history'>
             <TableHead tableHeadValues={tableHeadVlaues} />
             {/* <TableHistoryRow bookHistory={values} /> */}
           </table>
