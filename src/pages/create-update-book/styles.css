@@ -88,7 +88,7 @@
     padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0px;
 }
 
 .upload-popup-title {
@@ -115,4 +115,10 @@
     height: 35px;
     font: normal normal 600 16px/22px "Nunito Sans";
     padding: 8px 30px;
+}
+
+.download-button {
+    color: #03aeee;
+    cursor: pointer;
+    text-align: center;
 }

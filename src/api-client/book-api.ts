@@ -56,6 +56,12 @@ const bookApi = baseApi.injectEndpoints({
       invalidatesTags: ['Books']
     }),
 
+    downloadTemplate: builder.query({
+      query: () => ({
+        url: '/books/download-template'
+      })
+    }),
+
     getCategoryList: builder.query({
       query: () => ({
         url: '/book-categories',
@@ -123,6 +129,7 @@ export const {
   useGetCategoryListQuery,
   useReturnBookMutation,
   useUploadBookMutation,
+  useLazyDownloadTemplateQuery,
   useNotifyMeMutation,
   useLendBookMutation,
   useRequestBookMutation,

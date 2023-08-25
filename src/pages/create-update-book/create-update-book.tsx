@@ -14,6 +14,7 @@ import {
   useEditBookMutation,
   useGetBookQuery,
   useGetCategoryListQuery,
+  useLazyDownloadTemplateQuery,
   useUploadBookMutation
 } from '../../api-client/book-api';
 import { useGetShelflistQuery } from '../../api-client/shelf-api';
@@ -99,6 +100,27 @@ const CreateUpdateBook = () => {
     filedata.append('data', file, file.name);
     uploadFile(filedata);
     navigate('/library/books');
+  };
+
+  const [downloadFile, { data: template }] = useLazyDownloadTemplateQuery();
+
+  const handleDownload = async () => {
+    await downloadFile('');
+    const file = template;
+    let url = window.URL || window.webkitURL;
+    const blobXLSX = url.createObjectURL(
+      new Blob([file], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
+      })
+    );
+    const hiddenElement = document.createElement('a');
+
+    hiddenElement.style.display = 'none';
+    hiddenElement.href = blobXLSX;
+    hiddenElement.target = '_blank';
+    hiddenElement.download = 'template.xlsx';
+    hiddenElement.click();
+    hiddenElement.remove();
   };
 
   const { data: responseBook, isSuccess: responseBookReceived } = useGetBookQuery(id);
@@ -350,6 +372,9 @@ const CreateUpdateBook = () => {
           <div className='upload-popup-title'>Choose excel file</div>
           <input className='upload-popup-choose-file' type='file' onChange={handleFileChange} />
           <div>{file && `${file.name}`}</div>
+          <a className='download-button' onClick={handleDownload}>
+            Download Template
+          </a>
           <div className='upload-popup-buttons'>
             <Button style='primary' onClick={handleUpload} text='Upload' />
             <Button
