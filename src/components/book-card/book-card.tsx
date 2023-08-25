@@ -1,10 +1,9 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import './book-card.css';
 import { useNavigate } from 'react-router-dom';
 import BookQuckViewPopup from '../book-quick-view-popup/BookQuickViewPopup';
 import getCurrentUser from '../../utils/get-current-user';
-import { useGetBookQuery, useNotifyMeMutation } from '../../api-client/book-api';
-// import { useGetShelflistQuery } from '../../api-client/shelf-api';
+import { useLazyGetBookQuery, useNotifyMeMutation } from '../../api-client/book-api';
 
 type BookcardPropTypes = {
   imgsrc?: string;
@@ -49,9 +48,7 @@ const BookCard: FC<BookcardPropTypes> = ({
     navigate(`/library/books/${id}/edit`);
   };
 
-  const [notifyMe, { isSuccess: isNotifySuccess }] = useNotifyMeMutation();
-
-  console.log(isNotifySuccess);
+  const [notifyMe] = useNotifyMeMutation();
 
   const handleNotify = (empId, isbn) => {
     notifyMe({
@@ -64,22 +61,22 @@ const BookCard: FC<BookcardPropTypes> = ({
     });
   };
 
-  const { data: book } = useGetBookQuery(id);
+  const [getBookDetails, { data: bookDetails }] = useLazyGetBookQuery();
 
-  console.log('book');
-
-  const results = book?.data?.shelves.map((item) => ({
+  const shelfDetails = bookDetails?.data?.shelves.map((item) => ({
     id: item.shelfCode,
     name: item.shelfCode,
     availableCount: item.availableBookCount
   }));
 
-  console.log('results..', results);
-
-  const borrowedByList = book?.data?.borrowedBy.map((item) => ({
+  const borrowedByList = bookDetails?.data?.borrowedBy.map((item) => ({
     id: item.id,
     name: item.name
   }));
+
+  useEffect(() => {
+    if (popupIsVisible) getBookDetails(id);
+  }, [popupIsVisible]);
 
   return (
     <>
@@ -115,7 +112,7 @@ const BookCard: FC<BookcardPropTypes> = ({
           {availableCount ? 'AVAILABLE' : 'NOT AVAILABLE'}
         </div>
       </div>
-      {results && (
+      {shelfDetails && (
         <BookQuckViewPopup
           isVisible={popupIsVisible}
           setIsVisible={(isVisible) => {
@@ -124,7 +121,7 @@ const BookCard: FC<BookcardPropTypes> = ({
           handleNotify={() => {
             handleNotify(empId, isbn);
           }}
-          shelves={results}
+          shelves={shelfDetails}
           borrowedBy={borrowedByList}
           isAvailable={availableCount == 0 ? false : true}
           id={id}

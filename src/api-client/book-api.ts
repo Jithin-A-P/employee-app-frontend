@@ -119,6 +119,7 @@ export const {
   useGetBookListQuery,
   useLazyGetBookListQuery,
   useGetBookQuery,
+  useLazyGetBookQuery,
   useGetCategoryListQuery,
   useReturnBookMutation,
   useUploadBookMutation,
