@@ -8,7 +8,7 @@ const PageNotFound = () => {
     const auth = localStorage.getItem('auth-token');
 
     if (auth === null) navigate('/login');
-    else navigate(-1);
+    else navigate('/employees');
   };
 
   return (
