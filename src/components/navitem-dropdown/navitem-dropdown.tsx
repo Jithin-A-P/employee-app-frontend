@@ -46,6 +46,15 @@ const NavItemDropDown: FC<NavItemDDPropsType> = ({ icon, title }) => {
           >
             Locate Shelves
           </div>
+          <div className='divider-line'></div>
+          <div
+            className='dd-options'
+            onClick={() => {
+              navigate('/library/books/lend');
+            }}
+          >
+            Lend a Book
+          </div>
         </div>
       )}
     </>
